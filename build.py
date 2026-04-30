@@ -121,6 +121,9 @@ def collect_sources() -> tuple[list[Path], list[Path]]:
 
 def target_py() -> None:
     """Run all Python scripts, then build the LaTeX document."""
+    Path("images").mkdir(parents=True, exist_ok=True)
+    Path("tables").mkdir(parents=True, exist_ok=True)
+    Path("code").mkdir(parents=True, exist_ok=True)
     py_sources, src_sources = collect_sources()
     for src in py_sources + src_sources:
         execute_script(src)
