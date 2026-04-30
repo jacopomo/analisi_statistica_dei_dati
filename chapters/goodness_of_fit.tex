@@ -32,7 +32,7 @@ Mathematically, if $T$ is our Test statistic and $F_T$ is its cumulative distrib
 
 Essentially, it is a function of the data such that its distribution is uniform between $0$ and $1$ and such that it is small for hypotheses distant from $H_0$.
 
-The goodness of fit Test, in this case, corresponds to the critical region $p<\alpha$ ($P(p<\alpha)=\alpha\forall\alpha)$
+The goodness of fit Test, in this case, corresponds to the critical region $p<\alpha$, otherwise stated as $P(p<\alpha)=\alpha\forall\alpha$
 
 We also wish for the GOF test to give unbiased results, and so we need for this statistic $p(x)$ to move towards lower values in every hypothesis in which $H_0$ is not verified. Synthetically:
 
@@ -42,19 +42,88 @@ We also wish for the GOF test to give unbiased results, and so we need for this 
 
 This gives the $p$-value the interpretation of "probability" (under $H_0$) that the experiment give a result that deviates further from $H_0$ that what was observed. 
 
-\textbf{What the p-value is not:}
+\begin{figure}[H]
+	\centering
+	\input{images/p_value_plot.pgf}
+	\caption{Distribution of the $p$-value statistic under the null hypothesis $H_0$ and an example alternative $H_1$. A vertical line corresponding to $\alpha=0.05$ significance level is also shown.}
+	\label{images/p_value_plot}
+\end{figure}
+
+From figure \ref{images/p_value_plot} we can see the utility in our construction: all values of $p$ are equally likely under $H_0$, while for $H_1$ lower values are more probable. Thinking about it in a frequentist sense, if we were to repeat many trials and extract a $p$-value for each of them, under $H_0$ no specific value holds more importance than any other, and we expect to get all of them sooner or later. Under $H_1$, lower values are more likely. Therefore, our test corresponds to the critical region $p<\alpha$, and only in that case can we reject the null hypothesis. 
+
+We can also visualize the different types of errors we may commit: obtaining $p<\alpha$ suggests that it was not extracted from $H_0$, though naturally there is $\alpha$ chance for it to come from the uniform distribution, and so a probability of $\alpha$ to have committed a type one error, and erroneously rejected the null hypothesis. Hopefully this example clears the question of why we can attribute to the $p$-value the probability under $H_0$ to have a more extreme solution than what was observed.
+
+\subsubsection{What the p-value is not:}
 \begin{itemize}
 	\item It is \textbf{NOT} the probability that the null hypothesis is true. ($P(H_0 | \text{data}) \neq \text{p-value}$)
 	\item It is \textbf{NOT} the probability that the results were caused by chance
 	\item It is \textbf{NOT} the significance of the test, as that is the name given to $\alpha$, which has been priorly fixed.  
 \end{itemize}
 
+Let's also take this opportunity, while we are talking about incorrect interpretations, to introduce some cases for which the abuse of goodness-of-fit reasoning brings erroneous conclusions. First of all, let's keep in mind that the alternative hypothesis in this case is "anything that is not $H_0$". Therefore, to make a conceptual analogy, if our null hypothesis is "God does not exist" and we reject it using a GOF Test, it does not directly follow that God does indeed exist. It means that the specific data we collected is incompatible with a model where no such influence exists. In a goodness-of-fit context, rejecting $H_0$ only tells you that your null model is a poor description of reality; \emph{it doesn’t automatically validate a specific alternative}. There could be a third, unconsidered variable, a flaw in the experimental design, or simply a Type I Error. 
 
+\begin{example}
+	Perhaps a less philosophical example: suppose that we want to test the fairness of a six-sided die. Our null hypothesis is that the die rolls each number $1-6$ with an equal $\frac{1}{6}$ probability. We decide to test this, roll $100$ times, and only get even numbers for all of them. Can we say that the die only rolls even numbers? No, we cannot, all we can do, with this GOF formalism, is \emph{reject the hypothesis that the die is fair}, though we cannot justify our theory as to \emph{why} it is not fair.
+\end{example}
 
-\todo{Examples for when ONLY using GOF tests is badddddd! Also maybe Look elsewhere effect?}
+From these examples we can conclude one thing: \textbf{any "discoveries" based only on GOF tests cannot be accepted}. The goodness-of-fit is a useful and necessary tool that must be implemented to justify any \emph{pdf} we may be inclined to assume, but it absolutely cannot be used as a stand-alone decision-making tool. 
 
 \subsubsection{Combination of p-values}
 
+Let's say that in two iterations of the same experiment I measure two different $p$-values $p_1$ and $p_2$. We'd like a way to express the combination of these two to have one total $p$-values indicative of both experiments. 
+
+Since we have attributed the definition of probability to $p$-values, and the two experiments are considered to be independent, can we simply take the product of these two $p$-values and combine them as we would probabilities of i.i.d random variables? The idea is to see if $P\left(x\leq\alpha\right) = P\left(p_1\leq\alpha\right)\cdot P\left(p_2\leq\alpha\right)$ where $x=p_1\cdot p_2$.
+
+Well, we want $x$\sidenote{Please allow us to introduce a new letter for the sake of not calling $p=p_1\cdot p_2$, and using the letter "p" once again, even though $x$ seems out of place} to be distributed as a $p$-value should, which is following a standard uniform distribution. To see this, we wish to calculate the cumulative of the product $x$:
+
+	\[
+	F_X(x) =  P(p_1 \cdot p_2 \leq x)
+	\]
+To find this, we integrate the joint PDF (which is $1 \cdot 1 = 1$) over the region in the unit square where $p_2 \leq \frac{x}{p_1}$:
+
+
+\begin{align*}
+	F_X(x) &= \int_{0}^{x} 1 \, \dd p_1 + \int_{x}^{1} \frac{x}{p_1} \dd p_1 = x + x \left[ \ln\left(p_1\right) \right]_{x}^{1}\\
+	&= x - x\ln(x) = x(1 - \ln(x))
+\end{align*}
+
+
+\begin{figure}[H]
+	\centering
+	\input{images/p_value_comb.pgf}
+	\caption{Integration bounds for two variables $p_1$, $p_2$ uniformly distributed between $0$ and $1$, with the line $p_2=\frac{x}{p_1}$ explicitly drawn. This line shows, for each $p_1$, what value $p_2$ must adopt for the product to be $\alpha=0.05$}
+	\label{images/p_value_comb}
+\end{figure}
+
+As we can see, the cumulative of the joint \emph{pdf} is not simply $x$, and therefore does not describe a uniform distribution, and so simply multiplying the two $p$-values is not a valid way to combine them. It's interesting to see how this mistake can cost us our theory developed thus far, if I want to combine two $p$-values of $0.1$, I would incorrectly state that my combined $p$-value be equal to $0.01$ when I do the banal product. 
+
+In reality, under the null hypothesis, the probability of getting a product $\leq 0.01$ is $0.01(1 - \ln(0.01)) \approx 0.056$, which means that I would claim a significant result at the $1\%$ level more than $5\%$ of the time! Clearly this is not the strategy.
+
+What we have shown is that to combine two $p$-values, instead of multiplying them we combine them using the formula we derived, as the probability integral transform guarantees that the CDF of a variable transformation is distributed uniformly:
+
+	\[
+	p = p_1p_2 (1 - \ln(p_1p_2))
+	\tag{Combination of two $p$-values}
+	\]
+	
+
+This is not the only way that exists, and for $n$ $p$-values we prefer to calculate:
+
+	\[
+	q=-2\sum_i\ln\left(p_i\right) = -2\ln\left(\prod_i p_i\right)
+	\]
+
+To find the threshold $q>q_alpha$, we consider the fact that $-2\ln\left(p_i\right)$ has an exponential distribution and that:
+
+	\[
+	\chi^2_\nu \sim \frac{1}{2^{\frac{\nu}{2}}\Gamma\left(\frac{\nu}{2}\right)}x^{\frac{\nu}{2}}e^{-\frac{x}{2}} \Rightarrow \chi_2^2 \sim \frac{1}{2}e^{-\frac{1}{2}} \Rightarrow -2\ln\left(p_i\right) \sim \chi_2^2
+	\]
+
+We therefore find the threshold $q>q_\alpha$ considering that $a\sim\chi^2_{2n}$. 
+
+This combination of $p$-values is not just a didactic formalism; to be completely transparent, it is necessary to consider the ensemble of results from all repetitions of an experiment. For example, if I run an experiment an arbitrarily large number of times, sooner or later I will obtain at least one significant $p$-value purely by chance, due to the inherent probability of committing a Type I Error (which is exactly what $\alpha$ quantifies). 
+
+It would be intellectually dishonest to report only that singular result\sidenote{This is a form of \emph{publication bias} or \emph{p-hacking}, where non-significant results are ignored, often leading to the "Look Elsewhere Effect" or the "File Drawer Problem"}, ignoring the others; in practice, this is no better than simply fabricating data. Therefore, two options come to mind: re-scale $\alpha$ for each trial (the \emph{Bonferroni Correction} used in life sciences), as to compensate for the "multiplicity" of many independent trials, or to combine all of the obtained $p$-values into one singular one. While the first option can be overly conservative, the second (combining them) follows naturally from the methods we have developed in this chapter and is the one most commonly used in our field.
 \section{GOF Tests from the LR statistic}
 Also application to histograms (can be a subsection or example)
 
