@@ -12,10 +12,11 @@ PY_SOURCES = $(wildcard $(PY_DIR)/*.py)
 PY_STAMPS = $(patsubst $(PY_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(PY_SOURCES))
 SRC_SOURCES = $(wildcard $(SRC_DIR)/*.py)
 SRC_STAMPS = $(patsubst $(SRC_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(SRC_SOURCES))
+VERSION := $(shell git describe --tags --always)
 
 DRAFT_NAME = draft_analisi_statistica_dei_dati
 PRODUCTION_NAME = production_analisi_statistica_dei_dati
-LATEXMK = latexmk -pdf -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent
+LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent
 
 # ------------------------
 
@@ -26,7 +27,7 @@ production: $(PY_STAMPS) $(SRC_STAMPS)
 		-pdflatex='pdflatex %O "\def\draft{0}\input{%S}"' \
 		$(MAIN).tex
 
-build:
+build: version
 	$(LATEXMK) -jobname=$(MAIN) $(MAIN).tex
 
 $(STAMP_DIR)/%.stamp: $(PY_DIR)/%.py
@@ -50,3 +51,6 @@ clean:
 cleanall: clean
 	$(LATEXMK) -C
 	-$(RM) $(MAIN).pdf $(DRAFT_NAME).pdf $(PRODUCTION_NAME).pdf
+
+version:
+	printf '\\newcommand{\\version}{%s}\n' "$(VERSION)" > $(OUT_DIR)/version.tex
