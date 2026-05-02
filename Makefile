@@ -12,7 +12,7 @@ PY_SOURCES = $(wildcard $(PY_DIR)/*.py)
 PY_STAMPS = $(patsubst $(PY_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(PY_SOURCES))
 SRC_SOURCES = $(wildcard $(SRC_DIR)/*.py)
 SRC_STAMPS = $(patsubst $(SRC_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(SRC_SOURCES))
-VERSION := $(shell git describe --tags --always)
+VERSION := $(shell git describe --tags --always --abbrev=0)
 
 DRAFT_NAME = draft_analisi_statistica_dei_dati
 PRODUCTION_NAME = production_analisi_statistica_dei_dati
