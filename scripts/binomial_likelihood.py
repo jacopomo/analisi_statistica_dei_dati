@@ -22,9 +22,9 @@ def binomial_pmf(k, n, p):
 # Generate plot
 fig, ax = utils.pgf_generator(figsize=(5.5, 3.5))
 
-ax.plot(xx, binomial_pmf(K1, N, xx), label=r'$L_{n=1,k=1}$', color='#1f77b4', lw=1.5)
-ax.plot(xx, binomial_pmf(K2, N, xx), label=r'$L_{n=1,k=0}$', color='#ff7f0e', lw=1.5)
-ax.plot(xx, binomial_pmf(K3, 50*N, xx), label=r'$L_{n=50,k=25}$', color='#2ca02c', lw=1.5)
+ax.plot(xx, binomial_pmf(K1, N, xx), label=r'$L_{n=1,k=1}$', lw=1.0, linestyle='--')
+ax.plot(xx, binomial_pmf(K2, N, xx), label=r'$L_{n=1,k=0}$', lw=1.0, linestyle=':')
+ax.plot(xx, binomial_pmf(K3, 50*N, xx), label=r'$L_{n=50,k=25}$', lw=1.0, linestyle='-.')
 
 ax.set_xticks([0,0.5,1])
 ax.set_xticklabels([0,0.5,1])
