@@ -14,6 +14,16 @@ SRC_SOURCES = $(wildcard $(SRC_DIR)/*.py)
 SRC_STAMPS = $(patsubst $(SRC_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(SRC_SOURCES))
 VERSION := $(shell git describe --tags --always --abbrev=0)
 
+$(STAMP_DIR)/%.stamp: $(PY_DIR)/%.py
+	@$(MKDIR) $(STAMP_DIR)
+	$(PYTHON) $<
+	@echo "Executed $<" > $@
+
+$(STAMP_DIR)/%.stamp: $(SRC_DIR)/%.py
+	@$(MKDIR) $(STAMP_DIR)
+	$(PYTHON) $<
+	@echo "Executed $<" > $@
+
 DRAFT_NAME = draft_analisi_statistica_dei_dati
 PRODUCTION_NAME = production_analisi_statistica_dei_dati
 LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent
@@ -29,16 +39,6 @@ production: $(PY_STAMPS) $(SRC_STAMPS)
 
 build: version
 	$(LATEXMK) -jobname=$(MAIN) $(MAIN).tex
-
-$(STAMP_DIR)/%.stamp: $(PY_DIR)/%.py
-	@$(MKDIR) $(STAMP_DIR)
-	$(PYTHON) $<
-	@echo "Executed $<" > $@
-
-$(STAMP_DIR)/%.stamp: $(SRC_DIR)/%.py
-	@$(MKDIR) $(STAMP_DIR)
-	$(PYTHON) $<
-	@echo "Executed $<" > $@
 
 py: $(PY_STAMPS) $(SRC_STAMPS)
 	$(MAKE) build
