@@ -128,6 +128,9 @@ This is calculated after $\alpha$, and naturally depends on it, as well as being
 \todo{INSERT power of a Test graph}
 We can see how the power reduces to $\alpha$ for $i=0$. This metric will be the one that we will use to build our statistical Tests, and we want it to be as close to $1$ as possible, which happens for $H_0$ "far away" from the alternative hypotheses. Also, we can request certain favorable conditions from these Tests:
 
+
+\begin{itemize}
+\item
 The first condition that is necessarily and silently assumed for any valid Test is that it be \textbf{unbiased}. Namely, we require that:
 
 	\[
@@ -135,6 +138,7 @@ The first condition that is necessarily and silently assumed for any valid Test 
 	\tag{Unbiasedness condition}
 	\]
 
+\item
 We also wish for our Test to be \textbf{consistent}:
 
 	\[
@@ -143,11 +147,13 @@ We also wish for our Test to be \textbf{consistent}:
 	\]
 
 We note that being $\alpha\leq1$, consistency implies asymptotic unbiasedness. 
+\end{itemize}
 
 These two conditions are so important that they are rarely sacrificed, and any Test used in the following will silently satisfy these two conditions.
 
 We can then, in order of "strength", define three different properties of Tests:
-
+\begin{itemize}
+\item
 A Test on a simple hypothesis can be \textbf{maximally powerful} (MP) for some certain $\tilde{i}$:
 
 	\[
@@ -157,6 +163,7 @@ A Test on a simple hypothesis can be \textbf{maximally powerful} (MP) for some c
 
 This means that we have chosen the most powerful Test possible for this specific alternate hypothesis. In fact, MP Tests only work on simple hypotheses, as we are comparing one specific $H_{\tilde{i}}$ with $H_0$. A powerful Lemma we will talk about in the future will prove the existence of such a test. 
 
+\item
 For composite hypotheses, a Test can be \textbf{locally maximally powerful} (LMP) if there exists an interval of $H_0$, $I(H_0)$ such that:
 
 
@@ -167,6 +174,7 @@ For composite hypotheses, a Test can be \textbf{locally maximally powerful} (LMP
 
 Essentially, for a composite hypothesis we want our Test to be the most powerful one in a region near the null hypothesis. For example, if $H_0: \theta= \theta_0$ and $H_i: \theta\geq\theta_0$ the LMP is the most powerful Test near the most plausible values of $\theta$, namely the ones near (but greater than) $\theta_0$.
 
+\item
 The final, and most powerful property we can request of our Test is for it to be the \textbf{uniformly most powerful} (UMP), which essentially means that out of all of the Tests it is the "best" one:
 
 	\[
@@ -175,6 +183,7 @@ The final, and most powerful property we can request of our Test is for it to be
 	\]
 
 Having composite hypotheses, the concept of most powerful Test it difficult to define, in general, as the MP Test for some alternatives may be different than for others. This is why we restrict ourselves to local general solutions (LMP) or, when possible, find a uniform solution that works for all alternatives. If such a Test exists, it naturally follows that we choose it as the "best" option.
+\end{itemize}
 
 We will expand on all of these different types one by one in the following sections.
 
