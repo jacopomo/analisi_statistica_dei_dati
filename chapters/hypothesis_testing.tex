@@ -26,8 +26,8 @@ For example, a hypothesis may be "the parameter is equal to $0$", while an alter
 Remember, the only significant output of a Test is the rejection of a hypothesis, and so the possible results of a Test can be:
 
 \begin{align*}
-	T(x) \neq H_0&\text{, we reject }H_0\Rightarrow\text{, "significant"}\\
-	T(x) = H_0&\text{, we fail to reject }H_0\Rightarrow\text{, "not significant"}
+	T(x) \neq H_0&\text{, we reject }H_0\Rightarrow\text{"significant"}\\
+	T(x) = H_0&\text{, we fail to reject }H_0\Rightarrow\text{"not significant"}
 \end{align*}
 
 
@@ -95,9 +95,16 @@ We also take a moment to define the different errors\sidenote{Error in the sense
 	Namely, this represents the probability of not rejecting the null hypothesis though the measurement belongs to the alternative, of which we once again take the \emph{sup} ("worst-case") for composite hypotheses. 
 \end{definition}
 
-\todo{INSERT graph with two peaks and the vertival bar where it says left accept right critical and the shadings with alpha and beta}
+	\begin{figure}[H]
+	\centering
+	\input{images/hypothesis_testing_errors.pgf}
+	\caption{CAPTION}
+	\label{fig:hypothesis_testing_errors}
+\end{figure}
 
-We frequently use Test statistics of the type $T(x):\C\equiv\{x:T(x)>q_\alpha\}$ with
+\todo{I added the graph but I don't know how to contextualize it.}
+
+We frequently use Test statistics of the type $T(x):\C\equiv\{x:T(x)>q_\alpha\}$\todo{???} with
 	
 	\[
 	\alpha = P(x\in \C;H_0) = \int_{q_\alpha}^{\infty}p(T(x);H_0)\dd T
@@ -144,17 +151,17 @@ We can then, in order of "strength", define three different properties of Tests:
 A Test on a simple hypothesis can be \textbf{maximally powerful} (MP) for some certain $\tilde{i}$:
 
 	\[
-	\text{pow}_T(\hat{i})\geq\text{pow}_{T^\prime}(i)\quad \forall T^\prime
+	\text{pow}_T(\tilde{i})\geq\text{pow}_{T^\prime}(i)\quad \forall T^\prime
 	\tag{MP Test}
 	\]
 
-This means that we have chosen the most powerful Test possible for this specific alternate hypothesis. In fact, MP Tests only work on simple hypotheses, as we are comparing one specific $H_{\hat{i}}$ with $H_0$. A powerful Lemma we will talk about in the future will prove the existence of such a test. 
+This means that we have chosen the most powerful Test possible for this specific alternate hypothesis. In fact, MP Tests only work on simple hypotheses, as we are comparing one specific $H_{\tilde{i}}$ with $H_0$. A powerful Lemma we will talk about in the future will prove the existence of such a test. 
 
 For composite hypotheses, a Test can be \textbf{locally maximally powerful} (LMP) if there exists an interval of $H_0$, $I(H_0)$ such that:
 
 
 	\[
-	\forall i\in I(H_0): \text{pow}_T(i) \geq \text{pow}_{T^\prime}(i) \forall T^\prime
+	\forall i\in I(H_0): \text{pow}_T(i) \geq \text{pow}_{T^\prime}(i) \quad \forall T^\prime
 	\tag{LMP Test}
 	\]
 
@@ -163,13 +170,13 @@ Essentially, for a composite hypothesis we want our Test to be the most powerful
 The final, and most powerful property we can request of our Test is for it to be the \textbf{uniformly most powerful} (UMP), which essentially means that out of all of the Tests it is the "best" one:
 
 	\[
-	\forall i: \text{pow}_T(i) \geq \text{pow}_{T^\prime}(i) \forall T^\prime
+	\forall i: \text{pow}_T(i) \geq \text{pow}_{T^\prime}(i) \quad \forall T^\prime
 	\tag{UMP Test}
 	\]
 
 Having composite hypotheses, the concept of most powerful Test it difficult to define, in general, as the MP Test for some alternatives may be different than for others. This is why we restrict ourselves to local general solutions (LMP) or, when possible, find a uniform solution that works for all alternatives. If such a Test exists, it naturally follows that we choose it as the "best" option.
 
-We will expand on all of these different types one by one in the following sections:
+We will expand on all of these different types one by one in the following sections.
 
 \subsection{Neyman-Pearson Test}
 
