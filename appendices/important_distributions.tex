@@ -98,6 +98,55 @@ As expected, the MLE for the Poisson mean coincides with the sample mean. In the
 \section{Continuos distributions}
 \subsubsection{Uniform: The baseline for probability}
 
+The general Uniform distribution $\mathcal{U}[l, u]$ between $l$ and $u$ with $l, u \in \mathbb{R}$, has \emph{pdf}:
+\[
+	p(x; l, u)=\begin{cases}
+		\frac{1}{u-l} \; if \; x \in [l, v] \\
+		0 \; \text{otherwise}
+	\end{cases}
+\]
+One could write the same \emph{pdf} in terms of length of the interval $\delta$ and where it's centered $\mu$:
+\[
+p(x; \delta, \mu)=\begin{cases}
+	\frac{1}{\delta} \; if \; x \in [\mu-\delta/2, \mu+\delta/2] \\
+	0 \; \text{otherwise}
+\end{cases}
+\]
+
+To make the following math easier we consider a Uniform $\mathcal{U}[0, m]$ (we can always reconduct ourself to this simple case trough a trivial change of variables).
+
+We can evaluate the expected value of a uniform:
+\begin{align*}
+	\E[x]&=\int_{-\infty}^{+\infty}xp(x;0,m)\;dx=\int_{0}^{m}x\frac{1}{m}\;dx=\frac{m}{2}
+\end{align*}
+and for the variance:
+\begin{align*}
+	\operatorname{Var}[x]&=\E[x^2]-\E[x]^2=\int_{-\infty}^{+\infty}x^2p(x;0,m)\; dx - \frac{m^2}{4}\\
+	&=\int_{0}^{m}x^2\frac{1}{m}\;dx- \frac{m^2}{4}=\frac{m^2}{3}-\frac{m^2}{4}=\frac{m^2}{12}
+\end{align*}
+For the characteristic function we get:
+\[
+	\phi(t)=\E[e^{itx}]=\frac{e^{imt}-1}{imt}
+\]
+
+We now want to compute the likelihood $L_x(m)$:
+\[
+	L_x(m)=\frac{1}{m}\mathbb{I}_{m\geq x}
+\]
+(see \ref{ex:uniform_likelihood}).
+and for the Fisher information $I(m)$:
+\[
+	I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]= \E \left[\frac{1}{m^2} \right]=\frac{1}{m^2}
+\]
+
+Given $N$ observation ${x_i}$ following a uniform distribution, it is often useful to know how $x_{max}=\operatorname{max}[x_i]$ and $x_{min}=\operatorname{min}[x_i]$ are distributed.
+
+We shall start with $x_{max}$. We can find it's distribution in two different but equivalent manner:
+\begin{itemize}
+	\item cumulative
+	\item multinomial
+\end{itemize}
+
 \subsubsection{Normal (Gaussian): The king of statistics}
 
 \subsubsection{Exponential: For time/space between events}
