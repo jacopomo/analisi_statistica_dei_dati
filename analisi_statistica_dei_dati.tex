@@ -32,6 +32,11 @@
 \usepackage{marginnote}
 \usepackage{ifoddpage}
 \usepackage{sidenotes}
+%------------------------------------------------
+% BIBLIOGRAPHY
+%------------------------------------------------
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{appendices/biblio.bib}
 
 \newcommand{\mathdefault}[1]{#1}
 \renewcommand*{\marginfont}{\footnotesize}
@@ -188,6 +193,9 @@
 \include{appendices/important_distributions}
 \include{appendices/statistical_tables}
 \include{appendices/code}
+
+\nocite{*}
+\printbibliography
 
 \backmatter
 
