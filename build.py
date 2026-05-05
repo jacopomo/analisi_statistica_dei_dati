@@ -54,6 +54,23 @@ LATEXMK_BASE = [
 LATEX_ENV = os.environ.copy()
 LATEX_ENV["TEXMF_OUTPUT_DIRECTORY"] = str(OUT_DIR)
 
+
+def get_version() -> str:
+    """Return the current git version tag, mirroring the Makefile's:
+        VERSION := $(shell git describe --tags --always --abbrev=0)
+    Falls back to 'unknown' if git is unavailable or the repo has no tags."""
+    try:
+        result = subprocess.run(
+            ["git", "describe", "--tags", "--always", "--abbrev=0"],
+            capture_output=True, text=True, check=True,
+        )
+        return result.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
+
+
+VERSION = get_version()
+
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def run(cmd: list[str], check: bool = True, latex: bool = False) -> int:
@@ -130,9 +147,21 @@ def target_py() -> None:
     target_build()
 
 
-def target_build() -> None:
-    """Run latexmk on the main .tex file."""
+def target_version() -> None:
+    """Write version.tex into OUT_DIR, mirroring the Makefile's version target:
+        printf '\\newcommand{\\version}{%s}\\n' "$(VERSION)" > $(OUT_DIR)/version.tex
+    """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    version_file = OUT_DIR / "version.tex"
+    content = f"\\newcommand{{\\version}}{{{VERSION}}}\n"
+    version_file.write_text(content)
+    print(f"  Wrote {version_file}  (version={VERSION})")
+
+
+def target_build() -> None:
+    """Write version.tex, then run latexmk on the main .tex file."""
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    target_version()
     clean_stale_fdb(MAIN)
     run(LATEXMK_BASE + [f"-jobname={MAIN}", f"{MAIN}.tex"], latex=True)
 
