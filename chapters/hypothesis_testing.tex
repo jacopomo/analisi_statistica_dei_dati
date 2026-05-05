@@ -7,43 +7,33 @@ We start by defining what a hypothesis is in our case:
 	H_\alpha/H_1&:\text{ "Alternative hypothesis"}	
 	\end{align*}
 
-In general, we assume the null hypothesis holds unless there is statistical evidence that suggests we should reject it. This right here is a key concept: we can never \emph{prove} that a hypothesis is the "correct" one; we can only \emph{reject} or fail to reject it.
+For example, a hypothesis may be "the parameter is equal to $0$", while an alternative may be "the parameter is not equal to $0$". In general, we assume the null hypothesis holds unless there is statistical evidence that suggests we should reject it. This right here is a key concept: we can never \emph{prove} that a hypothesis is the "correct" one; we can only \emph{reject} or fail to reject it.
 
+It's important that all hypotheses be disjointed, so we impose that
 
+\[
+H_i\cap H_j = \emptyset \quad \forall i\neq j
+\]
 
-We also define a \emph{Test statistic}, that takes our data and maps it to a hypothesis. We look at the data, and the Test tells us which hypothesis it belongs to, out of the alternatives (which are subsets of the parameter space). More formally:
+What we mean to say here is that the hypotheses themselves are disjointed, so $H_0:\theta=3$ and $H_1:\theta>0$ will naturally bring ambiguity. However, it is not necessary for $p(x;H_i)$ and $p(x;H_j)$\sidenote{Here we use the probability of $x$ given the hypothesis, but of course it could be the probability of a certain statistic of $x$ instead} to have no overlap whatsoever. Usually, we find ourselves in the situation where some data \emph{could have} been extracted from either distribution (i.e. for that $x$ both $p(x;H)>0$) and we need to use a hypothesis test to try to reject one in favor of the other.
 
-	\[
-	T(x) : x\mapsto H_i; \quad H_i\in \mathcal{P}(A)\,\forall i \in \{0,\dots,n\}
-	\]
+In order to do this need to define a statistic, namely a \emph{Test statistic}, such that given some experimental data we can quantitatively select to reject or not the null hypothesis\cite{casella2002statistical}. The way that we do this is by defining a \textbf{critical (rejection) region} $\C$ such that if the output of the Test falls within this region we can reject $H_0$. For example, if we use as a Test statistic the sample mean, we can specify that $H_0$ be rejected if this statistic, $T(x)=\bar{x}$ is, for example, less than $5$. In this case, the critical region would be $\C=\{\left(x_1,\dots,x_N\right):\bar{x}<5\}$.  
 
-For example, a hypothesis may be "the parameter is equal to $0$", while an alternative may be "the parameter is not equal to $0$".\sidenote{This means that we could write a statistic of $x$ that instead of mapping to a hypothesis maps to a natural number $i$ that is the index of which alternative hypothesis the Test points to.} It's important that all hypotheses be disjoined, so we impose that
-
-	\[
-	H_i\cap H_j = \emptyset \quad \forall i\neq j
-	\]
-
-Remember, the only significant output of a Test is the rejection of a hypothesis, and so the possible results of a Test can be:
-
-\begin{align*}
-	T(x) \neq H_0&\text{, we reject }H_0\Rightarrow\text{"significant"}\\
-	T(x) = H_0&\text{, we fail to reject }H_0\Rightarrow\text{"not significant"}
-\end{align*}
-
-
-We then define a \textbf{critical (rejection) region} $\C$ such that:
+To give an informal one-line definition:
 
 	\[
-	\C \equiv \{x: T(x)\neq H_0\}
+	\C \equiv \{x: T(x)\text{ rejects} H_0\}
 	\]
+
+When we write the definition in this way we intend "the critical region is the interval in $x$ such that the output of the Test rejects $H_0$".
 
 The complement of this region goes under the name of "acceptance region"\sidenote{Important: we never accept hypotheses! Acceptance region, in this case, should more properly be called "failure to reject region"}, and can naturally be written as:
 
 	\[
-	\mathcal{A}\equiv\bar{\C} = \{x: T(x) = H_0\}
+	\mathcal{A}\equiv\bar{\C} = \{x: T(x) \text{ is compatible with} H_0\}
 	\]
 
-Under this notation: if our data falls within the rejection region $\C$, the test $T(x)$ maps to an alternative hypothesis $H_i$ (where $i \neq 0$), leading us to reject the null hypothesis.
+Under this notation, the acceptance region is the interval in $x$ such that the output of the Test cannot reject $H_0$.
 
 \section{The standard hypothesis test}
 We will be looking at two main types of hypotheses, depending on what we can infer on $\theta$. The first is the \emph{simple hypothesis}:
@@ -65,7 +55,7 @@ The other type is the \emph{composite hypothesis}:
 	\]
 \end{definition}
 
-In this case, the distribution remains dependent on one or more parameters that are not strictly fixed. For example, the hypothesis that $x$ follows a Normal distribution with mean $\mu > 10$ is composite, as it encompasses an infinite set of possible distributions (one for every possible value of $\mu$ greater than 10).
+In this case, the distribution remains dependent on one or more parameters that are not strictly fixed. For example, the hypothesis that $x$ follows a Normal distribution with mean $\mu > 10$ is composite, as it encompasses an infinite set of possible distributions (one for every possible value of $\mu$ greater than 10). 
 
 We also take a moment to define the different errors\sidenote{Error in the sense of mistake} we may obtain:
 
@@ -95,22 +85,31 @@ We also take a moment to define the different errors\sidenote{Error in the sense
 	Namely, this represents the probability of not rejecting the null hypothesis though the measurement belongs to the alternative, of which we once again take the \emph{sup} ("worst-case") for composite hypotheses. 
 \end{definition}
 
-	\begin{figure}[H]
-	\centering
-	\input{images/hypothesis_testing_errors.pgf}
-	\caption{CAPTION}
-	\label{fig:hypothesis_testing_errors}
-\end{figure}
-
-\todo{I added the graph but I don't know how to contextualize it.}
-
-We frequently use Test statistics of the type $T(x):\C\equiv\{x:T(x)>q_\alpha\}$\todo{???} with
+Therefore, what we will do is fix a certain $\alpha$ ("significance level"), which will be the probability of committing a type one error, and find the value of the \emph{threshold} $q_\alpha$ that defines the critical region. Essentially, $q_\alpha$ is a cut-off such that if $T(x_{\text{obs}})>q_\alpha$ then we can reject the null hypothesis. Under this formalism, the critical region is defined as all the $x$ for which $T(x)>q_\alpha$ (which shows that $q_\alpha$ has the same dimensions as the Test statistic): $\C\equiv\{x:T(x)>q_\alpha\}$. To find this value, we integrate the tail of the distribution under $H_0$, which corresponds to the area in which we erroneously reject $H_0$:
 	
 	\[
-	\alpha = P(x\in \C;H_0) = \int_{q_\alpha}^{\infty}p(T(x);H_0)\dd T
+	\alpha = P(x\in \C;H_0) = \int_{q_\alpha}^{\infty}p(T(x);H_0)\dd T(x)
 	\]
 
-of which we take the \emph{sup} for composite hypotheses. We choose a small $\alpha$ beforehand ("significance level") and we use it to find $q_\alpha$, (the \emph{cut-off}). For example, typical values may be $\alpha = 0.05, 3\sigma, 5\sigma,\dots$
+of which we take the \emph{sup} for composite hypotheses. We choose a small $\alpha$ beforehand, for example, typical values may be $\alpha = 0.05, 3\sigma, 5\sigma,\dots$. It also tells us the significance with which we can or cannot reject $H_0$ (\emph{"the data is compatible with $H_0$ with a significance corresponding to $3\sigma$..."}).
+
+
+\paragraph{Note: The choice of critical region:}
+The form of the critical region, e.g.\ $\mathcal{C} = \{x : T(x) > q_\alpha\}$, implicitly assumes that large values of the test statistic $T$ provide evidence \emph{against} $H_0$. This corresponds to a \textbf{right-tailed test}. However, this choice is not fundamental: depending on how $T$ is defined, evidence against $H_0$ may instead correspond to small values of $T$, leading to a left-tailed test with critical region $\mathcal{C} = \{x : T(x) < q_\alpha\}$. More generally, one may consider rejection regions of the form $\mathcal{C} = \{x : T(x) \in R_\alpha\}$, where $R_\alpha$ is chosen such that $P_{H_0}(T \in R_\alpha) = \alpha$ and contains those values of $T$ that are most incompatible with $H_0$. The direction of the inequality is therefore a matter of convention, reflecting how the test statistic is constructed, rather than an intrinsic property of the hypotheses themselves.
+
+
+To try and clear any possible confusion, the following image depicts a right-tailed test and how the various regions are defined.
+
+
+\begin{figure}[H]
+\centering
+\input{images/hypothesis_testing_errors.pgf}
+\caption{Probability of the Test statistic considering null and alternative hypotheses. The critical region is separated from the acceptance region by a vertical line, and $\alpha, \beta$ are shown shaded. This Test corresponds to a right-tailed test statistic.}
+\label{fig:hypothesis_testing_errors}
+\end{figure}
+
+
+
 
 We also calculate the second type of error:
 
@@ -342,9 +341,9 @@ This can be seen as a N-P Test done on $H_0$ and the alternative hypotheses obta
 We can't prove general properties on the power of this statistic, we can appreciate its simplicity, and use an extension of the aforementioned Wilks' theorem to derive a helpful property:
 
 \begin{theorem}
-	The statistic $\lambda(x)$ has (under the null hypothesis $H_0$), the asymptotic distribution of a $\chi^2_d$ where $d$ is the dimension of $\nu$.
+	The statistic $\lambda(x)$ has (under the null hypothesis $H_0$), the asymptotic distribution of a $\chi^2_d$ where $d$ is the dimension of $\mu$. the number of free parameters.
 \end{theorem}
-\todo{I'm not quite sure about the dimension of the $\chi^2$. We should talk about it.}
+
 
 Once again, we have an asymptotically pivotal quantity, and we can find the critical region for the test using the usual $\chi^2$ tables. We also enjoy the property that this Test is asymptotically unbiased.
 

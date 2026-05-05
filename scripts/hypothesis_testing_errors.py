@@ -46,16 +46,16 @@ ax.axvline(XC, color='black', lw=1.0, linestyle='--')
 
 ymax = max(pdf_H0.max(), pdf_H1.max())
 
-ax.text(mu0, norm.pdf(mu0, mu0, sigma0)*1.1, r'$H_0$', 
+ax.text(mu0, norm.pdf(mu0, mu0, sigma0)*1.1, r'$p(T(x) | H_0)$', 
         ha='center', fontsize=14)
-ax.text(mu1, norm.pdf(mu1, mu1, sigma1)*1.1, r'$H_m$', 
+ax.text(mu1, norm.pdf(mu1, mu1, sigma1)*1.1, r'$p(T(x) | H_1)$', 
         ha='center', fontsize=14)
 
 ax.text(XC - 0.8, ymax*0.25, r'$\beta$', color='blue', fontsize=18)
 ax.text(XC + 0.3, ymax*0.10, r'$\alpha$', color='red', fontsize=18)
 
 ax.set_xlabel(r'$T(x)$')
-ax.set_ylabel(r'$p(t)$')
+ax.set_ylabel(r'$p(T(x))$')
 
 ax.set_xlim(-3, 8)
 ax.set_ylim(0, ymax * 1.2)
