@@ -22,7 +22,7 @@ ax.plot(xx, likelihood, label=r'$L_{X_0}(m)$', color='#1f77b4', lw=1.5)
 ax.set_xticks([X0])
 ax.set_xticklabels([r'$x_0$'])
 ax.set_yticks([0,1])
-ax.set_yticklabels([0,1])
+ax.set_yticklabels([0,r'$\frac{1}{x_0}$'])
 ax.set_xlabel(r'$m$', fontsize=10)
 ax.set_ylabel(r'$L(m)$', fontsize=10)
 

@@ -7,9 +7,9 @@ Each distribution we will write, plot, derive (some not all), moments, MLE, supp
 
 \section{Discrete distributions}
 \label{Appendix:discrete}
-\subsection{Bernoulli: the foundation} %Sub sub sections give a nice bold but don't appear in the TOC... Win-win I'd say
+\subsection{Bernoulli} %Sub sub sections give a nice bold but don't appear in the TOC... Win-win I'd say
 
-\subsection{Binomial: For fixed trials}
+\subsection{Binomial}
 Support: $k \in \{0, 1, \dots, n\}$ and $p \in [0, 1]$.
 
 The probability of having exactly $k$ successes in $n$ independent Bernoulli trials is:
@@ -59,9 +59,9 @@ Fisher Information: This measure tells us how much "information" $k$ carries abo
 
 This shows us at a glance that $\hat{p}_{MLE}$ is the minimum variance estimator.
 
-\subsection{Multinomial: The multivariate version of Binomial}
+\subsection{Multinomial}
 Add the example of the k-median here (distribution of the k-biggest value, it's an important exercise we did in class you'll see)
-\subsection{Poisson: For occurrences over time/space}
+\subsection{Poisson}
 
 \label{eq:poisson_mle}
 We now want to find the maximum likelihood estimator (MLE) for a Poisson distribution. 
@@ -98,7 +98,7 @@ As expected, the MLE for the Poisson mean coincides with the sample mean. In the
 
 \section{Continuos distributions}
 
-\subsection{Uniform: The baseline for probability}
+\subsection{Uniform}
 
 The general Uniform distribution $\mathcal{U}[l, u]$ with $l, u \in \mathbb{R}$ has the \emph{pdf}:
 \[
@@ -143,29 +143,51 @@ The characteristic function is:
 =\frac{e^{imt}-1}{imt}
 \]
 
-We now compute the likelihood $L_x(m)$:
+We now compute the likelihood $L_x(m)$ for a single observation $x$ (see example \ref{ex:uniform_likelihood}):
 \[
-L_x(m)=\frac{1}{m}\,\mathbb{I}_{\{m \geq x\}}
+L_x(m)=\frac{1}{m}\,\mathbb{I}_{\{m \geq x\}}, \quad m>0
 \]
-(see example \ref{ex:uniform_likelihood}).
 
-The Fisher information is:
+\textbf{Remark:} The likelihood is not differentiable at $m=x$, so standard regularity conditions do not hold.
+
+The Fisher information is formally:
 \[
 I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]
 =\frac{1}{m^2}
 \]
+although this result must be treated with care due to the non-regularity of the model.
 
-MLE SINGOLA\\
+To find the MLE for $m$, we observe that the likelihood is decreasing in $m$ for $m \ge x$ (see fig \ref{fig:uniform_likelihood}), hence its maximum is attained at the boundary:
+\[
+\hat{m}=x
+\]
 
-LIKELIHOOD MULTI\\
+Given $N$ independent observations $\{x_i\}$ drawn from a uniform distribution, we have:
+\begin{align*}
+	L_{\text{tot}}(m)
+	&=\prod_{i=1}^N\frac{1}{m}\mathbb{I}_{\{m\geq x_i\}}\\
+	&=\frac{1}{m^N}\mathbb{I}_{\{m\geq \max_i [x_i]\}}
+\end{align*}
 
-FISHER MULI\\
+The log-likelihood (for $m \ge \max_i [x_i]$) is:
+\[
+\ln L_{\text{tot}}(m) = -N \ln m
+\]
+so formally:
+\[
+I_{\text{tot}}(m)=\frac{N}{m^2}
+\]
+again with the same caveat about regularity.
 
-MLE MULTI\\
+By the same argument as before, the MLE is:
 
-COSE AGGIUNGIVE SU MAX SU ESEMPIO STATISTICA SUFFICIENTE DA LINKARE\\
+\[
+	\hat m = \max_i [x_i]
+\]
 
-Given $N$ observations $\{x_i\}$ drawn independently from a uniform distribution, it is often useful to determine the distributions of 
+Further treatment of this fundamental statistic, and it's sufficiency, can be found in example \ref{ex:uniform_sufficient_statistics}.
+
+It is often useful to determine the distributions of 
 \[
 x_{\max} = \max_i [x_i]
 \quad \text{and} \quad
@@ -393,9 +415,9 @@ Would you look at that, the minimum and the maximum have the same variance! This
 
 \todo{FISHER INFO PER MAX E MIN?}
 
-\subsection{Normal (Gaussian): The king of statistics}
+\subsection{Normal (Gaussian)}
 
-\subsection{Exponential: For time/space between events}
+\subsection{Exponential}
 
 %Gamma: The generalized version of Exponential.  Add if we ever use
 
@@ -406,6 +428,6 @@ Would you look at that, the minimum and the maximum have the same variance! This
 \section{Sampling distributions}
 %Student’s t: For small sample sizes.  Add if we ever use
 
-\subsection{Chi-squared: For variances and goodness-of-fit}
+\subsection{Chi-squared}
 
 %F-distribution: For comparing variances (ANOVA).  Add if we ever use
