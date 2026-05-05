@@ -7,9 +7,9 @@ Each distribution we will write, plot, derive (some not all), moments, MLE, supp
 
 \section{Discrete distributions}
 \label{Appendix:discrete}
-\subsubsection{Bernoulli: the foundation} %Sub sub sections give a nice bold but don't appear in the TOC... Win-win I'd say
+\subsection{Bernoulli: the foundation} %Sub sub sections give a nice bold but don't appear in the TOC... Win-win I'd say
 
-\subsubsection{Binomial: For fixed trials}
+\subsection{Binomial: For fixed trials}
 Support: $k \in \{0, 1, \dots, n\}$ and $p \in [0, 1]$.
 
 The probability of having exactly $k$ successes in $n$ independent Bernoulli trials is:
@@ -59,9 +59,9 @@ Fisher Information: This measure tells us how much "information" $k$ carries abo
 
 This shows us at a glance that $\hat{p}_{MLE}$ is the minimum variance estimator.
 
-\subsubsection{Multinomial: The multivariate version of Binomial}
+\subsection{Multinomial: The multivariate version of Binomial}
 Add the example of the k-median here (distribution of the k-biggest value, it's an important exercise we did in class you'll see)
-\subsubsection{Poisson: For occurrences over time/space}
+\subsection{Poisson: For occurrences over time/space}
 
 \label{eq:poisson_mle}
 We now want to find the maximum likelihood estimator (MLE) for a Poisson distribution. 
@@ -98,7 +98,7 @@ As expected, the MLE for the Poisson mean coincides with the sample mean. In the
 
 \section{Continuos distributions}
 
-\subsubsection{Uniform: The baseline for probability}
+\subsection{Uniform: The baseline for probability}
 
 The general Uniform distribution $\mathcal{U}[l, u]$ with $l, u \in \mathbb{R}$ has the \emph{pdf}:
 \[
@@ -155,9 +155,15 @@ I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]
 =\frac{1}{m^2}
 \]
 
-STATISTICA SUFFICIENTE (linkare all'esempio nelle notes)\\
+MLE SINGOLA\\
 
-MLE (per una o N estrazioni)\\
+LIKELIHOOD MULTI\\
+
+FISHER MULI\\
+
+MLE MULTI\\
+
+COSE AGGIUNGIVE SU MAX SU ESEMPIO STATISTICA SUFFICIENTE DA LINKARE\\
 
 Given $N$ observations $\{x_i\}$ drawn independently from a uniform distribution, it is often useful to determine the distributions of 
 \[
@@ -387,9 +393,9 @@ Would you look at that, the minimum and the maximum have the same variance! This
 
 \todo{FISHER INFO PER MAX E MIN?}
 
-\subsubsection{Normal (Gaussian): The king of statistics}
+\subsection{Normal (Gaussian): The king of statistics}
 
-\subsubsection{Exponential: For time/space between events}
+\subsection{Exponential: For time/space between events}
 
 %Gamma: The generalized version of Exponential.  Add if we ever use
 
@@ -400,6 +406,6 @@ Would you look at that, the minimum and the maximum have the same variance! This
 \section{Sampling distributions}
 %Student’s t: For small sample sizes.  Add if we ever use
 
-\subsubsection{Chi-squared: For variances and goodness-of-fit}
+\subsection{Chi-squared: For variances and goodness-of-fit}
 
 %F-distribution: For comparing variances (ANOVA).  Add if we ever use
