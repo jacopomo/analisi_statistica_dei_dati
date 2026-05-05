@@ -1,4 +1,4 @@
-RM = rm -f
+RM = rm -rf
 PYTHON = python3
 MKDIR = mkdir -p
 SRC_DIR = src/asd/interval_estimation
@@ -7,6 +7,7 @@ MAIN = analisi_statistica_dei_dati
 PY_DIR = scripts
 OUT_DIR = .build
 STAMP_DIR = .stamps
+REQUIRED_DIR = $(OUT_DIR) images tables code
 
 PY_SOURCES = $(wildcard $(PY_DIR)/*.py)
 PY_STAMPS = $(patsubst $(PY_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(PY_SOURCES))
@@ -30,7 +31,7 @@ LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -au
 
 # ------------------------
 
-all: py
+all: requireddir py
 
 production: $(PY_STAMPS) $(SRC_STAMPS)
 	$(LATEXMK) -jobname=$(PRODUCTION_NAME) \
@@ -45,7 +46,7 @@ py: $(PY_STAMPS) $(SRC_STAMPS)
 
 clean:
 	$(LATEXMK) -c
-	-$(RM) *.out *.toc *.fls *.log *.fdb_latexmk *.aux *.synctex.gz
+	-$(RM) .build
 	-rm -rf $(STAMP_DIR)
 
 cleanall: clean
@@ -54,3 +55,6 @@ cleanall: clean
 
 version:
 	printf '\\newcommand{\\version}{%s}\n' "$(VERSION)" > $(OUT_DIR)/version.tex
+
+requireddir:
+	$(MKDIR) $(REQUIRED_DIR)
