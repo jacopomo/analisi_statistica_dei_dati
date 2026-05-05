@@ -338,6 +338,21 @@ We now turn to $x_{\min}$. Its distribution can be derived in analogous ways:
 	\]
 \end{itemize}
 
+While we are at it, we can also find expected value and variance for $x_{\max}$ and $x_{\min}$:
+\begin{align*}
+	\E_{x_{\max}}[x]&=\int_{0}^{m}x\frac{N}{m}\left(\frac{x}{m}\right)^{N-1}\;dx=\frac{N}{m^N}\int_{0}^{m}x^N\;dx\\
+	&=\frac{N}{m^N}\left[\frac{1}{N+1}x^{N+1}\right]^m_0=m \frac{N}{N+1}\\ \\
+	\E_{x_{\min}}[x]&=\int_{0}^{m}x\frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}\;dx\\
+	&=\frac{N}{m}\left[-\frac{m}{N}x\left(1-\frac{x}{m}\right)^{N}\bigg\vert_0^m-\int_0^m-\frac{m}{N}\left(1-\frac{x}{m}\right)^{N}\;dx\right]\\
+	&=\int_0^m\left(1-\frac{x}{m}\right)^N\;dx=-\frac{m}{N+1}\left(1-\frac{x}{m}\right)^{N+1}\bigg\vert_0^m\\
+	&=m\frac{1}{N+1}
+\end{align*}
+\todo{The integration for $x_{\min}$ can be hugely simplified if we introduce the $\beta$-functions.}
+thus, the variance:
+\begin{align*}
+	\operatorname{Var}_{x_{\max}}[x]=
+\end{align*}
+
 \subsubsection{Normal (Gaussian): The king of statistics}
 
 \subsubsection{Exponential: For time/space between events}
