@@ -18,7 +18,7 @@
 	under sufficiently sharp analysis."
 	
 	\vspace{0.5em}
-	--- Savage, 1954, The foundations of statistics\todo{Add ref}
+	--- Savage, 1954, The foundations of statistics \cite{savage1972introduction}
 \end{center}
 
 \vspace{2cm}
@@ -321,7 +321,7 @@ However, it is crucial that $\int p(x)\dd x = P(X\in O_X) = 1$ (we say that the 
 
 The fundamental theorem of calculus also tells us that $\dv{F}{x}=p(x)$. We will find the cumulative easier to calculate than the density function itself in many cases. 
 
-An interesting and somewhat unexpected result can be reached when talking about \emph{CDF's}: the \textbf{probability integral transform} (also known as the \emph{universality of the uniform}\sidenote{If you haven't done so already, take a moment to brush up on what a Uniform distribution is, by heading over to the appendix \textcolor{red}{ref}}).
+An interesting and somewhat unexpected result can be reached when talking about \emph{CDF's}: the \textbf{probability integral transform} \cite{david1948probability} (also known as the \emph{universality of the uniform}\sidenote{If you haven't done so already, take a moment to brush up on what a Uniform distribution is, by heading over to the appendix \ref{Appendix:discrete}}).
 
 \begin{theorem}[Probability integral transform]
 	Suppose that a random variable $X$ has a continuous distribution for which the cumulative distribution function (CDF) is $F_X$. Then the random variable $Y$ defined as $Y \equiv F_X(X)$ follows a standard uniform distribution
@@ -330,7 +330,6 @@ An interesting and somewhat unexpected result can be reached when talking about 
 	\]
 \label{th:universal_uniform}
 \end{theorem}
-\todo{This is my ref: https://www.jstor.org/stable/2332638?seq=1}
 
 Let's prove this theorem:
 Given a random continuous variable $X$, and $Y$ defined as above ($Y \equiv F_X(X)$) where $F_X$ is the \emph{cdf} of $X$. Given $y\in[0,1]$
@@ -474,7 +473,7 @@ Regardless of $\varepsilon$, the right hand side can be made arbitrarily small w
 \end{example}\todo{Phew... Look over all that to make sure nothing can be made clearer}
 \todo{We used here a property of the Var we have not yet stated. While trivial if you look at the Var definition it might be useful to have a list of properties for quick reference}
 
-If that didn't satisfy us the reader will be pleased to know that there is a stronger version of the Law of Large Numbers, appropriately called "Strong-LLN". 
+If that wasn't satisfying enough the reader will be pleased to know that there is a stronger version of the Law of Large Numbers, appropriately called "Strong-LLN". 
 
 \begin{theorem}[Strong-LLN]
 	\[
@@ -826,7 +825,7 @@ We now want to recover the shape of this particular distribution whose character
 	&=\frac{\exp\left(-\frac{x^2}{2\sigma^2}\right)}{2 \pi}\int_{-\infty}^{\infty}\exp\left(-\frac{\left(\sigma t -ix/\sigma \right)^2}{2}\right)dt\\
 	\end{align*}\todo{The undersized integral symbols really bother me :(, we should try to fix this in the future}
 
-The integrand is a holomorphic function with no poles\sidenote{whatever that means} thus we can perform the substitution $z=\sigma t -ix/\sigma$:
+The integrand is a holomorphic function with no poles\sidenote{If complex analysis isn't your strong suit, don't worry, you can kind of just follow along} thus we can perform the substitution $z=\sigma t -ix/\sigma$:
 
 	\begin{align*}
 	g(x)&=\frac{\exp\left(-\frac{x^2}{2\sigma^2}\right)}{2 \pi\sigma}\int_{-\infty}^{\infty}\exp\left(-\frac{z^2}{2}\right)dz\\
