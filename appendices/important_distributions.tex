@@ -96,55 +96,246 @@ As expected, the MLE for the Poisson mean coincides with the sample mean. In the
 %Negative Binomial / Geometric: For trials until success. Add if we ever use
 
 \section{Continuos distributions}
+
 \subsubsection{Uniform: The baseline for probability}
 
-The general Uniform distribution $\mathcal{U}[l, u]$ between $l$ and $u$ with $l, u \in \mathbb{R}$, has \emph{pdf}:
+The general Uniform distribution $\mathcal{U}[l, u]$ with $l, u \in \mathbb{R}$ has the \emph{pdf}:
 \[
-	p(x; l, u)=\begin{cases}
-		\frac{1}{u-l} \; if \; x \in [l, v] \\
-		0 \; \text{otherwise}
-	\end{cases}
-\]
-One could write the same \emph{pdf} in terms of length of the interval $\delta$ and where it's centered $\mu$:
-\[
-p(x; \delta, \mu)=\begin{cases}
-	\frac{1}{\delta} \; if \; x \in [\mu-\delta/2, \mu+\delta/2] \\
-	0 \; \text{otherwise}
+p(x; l, u)=
+\begin{cases}
+	\frac{1}{u-l} & \text{if } x \in [l, u] \\
+	0 & \text{otherwise}
 \end{cases}
 \]
 
-To make the following math easier we consider a Uniform $\mathcal{U}[0, m]$ (we can always reconduct ourself to this simple case trough a trivial change of variables).
-
-We can evaluate the expected value of a uniform:
-\begin{align*}
-	\E[x]&=\int_{-\infty}^{+\infty}xp(x;0,m)\;dx=\int_{0}^{m}x\frac{1}{m}\;dx=\frac{m}{2}
-\end{align*}
-and for the variance:
-\begin{align*}
-	\operatorname{Var}[x]&=\E[x^2]-\E[x]^2=\int_{-\infty}^{+\infty}x^2p(x;0,m)\; dx - \frac{m^2}{4}\\
-	&=\int_{0}^{m}x^2\frac{1}{m}\;dx- \frac{m^2}{4}=\frac{m^2}{3}-\frac{m^2}{4}=\frac{m^2}{12}
-\end{align*}
-For the characteristic function we get:
+One can equivalently parameterize the distribution in terms of the interval length $\delta$ and its center $\mu$:
 \[
-	\phi(t)=\E[e^{itx}]=\frac{e^{imt}-1}{imt}
+p(x; \delta, \mu)=
+\begin{cases}
+	\frac{1}{\delta} & \text{if } x \in [\mu-\delta/2, \mu+\delta/2] \\
+	0 & \text{otherwise}
+\end{cases}
 \]
 
-We now want to compute the likelihood $L_x(m)$:
+To simplify the following derivations, we consider a Uniform $\mathcal{U}[0, m]$ (any other case can be reduced to this one through a simple change of variables).
+
+The expected value is:
+\begin{align*}
+	\E[x]
+	&=\int_{-\infty}^{+\infty} x\,p(x;0,m)\,dx
+	=\int_{0}^{m} x\frac{1}{m}\,dx
+	=\frac{m}{2}
+\end{align*}
+
+and the variance:
+\begin{align*}
+	\operatorname{Var}[x]
+	&=\E[x^2]-\E[x]^2 \\
+	&=\int_{0}^{m} x^2\frac{1}{m}\,dx - \frac{m^2}{4} \\
+	&=\frac{m^2}{3}-\frac{m^2}{4}
+	=\frac{m^2}{12}
+\end{align*}
+
+The characteristic function is:
 \[
-	L_x(m)=\frac{1}{m}\mathbb{I}_{m\geq x}
+\phi(t)=\E[e^{itx}]
+=\frac{e^{imt}-1}{imt}
+\]
+
+We now compute the likelihood $L_x(m)$:
+\[
+L_x(m)=\frac{1}{m}\,\mathbb{I}_{\{m \geq x\}}
 \]
 (see \ref{ex:uniform_likelihood}).
-and for the Fisher information $I(m)$:
+
+The Fisher information is:
 \[
-	I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]= \E \left[\frac{1}{m^2} \right]=\frac{1}{m^2}
+I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]
+=\frac{1}{m^2}
 \]
 
-Given $N$ observation ${x_i}$ following a uniform distribution, it is often useful to know how $x_{max}=\operatorname{max}[x_i]$ and $x_{min}=\operatorname{min}[x_i]$ are distributed.
+Given $N$ observations $\{x_i\}$ drawn independently from a uniform distribution, it is often useful to determine the distributions of 
+\[
+x_{\max} = \max_i [x_i]
+\quad \text{and} \quad
+x_{\min} = \min_i [x_i]
+\]
 
-We shall start with $x_{max}$. We can find it's distribution in two different but equivalent manner:
+We start with $x_{\max}$. Its distribution can be derived in two equivalent ways:
+
 \begin{itemize}
-	\item cumulative
-	\item multinomial
+	\item Using the cumulative distribution function:
+	\[
+	F_{x_{\max}}(x)=P(x_{\max}\leq x)
+	\]
+	The condition $x_{\max}\leq x$ means that all observations satisfy $x_i \leq x$, hence:
+	\[
+	P(x_{\max}\leq x)=P(x_1\leq x, \dots, x_N \leq x)
+	=\prod_{i=1}^{N}P(x_i\leq x)
+	\]
+	where we used independence.
+	
+	For the uniform distribution:
+	\[
+	P(x_i\leq x)=
+	\begin{cases}
+		0 & \text{if } x<0\\
+		\frac{x}{m} & \text{if } 0\leq x \leq m\\
+		1 & \text{if } x> m
+	\end{cases}
+	\]
+	
+	Thus, for $x\in [0,m]$:
+	\[
+	F_{x_{\max}}(x)=\left(\frac{x}{m}\right)^N
+	\]
+	
+	Differentiating:
+	\[
+	p_{x_{\max}}(x)=\frac{d}{dx}F_{x_{\max}}(x)
+	=
+	\begin{cases}
+		\frac{N}{m}\left(\frac{x}{m}\right)^{N-1} & \text{if } 0 \leq x \leq m\\
+		0 & \text{otherwise}
+	\end{cases}
+	\]
+	
+	\item Another way to arrive at the same result is to view the problem in terms of a multinomial experiment. 
+	
+	We consider $N$ independent draws and imagine ordering them. Fix a value $x$ and focus on the $k$-th order statistic $x_k$. Each observation can fall into one of three categories:
+	\begin{itemize}
+		\item it lies below $x$
+		\item it falls in an infinitesimal interval $[x, x+dx]$
+		\item it lies above $x$
+	\end{itemize}
+	
+	These three outcomes have probabilities:
+	\[
+	p_{<} = F(x), \qquad
+	p_{=} = p(x)\,dx, \qquad
+	p_{>} = 1 - F(x)
+	\]
+	
+	For $N$ trials, the probability that exactly $k-1$ points lie below $x$, one point falls in $[x, x+dx]$, and the remaining $N-k$ lie above $x$ is given by the multinomial distribution:
+	\[
+	\frac{N!}{(k-1)!(N-k)!1!}
+	p_{<}^{\,k-1}\,
+	p_{=}\,
+	p_{>}^{\,N-k}
+	\]
+	
+	Dividing by $dx$, we obtain the density of the $k$-th order statistic:
+	\[
+	p_{x_k}(x)
+	=
+	\frac{N!}{(k-1)!(N-k)!}
+	[F(x)]^{k-1}
+	[1-F(x)]^{N-k}
+	p(x)
+	\]
+	
+	In the case of the maximum, we set $k=N$. Then there are $N-1$ points below $x$ and none above, giving:
+	\begin{align*}
+		p_{x_{\max}}(x)
+		&= N [F(x)]^{N-1} p(x) \\
+		&= N \left(\frac{x}{m}\right)^{N-1}\frac{1}{m} \\
+		&= \frac{N}{m}\left(\frac{x}{m}\right)^{N-1}
+	\end{align*}
+	
+	which coincides with the result obtained via the cumulative distribution.
+\end{itemize}
+
+We now turn to $x_{\min}$. Its distribution can be derived in analogous ways:
+
+\begin{itemize}
+	\item Using the cumulative distribution function:
+	\[
+	F_{x_{\min}}(x)=P(x_{\min}\leq x)
+	\]
+	It is often more convenient to compute the complementary probability:
+	\[
+	P(x_{\min} > x)
+	\]
+	The condition $x_{\min} > x$ means that all observations satisfy $x_i > x$, hence:
+	\[
+	P(x_{\min} > x)=P(x_1 > x, \dots, x_N > x)
+	=\prod_{i=1}^{N}P(x_i > x)
+	\]
+	
+	For the uniform distribution:
+	\[
+	P(x_i > x)=
+	\begin{cases}
+		1 & \text{if } x<0\\
+		1-\frac{x}{m} & \text{if } 0\leq x \leq m\\
+		0 & \text{if } x> m
+	\end{cases}
+	\]
+	
+	Thus, for $x\in [0,m]$:
+	\[
+	P(x_{\min} > x)=\left(1-\frac{x}{m}\right)^N
+	\]
+	
+	and therefore:
+	\[
+	F_{x_{\min}}(x)=1-\left(1-\frac{x}{m}\right)^N
+	\]
+	
+	Differentiating:
+	\[
+	p_{x_{\min}}(x)=\frac{d}{dx}F_{x_{\min}}(x)
+	=
+	\begin{cases}
+		\frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1} & \text{if } 0 \leq x \leq m\\
+		0 & \text{otherwise}
+	\end{cases}
+	\]
+	
+	\item Using the multinomial argument:
+	
+	We proceed as before by fixing a value $x$ and considering the $k$-th order statistic $x_k$.
+	The density of $x_k$ is:
+	\[
+	p_{x_k}(x)
+	=
+	\frac{N!}{(k-1)!(N-k)!}
+	[F(x)]^{k-1}
+	[1-F(x)]^{N-k}
+	p(x)
+	\]
+	
+	For the minimum, we set $k=1$. Then there are no points below $x$ and $N-1$ points above it:
+	\begin{align*}
+		p_{x_{\min}}(x)
+		&= N [1-F(x)]^{N-1} p(x) \\
+		&= N \left(1-\frac{x}{m}\right)^{N-1}\frac{1}{m} \\
+		&= \frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}
+	\end{align*}
+	
+	which agrees with the previous result.
+	
+	\item Variable change from $x_{\max}$:
+	
+	Let $y_i = m - x_i$. Then each $y_i \sim \mathcal{U}[0,m]$ and:
+	\[
+	y_{\max} = m - x_{\min}
+	\]
+	
+	Since we already know the distribution of $y_{\max}$, we can obtain that of $x_{\min}$ by a change of variables:
+	\[
+	p_{x_{\min}}(x)
+	=
+	p_{y_{\max}}(m-x)
+	\left|\frac{d}{dx}(m-x)\right|
+	\]
+	
+	which again yields:
+	\[
+	p_{x_{\min}}(x)
+	=
+	\frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}
+	\]
 \end{itemize}
 
 \subsubsection{Normal (Gaussian): The king of statistics}
