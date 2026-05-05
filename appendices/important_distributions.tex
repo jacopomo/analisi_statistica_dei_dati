@@ -371,7 +371,6 @@ We now compute the second moments, which are useful to determine the variances:
 	&=N m^2 \frac{2}{N(N+1)(N+2)} \\
 	&=\frac{2}{(N+1)(N+2)} m^2
 \end{align*}
-
 Finally for the variances:
 \begin{align*}
 	\operatorname{Var}_{x_{\max}}[x]&=E_{x_{\max}}[x^2]-E_{x_{\max}}[x]^2\\
@@ -382,7 +381,8 @@ Finally for the variances:
 	&=\frac{2}{(N+1)(N+2)} m^2-\frac{1}{(N+1)^2}m^2\\
 	&=\frac{N}{(N+1)^2(N+2)}m^2
 \end{align*}
-JAC SCRIVI LA CONSIDERAZIONE SUL FATTO CHE LA VAR SIA LA STESSA CHE HAI DETTO A MENSA? :3
+
+Would you look at that, the minimum and the maximum have the same variance! This should be of no surprise, really, as the Uniform distribution, by definition, assigns an equal probability to each value in the interval. Therefore, the probability of extracting a value greater than the current max, or less than the current min should be the same, and so they naturally have the same variance.
 
 \todo{FISHER INFO PER MAX E MIN?}
 
