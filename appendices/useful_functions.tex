@@ -1,0 +1,68 @@
+\chapter{Useful Functions}
+
+In many problems of probability theory and statistics, special functions naturally arise when computing normalization constants, expectations, and integrals involving factorial-like growth. Two of the most important ones are the Gamma and Beta functions.
+
+\section{Gamma function $\Gamma$}\label{sec:gamma}
+
+We introduce the Gamma function as a generalization of the factorial to the real and complex domain. For $\Re(\zeta) > -1$, it is defined as:
+\[
+\Gamma(\zeta+1) = \int_0^{+\infty} x^\zeta e^{-x} \, dx.
+\]
+
+This function satisfies several key properties:
+
+\begin{itemize}
+	\item \textbf{Normalization:}
+	\[
+	\Gamma(1) = 1.
+	\]
+	
+	\item \textbf{Recursion formula:}
+	\[
+	\Gamma(\zeta+1) = \zeta \, \Gamma(\zeta),
+	\]
+	which follows from integration by parts.
+	
+	\item \textbf{Factorial relation:}
+	For natural numbers $n \in \mathbb{N}$,
+	\begin{equation}\label{eq:gamma}
+		\Gamma(n) = (n-1)!.
+	\end{equation}
+	
+	\item \textbf{Half-integer value:}
+	\[
+	\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}.
+	\]
+\end{itemize}
+
+More generally, the Gamma function allows us to extend factorial-like quantities to non-integer arguments, which is fundamental in continuous probability distributions such as the Gamma, Chi-squared, and Student's t-distributions.
+
+\section{Beta function $\beta$}
+
+We introduce the Beta function as a symmetric function defined for $x > 0$, $y > 0$:
+\[
+\mathrm{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1} \, dt.
+\]
+
+The Beta function has several important properties:
+
+\begin{itemize}
+	\item \textbf{Symmetry:}
+	\[
+	\mathrm{B}(x,y) = \mathrm{B}(y,x).
+	\]
+	
+	\item \textbf{Relation with Gamma function:}
+	\begin{equation}\label{eq:beta_gamma}
+		\mathrm{B}(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}.
+	\end{equation}
+	
+	\item \textbf{Boundary cases:}
+	\[
+	\mathrm{B}(x,1) = \frac{1}{x}, \quad \mathrm{B}(1,1)=1.
+	\]
+\end{itemize}
+
+The Beta function plays a central role in probability theory. In particular, it appears as the normalization constant of the Beta distribution, which is widely used to model random variables on the interval $[0,1]$ (e.g., probabilities or proportions).
+
+Moreover, using equation \eqref{eq:beta_gamma}, many integrals involving powers of $t$ and $(1-t)$ can be expressed in closed form via Gamma functions, making it an essential computational tool in statistical derivations.

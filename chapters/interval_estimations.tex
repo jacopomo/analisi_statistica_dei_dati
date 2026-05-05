@@ -476,16 +476,7 @@ We use the inverse transformation to calculate the \emph{pdf} of $\chi_\nu^2$:
 	p_\nu(\chi^2) = \frac{1}{2\pi}\int_{-\infty}^{+\infty}\phi(t)e^{-itx}\dd t
 	\]
 	
-We introduce the Gamma function defined as:
-	
-	\[
-	\Gamma(\zeta+1) = \int_0^{+\infty}x^\zeta e^{-x} dx
-	\]
-	\[
-	\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}, \quad \Gamma\left(1\right) = 1, \quad \Gamma\left(n+1\right) = n\Gamma(n)
-	\]
-	
-From which, through a change of variable, we get equation (\ref{eq:chi_squared}):
+Using the Gamma function (see \ref{sec:gamma}), through a change of variable, we get equation (\ref{eq:chi_squared}):
 	
 	\[
 	p_\nu(\lambda) = \frac{1}{2^{\frac{\nu}{2}} \Gamma(\frac{\nu}{2})}\lambda^{\frac{\nu}{2}-1}e^{-\frac{\lambda}{2}}
