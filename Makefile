@@ -10,13 +10,17 @@ OUT_DIR = .build
 STAMP_DIR = .stamps
 REQUIRED_DIRS = $(OUT_DIR) images tables code
 
-LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent
+LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent -file-line-error
 
 VERSION := $(shell git describe --tags --always --abbrev=0)
 
 # ------------------------
-SOURCES = $(wildcard $(PY_DIR)/*.py) $(wildcard $(SRC_DIR)/*.py)
-STAMPS = $(patsubst %.py,$(STAMP_DIR)/%.stamp,$(notdir $(SOURCES)))
+PY_SOURCES  = $(wildcard $(PY_DIR)/*.py)
+SRC_SOURCES = $(wildcard $(SRC_DIR)/*.py)
+
+SOURCES = $(PY_SOURCES) $(SRC_SOURCES)
+
+STAMPS = $(patsubst %.py,$(STAMP_DIR)/%.stamp,$(SOURCES))
 
 # ------------------------
 all: build
@@ -24,16 +28,13 @@ all: build
 build: $(REQUIRED_DIRS) $(STAMPS) version
 	$(LATEXMK) -jobname=$(MAIN) $(MAIN).tex
 
-production: $(REQUIRED_DIRS) $(STAMPS) version
+production: $(REQUIRED_DIRS) $(STAMPS)
 	$(LATEXMK) -jobname=production_$(MAIN) \
 		-pdflatex='pdflatex %O "\def\draft{0}\input{%S}"' \
 		$(MAIN).tex
 
-$(STAMP_DIR)/%.stamp: $(PY_DIR)/%.py | $(STAMP_DIR)
-	$(PYTHON) $<
-	@echo "Executed $<" > $@
-
-$(STAMP_DIR)/%.stamp: $(SRC_DIR)/%.py | $(STAMP_DIR)
+$(STAMP_DIR)/%.stamp: %.py | $(STAMP_DIR)
+	@$(MKDIR) $(dir $@)
 	$(PYTHON) $<
 	@echo "Executed $<" > $@
 
