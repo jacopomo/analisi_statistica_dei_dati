@@ -290,7 +290,7 @@ First of all, let's identify that the expected value of $\left(\bar{x}-\mu_0\rig
 Looking at the rest of the term, we can identify $\frac{N}{\sum (x_i - \bar{x})^2} = \frac{1}{\hat{\sigma}^2}$, the estimator for the variance, which scales as $\mathcal{O}(1)$. Putting this together, we can see that:
 
 	\[
-	\frac{N(\bar{x} - \mu_0)^2}{\sum (x_i - \bar{x})^2} \sim \mathcal{O}N^{-1}
+	\frac{N(\bar{x} - \mu_0)^2}{\sum (x_i - \bar{x})^2} \sim \mathcal{O}\left(N^{-1}\right)
 	\]
 
 Using the asymptotic expansion $\ln(1+x) \approx x$, we see that:
@@ -308,7 +308,7 @@ Let's call $s$ (the \emph{unbiased} sample variance) $s^2 = \frac{\sum_i\left(x_
 Where we have defined $t$ to be a specific Test that we will talk about in the next section. In this more complex case, the likelihood-ratio test is equivalent to the $t$-test. For large $N$, the factor $\frac{N}{N-1} \to 1$, and $\lambda(x)\approx t^2$, which we will learn to converge in distribution to $\chi^2_1$.
 
 \section{Student's t}
-
+Annoying derivation, I already did the one above I can't handle two in the same day
 \section{Continuous distributions}
 
 \section{1-d}
