@@ -124,11 +124,57 @@ We therefore find the threshold $q>q_\alpha$ through the use of tables, consider
 This combination of $p$-values is not just a didactic formalism; to be completely transparent, it is necessary to consider the ensemble of results from all repetitions of an experiment. For example, if I run an experiment an arbitrarily large number of times, sooner or later I will obtain at least one significant $p$-value purely by chance, due to the inherent probability of committing a Type I Error (which is exactly what $\alpha$ quantifies). 
 
 It would be intellectually dishonest to report only that singular result\sidenote{This is a form of \emph{publication bias} or \emph{p-hacking}, where non-significant results are ignored, often leading to the "Look Elsewhere Effect" or the "File Drawer Problem"}, ignoring the others; in practice, this is no better than simply fabricating data. Therefore, two options come to mind: re-scale $\alpha$ for each trial (the \emph{Bonferroni Correction} used in life sciences), as to compensate for the "multiplicity" of many independent trials, or to combine all of the obtained $p$-values into one singular one. While the first option can be overly conservative, the second (combining them) follows naturally from the methods we have developed in this chapter and is the one most commonly used in our field.
+
 \section{GOF Tests from the LR statistic}
-Also application to histograms (can be a subsection or example)
+With a solid understanding of $p$-values under our belt, it's time to move on to the practical applications of this theory. Let's begin with the case where the most general hypothesized \emph{pdf} can be described as a member of a parametrized space $p(x;\theta)$. This space can even have a high number of dimensions, and $H_0$ is the case of $\theta=\theta_0$. As we have done in the previous chapter, $H_0$ can have an arbitrary number of nuisance parameters $\nu$.
 
+Following the formalism developed in \ref{subsec:LR_test}, we once again use the Log Likelihood Ratio (LLR):
 
-Also application to gaussian fit with known/unknown var (can be a subsection or example)
+	\[
+	\lambda(x) = 2\ln \frac{\sup_{\theta,\nu}p(x;\theta,\nu)}{\sup_{\nu}p(x;\theta_0,\nu)}
+	\]
+
+Which, as we have done before, can be re-written by replacing the sup's with \emph{MLE}\sidenote{We have gotten used to this switch from sup to \emph{MLE}, but we still explicit the original supremum for edge cases where the \emph{MLE} does not exist (we can consider it to be an asymptotic \emph{MLE})}.
+
+Once again, we know through Wilks' theorem that under $H_0$, $\lambda(x)$ will asymptotically follow a central $\chi^2_k$ distribution, where the number of degrees of freedom $d$ is equal to the number of parameters fixed by the null hypothesis (the dimension of $\theta$). For all cases where $\theta \neq \theta_0$, the distribution shifts towards higher values (following a non-central $\chi^2$), ensuring the test is unbiased.
+
+Therefore, the Test with critical region $\lambda(x)>q_\alpha$ will be unbiased and right-tailed, so a good $p$-value is $p=1-F_{\chi^2_d}(\lambda)$. 
+
+\subsection{Goodness of Fit applied to histograms}
+In this section we will follow the formalism introduced in section \ref{sec:fitting_hist}, revisiting what we have discussed using the new tools we have at our disposal. Specifically, we will look at variable-N histograms, as we cover in section \ref{subsec:variable_N_hist}.
+Considering a sequence of experimental measurements of a real observable $x$, let $k_i$ be the number of events $\{x_j\}$ falling into the bin $i\in \left[1,\dots,n\right]$. Therefore, what we have is a histogram of $n$ bins, $N$ measurements, completely defined by $\{k_i\}_n$ such that $\sum_i^n k_i =N$. We want to estimate the parameters $\theta$ of the \emph{pdf} from which $x$ was extracted, which we know to be $p(x;\theta)$.
+
+As we have already discussed, each bin count is independent and follows a Poisson distribution, such that:
+
+	\[
+	p(x;\theta) = \prod_i^n \mathcal{P}\left(k_i,\mu_i(\theta)\right)
+	\]
+
+What we are looking for, then, is a point estimation of $\theta$, and we'll use the \emph{MLE}:
+
+	\[
+	\hat{\theta_{\text{MLE}}} = \arg \max \prod_i^n \mathcal{P}\left(k_i;\mu_i(\theta)\right)
+	\]
+
+We know $\mu_i(\theta)=\E\left[k_i\right]$ to be the expected number of events in the $i$-th bin.
+
+Well, now we are more mature than we were all those chapters ago, and instead of blindly accepting the $\hat{\theta_{\text{MLE}}}$ we would like to confirm that the observed distribution does not statistically differ from the hypothesized \emph{pdf}. We assume that if we add \emph{enough} parameters to our current \emph{pdf}, then we can generally obtain whichever vector of expected values $\mu_i(\theta)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
+
+In this case, the LLR becomes:
+
+	\[
+	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\mathcal{P}\left(k_i;\mu_i(\theta,\nu)\prime\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
+	\]
+
+In the numerator, let's try to understand what $\sup_{\theta,\nu}\mu_i(\theta,\nu)$ is. It's essentially the mean of the Poisson distribution that governs the $i$-th bin, which depends on some parameters. We have added an arbitrary number of these parameters such that we can fit the histogram to any degree of precision, therefore the whole expression can be replaced with $k_i$ itself, as our general model follows maximizes the Likelihood in each bin.\sidenote{Essentially, we are just saying that $\sup_{\theta,\nu}\mu_i(\theta,\nu) = \hat{\mu_{i,\text{MLE}}} = k_i$} How many such parameters did we need to add to be able to completely fit the data? Well we have $n$ bins, and $dim(\theta)$ fixed parameters, so the number of free parameters we must add is $DOF = n-dim(\theta)$. More conventionally, the numerator has $n$ free parameters (one for each bin), and the denominator has $dim(\theta)$.
+
+Given all this, our expression becomes:
+
+	\[
+	2\ln\frac{\prod_i\mathcal{P}\left(k_i;k_i\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
+	\]
+
+We expand 
 
 \section{Student's t}
 
