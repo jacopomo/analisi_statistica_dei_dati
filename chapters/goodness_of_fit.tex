@@ -45,13 +45,13 @@ This gives the $p$-value the interpretation of "probability" (under $H_0$) that 
 \begin{figure}[H]
 	\centering
 	\input{images/p_value_plot.pgf}
-	\caption{Distribution of the $p$-value statistic under the null hypothesis $H_0$ and an example alternative $H_1$. A vertical line corresponding to $\alpha=0.05$ significance level is also shown. The probability of a uniformly distributed value to fall below the threshold, which corresponds to the probability of committing a type 1 error, is $\alpha$.}
+	\caption{Distribution of the $p$-value statistic under the null hypothesis $H_0$ and an example alternative $H_1$. A vertical line corresponding to $\alpha=0.05$ significance level is also shown. The probability of a uniformly distributed value to fall below the threshold, which corresponds to the probability of committing a Type I Error, is $\alpha$.}
 	\label{images/p_value_plot}
 \end{figure}
 
 From figure \ref{images/p_value_plot} we can see the utility in our construction: all values of $p$ are equally likely under $H_0$, while for $H_1$ lower values are more probable. Thinking about it in a frequentist sense, if we were to repeat many trials and extract a $p$-value for each of them, under $H_0$ no specific value holds more importance than any other, and we expect to get all of them sooner or later. Under $H_1$, lower values are more likely. Therefore, our test corresponds to the critical region $p<\alpha$, and only in that case can we reject the null hypothesis. 
 
-We can also visualize the different types of errors we may commit: obtaining $p<\alpha$ suggests that it was not extracted from $H_0$, though naturally there is $\alpha$ chance for it to come from the uniform distribution, and so a probability of $\alpha$ to have committed a type one error, and erroneously rejected the null hypothesis. Hopefully this example clears the question of why we can attribute to the $p$-value the probability under $H_0$ to have a more extreme solution than what was observed.
+We can also visualize the different types of errors we may commit: obtaining $p<\alpha$ suggests that it was not extracted from $H_0$, though naturally there is $\alpha$ chance for it to come from the uniform distribution, and so a probability of $\alpha$ to have committed a Type I Error, and erroneously rejected the null hypothesis. Hopefully this example clears the question of why we can attribute to the $p$-value the probability under $H_0$ to have a more extreme solution than what was observed.
 
 \subsubsection{What the p-value is not:}
 \begin{itemize}
