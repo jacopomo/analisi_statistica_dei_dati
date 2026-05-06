@@ -166,12 +166,12 @@ In this case, the LLR becomes:
 	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\mathcal{P}\left(k_i;\mu_i(\theta,\nu)\prime\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
 	\]
 
-In the numerator, let's try to understand what $\sup_{\theta,\nu}\mu_i(\theta,\nu)$ is. It's essentially the mean of the Poisson distribution that governs the $i$-th bin, which depends on some parameters. We have added an arbitrary number of these parameters such that we can fit the histogram to any degree of precision, therefore the whole expression can be replaced with $k_i$ itself, as our general model follows maximizes the Likelihood in each bin.\sidenote{Essentially, we are just saying that $\sup_{\theta,\nu}\mu_i(\theta,\nu) = \hat{\mu_{i,\text{MLE}}} = k_i$} How many such parameters did we need to add to be able to completely fit the data? Well we have $n$ bins, and $dim(\theta)$ fixed parameters, so the number of free parameters we must add is $DOF = n-dim(\theta)$. More conventionally, the numerator has $n$ free parameters (one for each bin), and the denominator has $dim(\theta)$.
+In the numerator, let's try to understand what $\sup_{\theta,\nu}\mu_i(\theta,\nu)$ is. It's essentially the mean of the Poisson distribution that governs the $i$-th bin, which depends on some parameters. We have added an arbitrary number of these parameters such that we can fit the histogram to any degree of precision, therefore the whole expression can be replaced with $k_i$ itself, as our general model follows maximizes the Likelihood in each bin.\sidenote{Essentially, we are just saying that $\sup_{\theta,\nu}\mu_i(\theta,\nu) = \hat{\mu_{i,\text{MLE}}} = k_i$} How many such parameters did we need to add to be able to completely fit the data? Well we have $n$ bins, and $dim(\theta)$ fixed parameters, so the number of free parameters we must add is $DOF = n-dim(\theta)$. More conventionally, the numerator has $n$ free parameters (one for each bin), and the denominator has $dim(\theta)$. Also, $\sup_\theta \mu_i(\hat{\theta_{\text{MLE}}}) = \hat{\mu_{i,\text{MLE}}}$ in the denominator.
 
 Given all this, our expression becomes:
 
 	\[
-	2\ln\frac{\prod_i\mathcal{P}\left(k_i;k_i\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
+	2\ln\frac{\prod_i\mathcal{P}\left(k_i;k_i\right)}{\prod_i\mathcal{P}\left(k_i;\mu_i(\hat{\mu_{i,\text{MLE}}})\right)}
 	\]
 
 We expand 
