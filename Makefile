@@ -8,7 +8,7 @@ SRC_DIR = src/asd/interval_estimation
 
 OUT_DIR = .build
 STAMP_DIR = .stamps
-REQUIRED_DIRS = $(OUT_DIR) images tables code
+REQUIRED_DIRS = $(OUT_DIR) images tables code $(OUT_DIR)/chapters $(OUT_DIR)/appendices
 
 LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent -file-line-error
 
