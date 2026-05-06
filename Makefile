@@ -1,60 +1,52 @@
 RM = rm -rf
 PYTHON = python3
 MKDIR = mkdir -p
-SRC_DIR = src/asd/interval_estimation
 
 MAIN = analisi_statistica_dei_dati
 PY_DIR = scripts
+SRC_DIR = src/asd/interval_estimation
+
 OUT_DIR = .build
 STAMP_DIR = .stamps
-REQUIRED_DIR = $(OUT_DIR) images tables code
+REQUIRED_DIRS = $(OUT_DIR) images tables code
 
-PY_SOURCES = $(wildcard $(PY_DIR)/*.py)
-PY_STAMPS = $(patsubst $(PY_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(PY_SOURCES))
-SRC_SOURCES = $(wildcard $(SRC_DIR)/*.py)
-SRC_STAMPS = $(patsubst $(SRC_DIR)/%.py, $(STAMP_DIR)/%.stamp, $(SRC_SOURCES))
-VERSION := $(shell git describe --tags --always --abbrev=0)
-
-$(STAMP_DIR)/%.stamp: $(PY_DIR)/%.py
-	@$(MKDIR) $(STAMP_DIR)
-	$(PYTHON) $<
-	@echo "Executed $<" > $@
-
-$(STAMP_DIR)/%.stamp: $(SRC_DIR)/%.py
-	@$(MKDIR) $(STAMP_DIR)
-	$(PYTHON) $<
-	@echo "Executed $<" > $@
-
-DRAFT_NAME = draft_analisi_statistica_dei_dati
-PRODUCTION_NAME = production_analisi_statistica_dei_dati
 LATEXMK = latexmk -pdf -shell-escape -interaction=nonstopmode -halt-on-error -auxdir=$(OUT_DIR) -silent
 
+VERSION := $(shell git describe --tags --always --abbrev=0)
+
 # ------------------------
+SOURCES = $(wildcard $(PY_DIR)/*.py) $(wildcard $(SRC_DIR)/*.py)
+STAMPS = $(patsubst %.py,$(STAMP_DIR)/%.stamp,$(notdir $(SOURCES)))
 
-all: requireddir py
+# ------------------------
+all: build
 
-production: $(PY_STAMPS) $(SRC_STAMPS)
-	$(LATEXMK) -jobname=$(PRODUCTION_NAME) \
+build: $(REQUIRED_DIRS) $(STAMPS) version
+	$(LATEXMK) -jobname=$(MAIN) $(MAIN).tex
+
+production: $(REQUIRED_DIRS) $(STAMPS) version
+	$(LATEXMK) -jobname=production_$(MAIN) \
 		-pdflatex='pdflatex %O "\def\draft{0}\input{%S}"' \
 		$(MAIN).tex
 
-build: version
-	$(LATEXMK) -jobname=$(MAIN) $(MAIN).tex
+$(STAMP_DIR)/%.stamp: $(PY_DIR)/%.py | $(STAMP_DIR)
+	$(PYTHON) $<
+	@echo "Executed $<" > $@
 
-py: $(PY_STAMPS) $(SRC_STAMPS)
-	$(MAKE) build
+$(STAMP_DIR)/%.stamp: $(SRC_DIR)/%.py | $(STAMP_DIR)
+	$(PYTHON) $<
+	@echo "Executed $<" > $@
+
+$(REQUIRED_DIRS) $(STAMP_DIR):
+	$(MKDIR) $@
+
+version: | $(OUT_DIR)
+	printf '\\newcommand{\\version}{%s}\n' "$(VERSION)" > $(OUT_DIR)/version.tex
 
 clean:
 	$(LATEXMK) -c
-	-$(RM) .build
-	-rm -rf $(STAMP_DIR)
+	$(RM) $(OUT_DIR) $(STAMP_DIR)
 
 cleanall: clean
 	$(LATEXMK) -C
-	-$(RM) $(MAIN).pdf $(DRAFT_NAME).pdf $(PRODUCTION_NAME).pdf
-
-version:
-	printf '\\newcommand{\\version}{%s}\n' "$(VERSION)" > $(OUT_DIR)/version.tex
-
-requireddir:
-	$(MKDIR) $(REQUIRED_DIR)
+	$(RM) $(MAIN).pdf production_$(MAIN).pdf
