@@ -324,13 +324,14 @@ Because $LR(x)$ is a strictly increasing function of $T(x)$, there exists a one-
 The important point is that $T(x)$ does not depend on the parameter $\theta$, and so the N-P statistic ends up being the same for all $\theta$, and therefore is a UMP Test. 
 
 \subsection{LR Test}
+\label{subsec:LR_test}
 Let's look at a more general type of situation than the ones we have previously studied. Up until now we have talked about simple hypotheses or composite hypotheses of the type $\theta>\theta_0$. Now, let's study the case of "nested" hypotheses of the type:
 
 	\[
 	H_0: p(x;\theta_0,\nu) \quad H_\theta: p(x;\theta, \nu), \quad \text{with }\theta,\nu\in\R^N
 	\]
 
-In this case, the null hypothesis fixes \emph{some} values of the parameter and leaves some other values as free alternatives. We could think to still use the \emph{LR} statistic as we have done in the UMP Test, as it generalizes to the NP Test\sidenote{Once again, its inverse, though it does not change much} for simple hypotheses, which we know has the property of maximal power. Therefore, we write:
+In this case, the null hypothesis fixes \emph{some} values of the parameter and leaves some other values as free alternatives. We could think to still use the \emph{LR} statistic as we have done in the UMP Test, as it generalizes to the NP Test\sidenote{Once again, its inverse, as to have a right-tailed test} for simple hypotheses, which we know has the property of maximal power. Therefore, we write:
 
 	\[
 	\lambda(x) = 2\ln \frac{\sup_{\theta,\nu}p(x;\theta,\nu)}{\sup_{\nu}p(x;\theta_0,\nu)}
@@ -347,7 +348,7 @@ This can be seen as a N-P Test done on $H_0$ and the alternative hypotheses obta
 We can't prove general properties on the power of this statistic, we can appreciate its simplicity, and use an extension of the aforementioned Wilks' theorem to derive a helpful property:
 
 \begin{theorem}
-	The statistic $\lambda(x)$ has (under the null hypothesis $H_0$), the asymptotic distribution of a $\chi^2_d$ where $d$ is the dimension of $\mu$, i.e. the number of free parameters.
+	The statistic $\lambda(x)$ has (under the null hypothesis $H_0$), the asymptotic distribution of a $\chi^2_d$ where $d$ is the dimension of $\theta$, i.e. the number of free parameters.
 \end{theorem}
 
 

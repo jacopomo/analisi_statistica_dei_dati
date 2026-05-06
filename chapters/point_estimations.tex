@@ -468,6 +468,7 @@ This result is widely used in fitting software (that you've probably used thousa
 It is important to stress that this is an asymptotic result and we invite the reader to take another look at all the approximations made throughout the derivation.
 
 \section{Fitting histograms}
+\label{sec:fitting_hist}
 
 In the quite common case where no sufficient statistic is available, a compact representation of the data can be obtained using histograms. One should always keep in mind that the information content is reduced: $I_{\text{hist}} \leq I_x$.
 
@@ -528,12 +529,13 @@ In the limit of infinitely fine binning ($n \to \infty$), each bin contains at m
 \emph{Therefore, in the limit of infinitesimally small bins, the binned and unbinned likelihoods coincide up to an additive constant. This implies that both approaches lead to the same inference asymptotically.}
 
 \subsection{Variable-$N$ histograms}
+\label{subsec:variable_N_hist}
 
 When $N$ is not fixed (for instance, when observations are collected over a fixed time interval), it becomes itself a random variable, following a Poisson distribution:\todo{Insert here the ref to the appendix with all the distribution defined}
 \[
 	N \sim \mathcal{P}(N; \mu(\theta))
 \]
-where $\mu$ is the expected number of events:
+where $\mu$ is the expected number of total events:
 \[
 	\mu(\theta)\equiv\E\left[N(\theta)\right]=\E\left[\sum_i k_i(\theta)\right]
 \]
