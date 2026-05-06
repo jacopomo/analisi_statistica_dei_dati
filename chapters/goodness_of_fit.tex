@@ -163,18 +163,149 @@ Well, now we are more mature than we were all those chapters ago, and instead of
 In this case, the LLR becomes:
 
 	\[
-	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\mathcal{P}\left(k_i;\mu_i(\theta,\nu)\prime\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
+	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\mathcal{P}\left(k_i;\mu_i(\theta,\nu)\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
 	\]
 
-In the numerator, let's try to understand what $\sup_{\theta,\nu}\mu_i(\theta,\nu)$ is. It's essentially the mean of the Poisson distribution that governs the $i$-th bin, which depends on some parameters. We have added an arbitrary number of these parameters such that we can fit the histogram to any degree of precision, therefore the whole expression can be replaced with $k_i$ itself, as our general model follows maximizes the Likelihood in each bin.\sidenote{Essentially, we are just saying that $\sup_{\theta,\nu}\mu_i(\theta,\nu) = \hat{\mu_{i,\text{MLE}}} = k_i$} How many such parameters did we need to add to be able to completely fit the data? Well we have $n$ bins, and $dim(\theta)$ fixed parameters, so the number of free parameters we must add is $DOF = n-dim(\theta)$. More conventionally, the numerator has $n$ free parameters (one for each bin), and the denominator has $dim(\theta)$. Also, $\sup_\theta \mu_i(\hat{\theta_{\text{MLE}}}) = \hat{\mu_{i,\text{MLE}}}$ in the denominator.
+To evaluate this, let's look at the numerator. The term $\sup_{\theta,\nu}\mu_i(\theta,\nu)$ represents the mean of the Poisson distribution in the $i$-th bin under the most general possible hypothesis. If we assume this general model has enough parameters to "fit any histogram" to any degree of precision, it becomes what is known as the \emph{Saturated Model}. 
 
-Given all this, our expression becomes:
+In this saturated case, the Likelihood is maximized when each bin's expected value is exactly equal to its observed count, $\hat{\mu}_{i} = k_i$. Essentially, we are allowing each of the $n$ bins to behave as an independent free parameter. Conversely, the denominator represents our specific physical model, which constrains those $n$ bins using only a small set of parameters $\theta$.
+
+Following Wilks' theorem, the degrees of freedom for our test statistic will be the difference in the number of free parameters between these two models. Since the Saturated Model uses $n$ parameters and our model uses $\dim(\theta)$, we find:
+	\[
+	DOF = n - \dim(\theta)
+	\]
+
+By evaluating the Poisson product at these respective maxima, which are $\hat{\mu}_{i} = k_i$ for the numerator and $\hat{\mu}_i(\hat{\theta})$ for the denominator, our expression becomes:\sidenote{Consider the "hats" to be the \emph{MLE}'s, not explicitly stated for the sake of clarity}
 
 	\[
-	2\ln\frac{\prod_i\mathcal{P}\left(k_i;k_i\right)}{\prod_i\mathcal{P}\left(k_i;\mu_i(\hat{\mu_{i,\text{MLE}}})\right)}
+	\lambda(x) = 2\ln\frac{\prod_i^n \mathcal{P}\left(k_i;k_i\right)}{\prod_i^n \mathcal{P}\left(k_i;\hat{\mu}_i(\hat{\theta})\right)}
+	\]
+	
+We expand using the definition of a Poisson statistic:
+
+\begin{align*}
+	\lambda(x) &= 2\ln\frac{\prod_i e^{-k_i} k_i^{k_i} \cdot k_i!}{\prod_ik_i! \cdot e^{-\hat{\mu_i}} \hat{\mu_i}^{k_i}} \\
+	&= 2\ln\left[\prod_i e^{\hat{\mu_i}-k_i} \left(\frac{k_i}{\hat{\mu_i}}\right)^{k_i}\right] \\
+	&= 2\sum_i\left[\hat{\mu_i}-k_i+k_i\ln\left(\frac{k_i}{\hat{\mu_i}}\right)\right] \Rightarrow \\
+	\lambda(x) &= 2\sum_i\left[k_i\ln\left(\frac{k_i}{\hat{\mu_i}}\right)-\left(k_i-\hat{\mu_i}\right)\right]
+\end{align*}
+
+The above expression presents the GOF statistic for a generic histogram, which in the asymptotic limit is distributed like a $\chi^2_{DOF}$.
+
+Before we move on, there is a rewarding connection to be made here. If you look closely at our final expression for $\lambda(x)$, it might not immediately look like the classic $\chi^2$ formula you likely encountered in your introductory courses, and that you certainly used to fit histograms in the past. However, if we assume our model is a reasonably good fit, such that the fluctuations $\delta_i = k_i - \hat{\mu}_i$ are relatively small, we can perform a Taylor expansion of the logarithm:
+	
+	\[
+	\ln\left(\frac{k_i}{\hat{\mu}_i}\right) = \ln\left(1 + \frac{\delta_i}{\hat{\mu}_i}\right) \approx \frac{\delta_i}{\hat{\mu}_i} - \frac{\delta_i^2}{2\hat{\mu}_i^2} + \dots
+	\]
+	
+Plugging this approximation back into our sum for $\lambda(x)$, and remembering that $\sum (k_i - \hat{\mu}_i) = \sum \delta_i$, a bit of algebra leads us to:
+	
+	\[
+	\lambda(x) \approx \sum_i \frac{(k_i - \hat{\mu}_i)^2}{\hat{\mu}_i}
+	\]
+	
+This is exactly the \textbf{Pearson's $\chi^2$ statistic}! It turns out that the LLR approach is effectively a more robust, fundamental version of the same idea. While the Pearson version is a second-order approximation, our LLR-based "Likelihood $\chi^2$" (often called the \emph{Deviance}) remains exact for any sample size, only relying on the asymptotic limit to claim its $\chi^2$ distribution. 
+
+\subsection{Goodness of Fit of Normally distributed variables}
+
+Though it can be perhaps seen as a particular case of the previous section, we take a moment to formally flush out the case of $N$ measurements $\{x_i\}_N$ of a Normally distributed variable with known variance $\sigma_i^2$ and unknown mean $\mu_i$: Both the mean and variance can be the same or different for each measure, though in this example the variance is always known. We want to verify the hypothesis $H_0$ that the means $\E\left[x_i\right]=\mu_i$. It's not hard to see how this is a specific case of the histogram problem for high-statistic bins, and so we start with a similar reasoning:
+
+	\[
+	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\N\left(x_i;\mu_i(\theta,\nu),\sigma_i\right)}{\sup_\theta\prod_i\N\left(x_i;\mu_i(\theta),\sigma_i\right)}
 	\]
 
-We expand 
+We have that $\sup_{\theta,\nu}\mu_i(\theta,\nu)=x_i$ itself, since the Likelihood is maximized when the expected value of the Normal distribution is exactly equal to its observed count. Therefore, we have:
+
+\begin{align*}
+	\lambda(x) &= 2\ln\frac{\prod_i\N\left(x_i;x_i,\sigma_i\right)}{\prod_i\N\left(x_i;\hat{\mu}_i,\sigma_i\right)} \\
+	&= 2\ln\prod_i \frac{\sqrt{2\pi}\sigma_i \cdot e^{-\frac{(x_i-x_i)^2}{2\sigma_i^2}}}{\sqrt{2\pi}\sigma_i \cdot e^{-\frac{(x_i-\hat{\mu}_i)^2}{2\sigma_i^2}}} \Rightarrow \\
+	\lambda(x) &= \sum_i \frac{\left(x_i-\hat{\mu}_i\right)^2}{\sigma_i^2}
+\end{align*}
+
+Look familiar? Once again we have found the \textbf{Pearson $\chi^2$ Test}, which we now see to be the point of convergence for histogram GOF testing in the case of "good" hypotheses, high statistics, or Normally distributed variables. We can also see that in this case, the statistic has \emph{exactly} the distribution of a $\chi^2_{DOF}$.
+
+\subsubsection{Unknown variance Normally distributed GOF}
+Let's follow the logic of the previous point, but introduce the complication of an unknown variance. We are testing whether the data is consistent with a Normal distribution of known mean $\mu_0$ against a general Normal distribution where both mean and variance are free. To state this clearly, we have $H_0: p(x) = \mathcal{N}(x;\mu_0, \sigma)$ against $H_1: p(x) = \mathcal{N}(x;\mu, \sigma)$. This case is remarkably common in instrumental calibration, where the "true" value $\mu_0$ is known from a reference standard, but the precision of the instrument ($\sigma$) is unknown and must be estimated from the data itself.
+
+We therefore introduce the unrestricted and restricted maximum likelihood estimators of the variance:
+
+	\[
+	\hat{\sigma}^2 = \frac{\sum_j\left(x_j-\bar{x}\right)^2}{N}\text{ and } \hat{\sigma}_0^2 = \frac{\sum_j\left(x_j-\mu_0\right)^2}{N}
+	\]
+
+Applying our trusty LLR:
+
+\begin{align*}
+	\lambda(x) &= 2\ln \frac{\sup_{\mu,\sigma}\prod_i^N\N\left(x_i,\mu, \sigma\right)}{\sup_{\sigma}\prod_i^N\N\left(x_i,\mu_0, \sigma\right)} \\ 
+	&= 2\ln \frac{\prod_i^N\N\left(x_i,\bar{x}, \hat\sigma\right)}{\prod_i^N\N\left(x_i,\mu_0, \hat{\sigma}_0\right)} \\ 
+	&= 2\ln \frac{\prod_i^N\sqrt{2\pi}\hat{\sigma}_0 \cdot e^{-\frac{\left(x_i-\bar{x}\right)^2}{2\hat{\sigma}^2}}}{\prod_i^N\sqrt{2\pi}\hat{\sigma} \cdot e^{-\frac{\left(x_i-\bar{x}\right)^2}{2\hat{\sigma}_0^2}}} \\ 
+	&= 2\ln\prod_i^N\left(\frac{\hat{\sigma}_0}{\hat{\sigma}}\right) + \sum_i^N\frac{\left(x_i-\mu_0\right)^2}{2\hat{\sigma}_0^2}-\sum_i^N\frac{\left(x_i-\bar{x}\right)^2}{2\hat{\sigma}^2}
+\end{align*}
+
+Looking at our above definition of the estimators for the variance, we can invert them to write 
+
+	\[
+	\sum_i^N\left(x_i-\bar{x}\right)^2=N\hat{\sigma}^2\text{ and }\sum_i^N\left(x_i-\mu_0\right)^2=N\hat{\sigma}_0^2
+	\]
+
+Therefore, the two sum terms in our expression both equal $\frac{N}{2}$ and cancel out, leaving us with:
+
+	\[
+	\lambda(x) = 2\ln\prod_i^N\left(\frac{\hat{\sigma}_0}{\hat{\sigma}}\right) = N\ln\left(\frac{\hat{\sigma}_0^2}{\hat{\sigma}^2}\right)
+	\]
+
+Using that the ratio is constant across observations, we have:
+	\[
+	\lambda(x) = N \ln\frac{1/N\sum_j\left(x_j-\mu_0\right)^2}{1/N\sum_j\left(x_j-\bar{x}\right)^2}\\
+	\]
+
+We expand the numerator term:
+
+	\[
+	\sum_j\left(x_j-\mu_0\right)^2 = \sum_j\left(x_j+\bar{x}-\bar{x}-\mu_0\right)^2
+	\]
+
+Which we can re-write in the following way with a little algebra:
+
+	\[
+	\sum_j\left(x_j-\bar{x}\right)^2 + \sum_j\left(\bar{x}-\mu_0\right)^2 + 2\sum_j\left(x_j-\bar{x}\right)\left(\bar{x}-\mu_0\right)
+	\]
+
+The final mixed term is equal to zero: $\sum_j\left(x_j-\bar{x}\right)=0$, and we are left with:
+
+	\[
+	\sum_j\left(x_j-\mu_0\right)^2 = \sum_j\left(x_j-\bar{x}\right)^2 + N\left(\bar{x}-\mu_0\right)^2
+	\]
+
+Substituting back into the LLR, we have:
+
+\begin{align*}
+	\lambda(x) &= N \ln \left[\frac{\sum (x_i - \bar{x})^2 + N(\bar{x} - \mu_0)^2}{\sum (x_i - \bar{x})^2} \right] \\
+	&= N \ln \left[1 + \frac{N(\bar{x} - \mu_0)^2}{\sum (x_i - \bar{x})^2} \right] \\
+\end{align*}
+
+We'd like to use our old friend Taylor to approximate the logarithm, but we must first convince ourselves that the second term is much smaller than $1$, at least asymptotically.
+First of all, let's identify that the expected value of $\left(\bar{x}-\mu_0\right)^2$ is, by definition under $H_0$, the variance of $\bar{x}$, which is $\frac{\sigma^2}{N}$. This means that $\left(\bar{x}-\mu_0\right)^2$ is typically of order $\frac{1}{N}$ ($\mathcal{O}_p\frac{1}{N}$ \emph{in probability}).
+
+Looking at the rest of the term, we can identify $\frac{N}{\sum (x_i - \bar{x})^2} = \frac{1}{\hat{\sigma}^2}$, the estimator for the variance, which scales as $\mathcal{O}(1)$. Putting this together, we can see that:
+
+	\[
+	\frac{N(\bar{x} - \mu_0)^2}{\sum (x_i - \bar{x})^2} \sim \mathcal{O}N^{-1}
+	\]
+
+Using the asymptotic expansion $\ln(1+x) \approx x$, we see that:
+
+	\[
+	\lambda(x) \approx N^2\frac{\left(\bar{x}-\mu_0\right)^2}{\sum_j\left(x_j-\bar{x}\right)^2}
+	\]
+
+Let's call $s$ (the \emph{unbiased} sample variance) $s^2 = \frac{\sum_i\left(x_i-\bar{x}\right)^2}{N-1}$. We then have that
+
+	\[
+	\lambda(x) \approx \frac{N}{N-1}\underbrace{\frac{N\left(\bar{x}-\mu_0\right)^2}{s^2}}_{t^2}
+	\]
+
+Where we have defined $t$ to be a specific Test that we will talk about in the next section. In this more complex case, the likelihood-ratio test is equivalent to the $t$-test. For large $N$, the factor $\frac{N}{N-1} \to 1$, and $\lambda(x)\approx t^2$, which we will learn to converge in distribution to $\chi^2_1$.
 
 \section{Student's t}
 
