@@ -358,7 +358,11 @@ This expression is a function of $\theta$, though for fixed $\theta$ it can be b
 	\E\left[ S_x(\theta) \right] = \int \frac{\partial \ln p(x;\theta)}{\partial \theta}p(x;\theta)\dd x
 	\]
 
-We note that, if the domain of $x$ is independent of $\theta$ and we have sufficient regularity in $p$ then we can commute the derivative with the integral and we get
+We note that, if the domain of $x$ is independent of $\theta$ and we have sufficient regularity in $p$\sidenote{To be precise, the regularity conditions are as follows:\begin{itemize}
+		\item The partial derivative of $p(x; \theta)$ with respect to $\theta$ exists almost everywhere (It can fail to exist on a null set, as long as this set does not depend on $\theta$)
+		\item The integral of $p(x; \theta)$ can be differentiated under the integral sign with respect to $\theta$
+		\item \textbf{The support of $p(x; \theta)$ does not depend on $\theta$}
+\end{itemize}} then we can commute the derivative with the integral and we get
 
 	\begin{align*}
 	\E\left[ S_x(\theta) \right] &= \int\frac{1}{p(x;\theta)}\frac{\partial p(x;\theta)}{\partial \theta} p(x;\theta) \dd x \\
