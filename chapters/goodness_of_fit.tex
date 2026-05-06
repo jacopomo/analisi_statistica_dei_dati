@@ -1,6 +1,6 @@
 \chapter{Goodness of Fit}
 
-Congrats, you've made it this far, and not much more separates you from the back cover of this book. We wrap up our general review of inferences with this final type that differs from all the others in an important way: we want to test if the \emph{pdf} we assume the data to be extracted from is actually the "correct one". Well, without getting ahead of ourselves we want to quantify, in some statistically correct way, \textbf{how much the observed data is in accord with the assumed distribution}. 
+Congrats, you've made it this far, and not much more separates you from the back cover of this book\sidenote{Admittedly, there are quite a few pages, but the real "meat" of the course is behind us}. We wrap up our general review of inferences with this final type that differs from all the others in an important way: we want to test if the \emph{pdf} we assume the data to be extracted from is actually the "correct one". Well, without getting ahead of ourselves we want to quantify, in some statistically correct way, \textbf{how much the observed data is in accord with the assumed distribution}. 
 
 Up until now we have assumed that the observed data come from a known \emph{pdf} (or class of \emph{pdf's}) depending on some parameter, and we have worked long and hard to try to say \emph{something} about that parameter. Well, now we must zoom out a step, and justify why we are assuming that distribution in the first place. Without this initial justification, whatever we end up discovering about the parameters that govern $p(x)$ must be thrown directly in the bin, as if we have failed to convince ourselves that $x$ is distributed following $p$ in the first place then all our work is for naught.
 
@@ -22,19 +22,19 @@ Not having defined alternatives, we can't talk about \emph{priors} (there may no
 
 The statistic at the core of almost every GOF Test is the famous (or infamous, if you were not a fan of the Lab courses) \textbf{p-value} statistic. This is perhaps one of the most common and commonly misunderstood concepts in data analysis, and so we take our time in defining it. Let's begin with an example:
 
-Imagine flipping a coin 10 times and getting 10 heads in a row. You suspect the coin is unfair, and thus construct a null hypothesis to hopefully reject $H_0$: The coin is fair (the outcomes of $n$ flips follows a Binomial with $p=0.5$). Our alternative hypothesis is that the coin is \emph{unfair}, as in, anything that is not $H_0$, and thus a goodness-of-fit Test must be used. If the coin really were fair, seeing 10 heads would be extremely rare. The $p$-value quantifies exactly how "rare" or "surprising" your observed data is, assuming $H_0$. We can see the parallels with the previous chapter, and we expect to use $p$ as a sort of Test statistic with a certain critical region. Therefore, it is intuitive that $p$ depend on the data $x$, and in some way must be combined with $H_0$. 
+Imagine flipping a coin 10 times and getting 10 heads in a row. You suspect the coin is unfair, and thus construct a null hypothesis to hopefully reject $H_0$: The coin is fair (the outcomes of $n$ flips follows a Binomial with $p=0.5$). Our alternative hypothesis is that the coin is \emph{unfair}, as in, anything that is not $H_0$, and thus a goodness-of-fit test must be used. If the coin really were fair, seeing 10 heads would be extremely rare. The $p$-value quantifies exactly how "rare" or "surprising" the observed data is, assuming $H_0$. We can see the parallels with the previous chapter, and we expect to use $p$ as a sort of Test statistic with a certain critical region. Therefore, it is intuitive that $p$ depend on the data $x$, and in some way must be combined with $H_0$. 
 
 \begin{definition}[p-value]
 	A \emph{p-value} is a statistic $p(x)$ such that $p\sim U[0,1]$ under $H_0$
 \end{definition}
 
-Mathematically, if $T$ is our Test statistic and $F_T$ is its cumulative distribution function under $H_0$, then $p = 1 - F_T(t_{obs})$. Because the \emph{CDF} of any continuous random variable is uniformly distributed, as the probability integral transform theorem \ref{th:universal_uniform} states, the p-value follows $U[0, 1]$.
+Mathematically, if $T(x)$ is our Test statistic and $F_T$ is its cumulative distribution function under $H_0$, then $p = 1 - F_T(t_{obs})$\sidenote{This assumes a right (upper) tailed test, where large values of $T$ suggest evidence against $H_0$. For left (lower) tailed tests, $p = F_T(t_{obs})$}, where $t_{obs} = T(x_{obs})$, the sampled Test statistic. Because the \emph{CDF} of any continuous random variable is uniformly distributed, as the probability integral transform theorem \ref{th:universal_uniform} states, the p-value follows $U[0, 1]$.
 
 Essentially, it is a function of the data such that its distribution is uniform between $0$ and $1$ and such that it is small for hypotheses distant from $H_0$.
 
-The goodness of fit Test, in this case, corresponds to the critical region $p<\alpha$, otherwise stated as $P(p<\alpha)=\alpha\forall\alpha$
+The goodness of fit test, in this case, corresponds to the critical region $p<\alpha$, otherwise stated as $P(p<\alpha)=\alpha\,\forall\alpha$
 
-We also wish for the GOF test to give unbiased results, and so we need for this statistic $p(x)$ to move towards lower values in every hypothesis in which $H_0$ is not verified. Synthetically:
+We also wish for the GOF test to give unbiased results, and so we need for this statistic $p(x)$ to move towards lower values in every hypothesis in which $H_0$ is not verified (for right-tailed tests, as the opposite can be true granted we use a left-tailed test). Synthetically:
 
 	\[
 	F_{\cancel{H_0}}(p) \geq F_{H_0}(p)
@@ -45,7 +45,7 @@ This gives the $p$-value the interpretation of "probability" (under $H_0$) that 
 \begin{figure}[H]
 	\centering
 	\input{images/p_value_plot.pgf}
-	\caption{Distribution of the $p$-value statistic under the null hypothesis $H_0$ and an example alternative $H_1$. A vertical line corresponding to $\alpha=0.05$ significance level is also shown.}
+	\caption{Distribution of the $p$-value statistic under the null hypothesis $H_0$ and an example alternative $H_1$. A vertical line corresponding to $\alpha=0.05$ significance level is also shown. The probability of a uniformly distributed value to fall below the threshold, which corresponds to the probability of committing a type 1 error, is $\alpha$.}
 	\label{images/p_value_plot}
 \end{figure}
 
@@ -113,13 +113,13 @@ This is not the only way that exists, and for $n$ $p$-values we prefer to calcul
 	q=-2\sum_i\ln\left(p_i\right) = -2\ln\left(\prod_i p_i\right)
 	\]
 
-To find the threshold $q>q_alpha$, we consider the fact that $-2\ln\left(p_i\right)$ has an exponential distribution and that:
+To find the threshold $q>q_\alpha$, we consider the fact that $-2\ln\left(p_i\right)$ has an exponential distribution and that:
 
 	\[
 	\chi^2_\nu \sim \frac{1}{2^{\frac{\nu}{2}}\Gamma\left(\frac{\nu}{2}\right)}x^{\frac{\nu}{2}}e^{-\frac{x}{2}} \Rightarrow \chi_2^2 \sim \frac{1}{2}e^{-\frac{1}{2}} \Rightarrow -2\ln\left(p_i\right) \sim \chi_2^2
 	\]
 
-We therefore find the threshold $q>q_\alpha$ considering that $a\sim\chi^2_{2n}$. 
+We therefore find the threshold $q>q_\alpha$ through the use of tables, considering that $q\sim\chi^2_{2n}$. 
 
 This combination of $p$-values is not just a didactic formalism; to be completely transparent, it is necessary to consider the ensemble of results from all repetitions of an experiment. For example, if I run an experiment an arbitrarily large number of times, sooner or later I will obtain at least one significant $p$-value purely by chance, due to the inherent probability of committing a Type I Error (which is exactly what $\alpha$ quantifies). 
 
