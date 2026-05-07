@@ -6,7 +6,7 @@ In many problems of probability theory and statistics, special functions natural
 
 We introduce the Gamma function as a generalization of the factorial to the real and complex domain. For $\Re(\zeta) > -1$, it is defined as:
 \[
-\Gamma(\zeta+1) = \int_0^{+\infty} x^\zeta e^{-x} \, dx.
+\Gamma(\zeta+1) = \int_0^{+\infty} x^\zeta e^{-x} \, dx
 \]
 
 This function satisfies several key properties:
@@ -14,24 +14,24 @@ This function satisfies several key properties:
 \begin{itemize}
 	\item \textbf{Normalization:}
 	\[
-	\Gamma(1) = 1.
+	\Gamma(1) = 1
 	\]
 	
 	\item \textbf{Recursion formula:}
 	\[
-	\Gamma(\zeta+1) = \zeta \, \Gamma(\zeta),
+	\Gamma(\zeta+1) = \zeta \, \Gamma(\zeta)
 	\]
 	which follows from integration by parts.
 	
 	\item \textbf{Factorial relation:}
 	For natural numbers $n \in \mathbb{N}$,
 	\begin{equation}\label{eq:gamma}
-		\Gamma(n) = (n-1)!.
+		\Gamma(n) = (n-1)!
 	\end{equation}
 	
 	\item \textbf{Half-integer value:}
 	\[
-	\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}.
+	\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}
 	\]
 \end{itemize}
 
@@ -41,7 +41,7 @@ More generally, the Gamma function allows us to extend factorial-like quantities
 
 We introduce the Beta function as a symmetric function defined for $x > 0$, $y > 0$:
 \[
-\mathrm{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1} \, dt.
+\mathrm{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1} \, dt
 \]
 
 The Beta function has several important properties:
@@ -49,17 +49,17 @@ The Beta function has several important properties:
 \begin{itemize}
 	\item \textbf{Symmetry:}
 	\[
-	\mathrm{B}(x,y) = \mathrm{B}(y,x).
+	\mathrm{B}(x,y) = \mathrm{B}(y,x)
 	\]
 	
 	\item \textbf{Relation with Gamma function:}
 	\begin{equation}\label{eq:beta_gamma}
-		\mathrm{B}(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}.
+		\mathrm{B}(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
 	\end{equation}
 	
 	\item \textbf{Boundary cases:}
 	\[
-	\mathrm{B}(x,1) = \frac{1}{x}, \quad \mathrm{B}(1,1)=1.
+	\mathrm{B}(x,1) = \frac{1}{x}, \quad \mathrm{B}(1,1)=1
 	\]
 \end{itemize}
 
