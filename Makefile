@@ -46,8 +46,8 @@ version: | $(OUT_DIR)
 
 clean:
 	$(LATEXMK) -c
-	$(RM) $(OUT_DIR) $(STAMP_DIR)
+	$(RM) $(OUT_DIR)
 
 cleanall: clean
 	$(LATEXMK) -C
-	$(RM) $(MAIN).pdf production_$(MAIN).pdf
+	$(RM) $(MAIN).pdf production_$(MAIN).pdf $(REQUIRED_DIRS) $(STAMP_DIR)
