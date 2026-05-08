@@ -1,2 +1,36 @@
 \chapter{Statistical Tables}
-Statistical tables start here
+Here we will have tables
+\clearpage
+
+\section{\texorpdfstring{$\chi^2_\nu$ integral for $p$-values}{Chi-Squared integral for p-values}}
+
+\begin{table}[H]
+	\input{tables/chi2_table.tex}
+\end{table}
+
+\clearpage
+
+\section{One-sided standard Normal tails}
+
+\begin{table}[H]
+	\centering
+	% Left Side
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\input{tables/normal_alpha_delta_table.tex}
+	\end{minipage}
+	\hfill % This pushes them to the far left and right
+	% Right Side
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\input{tables/normal_delta_sigma_table.tex}
+	\end{minipage}
+	\caption{One-tailed integral of Normal distribution at different $\alpha$ and $\sigma$}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\input{images/normal_alpha_delta_visualization.pgf}
+	\caption{Proof of concept... not done yet by any stretch of the imagination.}
+	\label{fig:normal_alpha_delta_visualization}
+\end{figure}
