@@ -143,12 +143,12 @@ Following the formalism developed in \ref{subsec:LR_test}, we once again use the
 
 Which, as we have done before, can be re-written by replacing the sup's with \emph{MLE}\sidenote{We have gotten used to this switch from sup to \emph{MLE}, but we still explicit the original supremum for edge cases where the \emph{MLE} does not exist (we can consider it to be an asymptotic \emph{MLE})}.
 
-Once again, we know through Wilks' theorem that under $H_0$, $\lambda(x)$ will asymptotically follow a central $\chi^2_k$ distribution, where the number of degrees of freedom $d$ is equal to the number of parameters fixed by the null hypothesis (the dimension of $\theta$). For all cases where $\theta \neq \theta_0$, the distribution shifts towards higher values (following a non-central $\chi^2$), ensuring the test is unbiased.
+Once again, we know through Wilks' theorem that under $H_0$, $\lambda(x)$ will asymptotically follow a central $\chi^2_d$ distribution, where the number of degrees of freedom $d$ is equal to the number of parameters fixed by the null hypothesis (the dimension of $\theta$). For all cases where $\theta \neq \theta_0$, the distribution shifts towards higher values\todo{Why???} (following a non-central $\chi^2$), ensuring the test is unbiased.
 
 Therefore, the Test with critical region $\lambda(x)>q_\alpha$ will be unbiased and right-tailed, so a good $p$-value is $p=1-F_{\chi^2_d}(\lambda)$. 
 
 \subsection{Goodness of Fit applied to histograms}
-In this section we will follow the formalism introduced in section \ref{sec:fitting_hist}, revisiting what we have discussed using the new tools we have at our disposal. Specifically, we will look at variable-N histograms, as we cover in section \ref{subsec:variable_N_hist}.
+In this section we will follow the formalism introduced in section \ref{sec:fitting_hist}, revisiting what we have discussed using the new tools we have at our disposal. Specifically, we will look at variable-$N$ histograms, as we cover in section \ref{subsec:variable_N_hist}.
 Considering a sequence of experimental measurements of a real observable $x$, let $k_i$ be the number of events $\{x_j\}$ falling into the bin $i\in \left[1,\dots,n\right]$. Therefore, what we have is a histogram of $n$ bins, $N$ measurements, completely defined by $\{k_i\}_n$ such that $\sum_i^n k_i =N$. We want to estimate the parameters $\theta$ of the \emph{pdf} from which $x$ was extracted, which we know to be $p(x;\theta)$.
 
 As we have already discussed, each bin count is independent and follows a Poisson distribution, such that:
@@ -160,12 +160,12 @@ As we have already discussed, each bin count is independent and follows a Poisso
 What we are looking for, then, is a point estimation of $\theta$, and we'll use the \emph{MLE}:
 
 	\[
-	\hat{\theta_{\text{MLE}}} = \arg \max \prod_i^n \mathcal{P}\left(k_i;\mu_i(\theta)\right)
+	\hat{\theta}_{\text{MLE}} = \arg \max \prod_i^n \mathcal{P}\left(k_i;\mu_i(\theta)\right)
 	\]
 
 We know $\mu_i(\theta)=\E\left[k_i\right]$ to be the expected number of events in the $i$-th bin.
 
-Well, now we are more mature than we were all those chapters ago, and instead of blindly accepting the $\hat{\theta_{\text{MLE}}}$ we would like to confirm that the observed distribution does not statistically differ from the hypothesized \emph{pdf}. We assume that if we add \emph{enough} parameters to our current \emph{pdf}, then we can generally obtain whichever vector of expected values $\mu_i(\theta)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
+Well, now we are more mature than we were all those chapters ago, and instead of blindly accepting the $\hat{\theta}_{\text{MLE}}$ we would like to confirm that the observed distribution does not statistically differ from the hypothesized \emph{pdf}. We assume that if we add \emph{enough} parameters to our current \emph{pdf}, then we can generally obtain whichever vector of expected values $\mu_i(\theta)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
 
 In this case, the LLR becomes:
 
@@ -215,7 +215,7 @@ This is exactly the \textbf{Pearson's $\chi^2$ statistic}! It turns out that the
 
 \subsection{Goodness of Fit of Normally distributed variables}
 
-Though it can be perhaps seen as a particular case of the previous section, we take a moment to formally flush out the case of $N$ measurements $\{x_i\}_N$ of a Normally distributed variable with known variance $\sigma_i^2$ and unknown mean $\mu_i$: Both the mean and variance can be the same or different for each measure, though in this example the variance is always known. We want to verify the hypothesis $H_0$ that the means $\E\left[x_i\right]=\mu_i$. It's not hard to see how this is a specific case of the histogram problem for high-statistic bins, and so we start with a similar reasoning:
+Though it can be perhaps seen as a particular case of the previous section, we take a moment to formally flush out the case of $N$ measurements $\{x_i\}_N$ of a Normally distributed variable with known variance $\sigma_i^2$ and unknown mean $\mu_i$. Both the mean and variance can be the same or different for each measure, though in this example the variance is always known. We want to verify the hypothesis $H_0$ that the means $\E\left[x_i\right]=\mu_i$. It's not hard to see how this is a specific case of the histogram problem for high-statistic bins, and so we start with a similar reasoning:
 
 	\[
 	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\N\left(x_i;\mu_i(\theta,\nu),\sigma_i\right)}{\sup_\theta\prod_i\N\left(x_i;\mu_i(\theta),\sigma_i\right)}
@@ -292,7 +292,7 @@ Substituting back into the LLR, we have:
 \end{align*}
 
 We'd like to use our old friend Taylor to approximate the logarithm, but we must first convince ourselves that the second term is much smaller than $1$, at least asymptotically.
-First of all, let's identify that the expected value of $\left(\bar{x}-\mu_0\right)^2$ is, by definition under $H_0$, the variance of $\bar{x}$, which is $\frac{\sigma^2}{N}$. This means that $\left(\bar{x}-\mu_0\right)^2$ is typically of order $\frac{1}{N}$ ($\mathcal{O}_p\frac{1}{N}$ \emph{in probability}).
+First of all, let's identify that the expected value of $\left(\bar{x}-\mu_0\right)^2$ is, by definition under $H_0$, the variance of $\bar{x}$, which is $\frac{\sigma^2}{N}$. This means that $\left(\bar{x}-\mu_0\right)^2$ is typically of order $\frac{1}{N}$ ($\mathcal{O}_p(\frac{1}{N})$ \emph{in probability}).
 
 Looking at the rest of the term, we can identify $\frac{N}{\sum (x_i - \bar{x})^2} = \frac{1}{\hat{\sigma}^2}$, the estimator for the variance, which scales as $\mathcal{O}(1)$. Putting this together, we can see that:
 
