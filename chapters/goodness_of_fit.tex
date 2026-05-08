@@ -32,7 +32,7 @@ Mathematically, if $T(x)$ is our Test statistic and $F_T$ is its cumulative dist
 
 Essentially, it is a function of the data such that its distribution is uniform between $0$ and $1$ and such that it is small for hypotheses distant from $H_0$.
 
-The goodness of fit test, in this case, corresponds to the critical region $p<\alpha$, otherwise stated as $P(p<\alpha)=\alpha\,\forall\alpha$
+The goodness of fit test, in this case, corresponds to the critical region $p<\alpha$, otherwise stated as $P(p<\alpha)=\alpha\;\forall\alpha$.
 
 We also wish for the GOF test to give unbiased results, and so we need for this statistic $p(x)$ to move towards lower values in every hypothesis in which $H_0$ is not verified (for right-tailed tests, as the opposite can be true granted we use a left-tailed test). Synthetically:
 
@@ -113,13 +113,20 @@ This is not the only way that exists, and for $n$ $p$-values we prefer to calcul
 	q=-2\sum_i\ln\left(p_i\right) = -2\ln\left(\prod_i p_i\right)
 	\]
 
-To find the threshold $q>q_\alpha$, we consider the fact that $-2\ln\left(p_i\right)$ has an exponential distribution and that:
-
+To find the threshold $q>q_\alpha$, we want to find how $q_i=-2\ln\left(p_i\right)$ is distributed. Trough a variable change\sidenote{$q_i=-2\ln\left(p_i\right) \implies p_i=e^{-\frac{q_i}{2}}$}:
+\begin{align*}
+	\mathfrak{p}(q_i)&=\mathfrak{p}(p_i(q_i))\left|\frac{\dd q_i}{\dd p_i}\right|^{-1}_{p_i=p_i(q_i)}\\
+	&=\frac{1}{2}e^{-\frac{q_i}{2}}
+\end{align*}
+Now we consider that:
 	\[
-	\chi^2_\nu \sim \frac{1}{2^{\frac{\nu}{2}}\Gamma\left(\frac{\nu}{2}\right)}x^{\frac{\nu}{2}}e^{-\frac{x}{2}} \Rightarrow \chi_2^2 \sim \frac{1}{2}e^{-\frac{1}{2}} \Rightarrow -2\ln\left(p_i\right) \sim \chi_2^2
+	\chi^2_\nu = \frac{1}{2^{\frac{\nu}{2}}\Gamma\left(\frac{\nu}{2}\right)}x^{\frac{\nu}{2}}e^{-\frac{x}{2}} \Rightarrow \chi_2^2 \sim \frac{1}{2}e^{-\frac{1}{2}} \Rightarrow q_i=-2\ln\left(p_i\right) \sim \chi_2^2
 	\]
-
-We therefore find the threshold $q>q_\alpha$ through the use of tables, considering that $q\sim\chi^2_{2n}$. 
+Since $q=\sum_iq_i$, using the fact that the sum of independent chi-squared variables is again chi-squared, we get:
+\[
+	q\sim\chi^2_{2n}
+\]
+Therefore we can find the threshold $q>q_\alpha$ through the use of tables.
 
 This combination of $p$-values is not just a didactic formalism; to be completely transparent, it is necessary to consider the ensemble of results from all repetitions of an experiment. For example, if I run an experiment an arbitrarily large number of times, sooner or later I will obtain at least one significant $p$-value purely by chance, due to the inherent probability of committing a Type I Error (which is exactly what $\alpha$ quantifies). 
 
