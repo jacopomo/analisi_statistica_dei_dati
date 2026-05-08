@@ -1,0 +1,110 @@
+\chapter{Some useful exercises}
+
+\begin{exercise}
+	Given two random variables $X$ and $Y$ with probability density functions
+	$p_X(x)$ and $p_Y(y)$, respectively, we want to determine the \emph{pdf}
+	$f_S(s)$ of the statistic
+	\[
+	S = X + Y
+	\]
+	We consider two separate cases:
+	\begin{itemize}
+		\item $X$ and $Y$ dependent
+		\item $X$ and $Y$ independent
+	\end{itemize}
+	
+	The main strategy is to express one of the original variables as a function
+	of the statistic, perform a change of variables, and then marginalize over
+	the remaining variable:
+	\[
+	(x,y)\longrightarrow (x,s=x+y)
+	\]
+	
+	For a general transformation
+	\[
+	(x_1,\dots,x_N)\longrightarrow(y_1,\dots,y_N)
+	\]
+	the probability density transforms as
+	\[
+	p_Y(y_1,\dots,y_N)
+	=
+	p_X(x_1,\dots,x_N)
+	\left|
+	\det\!\left(
+	\frac{\partial y_i}{\partial x_j}
+	\right)
+	\right|^{-1}_{x=x(y)}
+	\]
+	
+	In our case, $y=s-x$, the Jacobian matrix is
+	\[
+	\begin{pmatrix}
+		\dfrac{\partial x}{\partial x} &
+		\dfrac{\partial x}{\partial y}
+		\\[1em]
+		\dfrac{\partial s}{\partial x} &
+		\dfrac{\partial s}{\partial y}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		1 & 0\\
+		1 & 1
+	\end{pmatrix}
+	\]
+	whose determinant is
+	\[
+	J = 1
+	\]
+	
+	Thus, the joint \emph{pdf} of $(X,S)$ is
+	\[
+	p_{X,S}(x,s)
+	=
+	p_{X,Y}(x,s-x)\frac{1}{|J|}
+	=
+	p_{X,Y}(x,s-x)
+	\]
+	
+	To obtain the distribution of $S$, we marginalize over $x$:
+	\[
+	f_S(s)
+	=
+	\int_{-\infty}^{+\infty}
+	p_{X,Y}(x,s-x)\,dx
+	\]
+	
+	If $X$ and $Y$ are independent, then
+	\[
+	p_{X,Y}(x,y)=p_X(x)p_Y(y)
+	\]
+	and therefore
+	\[
+	f_S(s)
+	=
+	\int_{-\infty}^{+\infty}
+	p_X(x)p_Y(s-x)\,dx
+	\]
+	
+	This integral is called the \emph{convolution} of the two \emph{pdfs}:
+	\[
+	f_S = p_X * p_Y
+	\]
+	
+	Hence, the sum of two independent random variables is distributed
+	according to the convolution of their probability densities.
+	
+	It is important to note that one cannot simply add the two \emph{pdfs},
+	i.e.\ write
+	\[
+	f_S(s)\neq p_X(s)+p_Y(s)
+	\]
+	This is because a \emph{pdf} describes how probability mass is distributed
+	over the possible values of a random variable. The event
+	$S=s$ can be obtained through infinitely many combinations
+	\[
+	x+(s-x)=s
+	\]
+	so all possible decompositions of $s$ must be taken into account.
+	The convolution precisely performs this weighted sum over all
+	possible pairs $(x,s-x)$.
+\end{exercise}
