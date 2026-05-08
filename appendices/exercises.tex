@@ -1,5 +1,7 @@
 \chapter{Some useful exercises}
 
+The following exercises will be focused on performing variable change and finding the distribution of various statistics.
+
 \begin{exercise}\label{exer:variable_sum}
 	Given two random variables $X$ and $Y$ with probability density functions
 	$p_X(x)$ and $p_Y(y)$, respectively, we want to determine the \emph{pdf}
@@ -114,5 +116,36 @@
 	$f_{\Pi}(\pi)$ of the statistic
 	\[
 	\Pi = X + Y
+	\]
+	As we've done before, we want to express one of the original variables as a function
+	of the statistic, perform a change of variables, and then marginalize over
+	the remaining variable:
+	\[
+	(x,y)\longrightarrow (x,\pi=xy)
+	\]
+	For the Jacobian:
+	\[
+		J = \det 	\begin{pmatrix}
+			\dfrac{\partial x}{\partial x} &
+			\dfrac{\partial x}{\partial y}
+			\\[1em]
+			\dfrac{\partial \pi}{\partial x} &
+			\dfrac{\partial \pi}{\partial y}
+		\end{pmatrix} = \det \begin{pmatrix}
+		1 & 0\\
+		y & x \\
+		\end{pmatrix}=x
+	\]
+	Thus:
+	\[
+		p_{X, \Pi}(x, \pi)=p_{X, Y}\left(x, \frac{\pi}{x}\right)\frac{1}{\left|x\right|}
+	\]
+	Marginalizing over $x$:
+	\[
+		f_{\Pi}(\pi)=\int_{-\infty}^{+\infty}p_{X, Y}\left(x, \frac{\pi}{x}\right)\frac{1}{\left|x\right|}\; dx
+	\]
+	that for independent variables:
+	\[
+		f_{\Pi}(\pi)=\int_{-\infty}^{+\infty}p_{X}(x)p_{Y}\left(\frac{\pi}{x}\right)\frac{1}{\left|x\right|}\; dx
 	\]
 \end{exercise}
