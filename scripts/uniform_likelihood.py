@@ -23,10 +23,10 @@ ax.set_xticks([X0])
 ax.set_xticklabels([r'$x_0$'])
 ax.set_yticks([0,1])
 ax.set_yticklabels([0,r'$\frac{1}{x_0}$'])
-ax.set_xlabel(r'$m$', fontsize=10)
-ax.set_ylabel(r'$L(m)$', fontsize=10)
+ax.set_xlabel(r'$m$')
+ax.set_ylabel(r'$L(m)$')
 
-ax.legend(loc='upper right', fontsize='small')
+ax.legend(loc='upper right')
 ax.grid(True, linestyle=':', alpha=0.3)
 
 plt.savefig("images/uniform_likelihood.pgf", bbox_inches='tight')

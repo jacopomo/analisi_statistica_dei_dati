@@ -29,7 +29,7 @@ ax.set_xticklabels([r'$\mu$', r'$\mu-k\sigma$', r'$\mu+k\sigma$'])
 ax.set_yticks([0, 1, Y_VALS])
 ax.set_yticklabels(['0', '1', r'$k\sigma$'])
 
-ax.legend(loc='upper right', fontsize='small')
+ax.legend(loc='upper right')
 ax.grid(True, linestyle=':', alpha=0.3)
 
 plt.savefig("images/chebyshev_theorem.pgf", bbox_inches='tight')

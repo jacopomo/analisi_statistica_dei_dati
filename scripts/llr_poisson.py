@@ -170,6 +170,8 @@ ax.plot(mu_axis, errors, lw=1.0, label=r"$1 - \mathcal{C}(\mu)$")
 # Reference line at nominal level
 ax.axhline(0.05, ls="--", lw=1.0, label=r"Nominal level $0.05$")
 
+ax.grid(alpha=0.3)
+
 ax.set_xlim(-0.2, 16)
 ax.set_xlabel(r"$\mu$")
 ax.set_ylabel(r"Coverage error")

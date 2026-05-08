@@ -27,7 +27,7 @@ ax.set_xticklabels([r'$\mu$'])
 ax.set_yticks([0,1])
 ax.set_yticklabels([0,1])
 
-ax.legend(loc='upper right', fontsize='small')
+ax.legend(loc='upper right')
 ax.grid(True, linestyle=':', alpha=0.3)
 
 plt.savefig("images/historical_example.pgf", bbox_inches='tight')
