@@ -32,6 +32,10 @@
 \usepackage{marginnote}
 \usepackage{ifoddpage}
 \usepackage{sidenotes}
+\newcommand{\startexercises}{
+	\cleardoublepage
+	\renewcommand{\thechapter}{E}
+}
 %------------------------------------------------
 % BIBLIOGRAPHY
 %------------------------------------------------
@@ -186,18 +190,21 @@
 
 \include{chapters/goodness_of_fit}
 
+% --- EXERCISES ---
+\part*{Exercises}
+\startexercises
+\include{appendices/exercises}
 
 % --- APPENDICES ---
 \appendix
 \include{appendices/useful_functions}
 \include{appendices/important_distributions}
-\include{appendices/exercises}
 \include{appendices/statistical_tables}
 \include{appendices/code}
 
+\backmatter
+
 %\nocite{*} % This will make it so all sources show up even if not cited with J. does not like!
 \printbibliography[heading=bibintoc]
-
-\backmatter
 
 \end{document}
