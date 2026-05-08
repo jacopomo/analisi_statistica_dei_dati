@@ -40,7 +40,7 @@ ax.set_xlabel(r"$\mu$")
 ax.set_ylabel(r"$x$")
 ax.set_title(r"Probability ordering, all $\mu$ allowed")
 ax.set_xlim(-3.0, 3.0)
-ax.grid(alpha=0.25)
+ax.grid(alpha=0.3)
 
 plt.savefig("images/neyman_gauss.pgf", bbox_inches='tight')
 plt.close()

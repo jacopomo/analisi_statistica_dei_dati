@@ -66,7 +66,7 @@ for ax, (title, low, high) in zip(axes, plots):
     ax.set_xlabel(r"$\mu$")
     ax.set_xlim(-0.25, 3.0)
     ax.set_ylim(-3.5, 5)
-    ax.grid(alpha=0.25)
+    ax.grid(alpha=0.3)
 
 axes[0].set_ylabel(r"$x$")
 

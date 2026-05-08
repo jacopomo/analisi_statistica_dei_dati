@@ -53,7 +53,7 @@ for idx in starts + ends:
 ax2.set_ylabel("LR ratio")
 ax2.set_ylim(-TRASL, max(r)*1.1)
 ax1.set_title(r"Likelihood-ratio ordering for $\mu=0.5$")
-ax1.grid(alpha=0.25)
+ax1.grid(alpha=0.3)
 
 lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()

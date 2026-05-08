@@ -30,10 +30,10 @@ ax.set_xticks([0,0.5,1])
 ax.set_xticklabels([0,0.5,1])
 ax.set_yticks([0,1])
 ax.set_yticklabels([0,1])
-ax.set_xlabel(r'$p$', fontsize=10)
-ax.set_ylabel(r'$L(p)$', fontsize=10)
+ax.set_xlabel(r'$p$')
+ax.set_ylabel(r'$L(p)$')
 
-ax.legend(loc='upper center', fontsize='small')
+ax.legend(loc='upper center')
 ax.grid(True, linestyle=':', alpha=0.3)
 
 plt.savefig("images/binomial_likelihood.pgf", bbox_inches='tight')

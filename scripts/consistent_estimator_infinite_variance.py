@@ -33,8 +33,8 @@ ax.set_ylim(-0.05, 1.05)
 
 ax.set_xscale('symlog', linthresh=1.0)
 
-ax.grid(True, which="both", linestyle=':', alpha=0.4)
-ax.legend(loc='upper right', fontsize='small')
+ax.grid(True, which="both", linestyle=':', alpha=0.3)
+ax.legend(loc='upper right')
 
 plt.savefig("images/consistency_counterexample.pgf", bbox_inches='tight')
 plt.close()

@@ -36,7 +36,6 @@ for k in k_values:
         peak_m + 0.5,
         peak_y + 0.005,
         f"k = {k}",
-        fontsize=9,
         va="center"
     )
 
@@ -96,7 +95,7 @@ for i, o in enumerate(ordering):
     peak_m = m[peak_idx]
     peak_y = posterior[peak_idx]
 
-    ax[i].set_title(o, fontsize=10)
+    ax[i].set_title(o)
 
     ax[i].set_xlabel(r"$\mu$")
     ax[i].grid(True, alpha=0.3)

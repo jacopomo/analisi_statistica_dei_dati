@@ -24,7 +24,7 @@ def pgf_generator(**kwargs):
 
     return matplotlib.pyplot.subplots(**kwargs)
 
-def table_generator(n_columns: int, labels: tuple, content: tuple, output_file_name: str):
+def table_generator(n_columns: int, labels: tuple, content: tuple, output_file_name: str, note: str = None):
     '''
     Generates a LaTeX table and writes it to a file. At the moment the content is expected to be 
     already formatted as LaTeX math mode strings, but this can be extended in the future to allow
@@ -37,6 +37,7 @@ def table_generator(n_columns: int, labels: tuple, content: tuple, output_file_n
         content: Tuple of numpy arrays or lists, each containing the content for a column.
             e.g. (n_table, wilks_intervals, lr_intervals, central_intervals)
         output_file_name: Name of the output .tex file to write the table to.
+        note: Optional trailing LaTeX text to append after the table.
     '''
 
     table = r"""
@@ -70,6 +71,10 @@ def table_generator(n_columns: int, labels: tuple, content: tuple, output_file_n
 
     with open(f"tables/{output_file_name}", "w", encoding="utf-8") as f:
         f.write(table)
+        if note:
+            f.write("\n")
+            f.write(note)
+            f.write("\n")
 
 def code_snippet_generator(start_tag, end_tag, output_file_name, file=__file__):
     '''

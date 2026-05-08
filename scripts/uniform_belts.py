@@ -104,7 +104,7 @@ for plot_idx, (ax, (title, low, high)) in enumerate(zip(axes, plots)):
     ax.set_xlabel(r"$m$")
     ax.set_xlim(0, max(m_grid))
     ax.set_ylim(-0.5, max(x_grid))
-    ax.grid(alpha=0.25)
+    ax.grid(alpha=0.3)
 
 axes[0].set_ylabel(r"$x$")
 

@@ -350,9 +350,9 @@ The important take-away is that \textbf{there is no universal goodness of fit te
 
 \subsection{Kolmogorov-Smirnov GOF}
 
-While we have recently learned that for continuos distributions we can't write a general GOF test, we can construct one that is "pretty good" in the case of a one-dimensional real-valued observable $X\in\R$.
+While we have recently learned that for continuos distributions we can't write a general GOF test like we did for the binned LR, we can construct one that is remarkably effective in the case of a one-dimensional real-valued observable $X\in\R$.
 
-Let $H_0$ be the simple hypothesis that the cumulative of $X$ be a certain $F(x)$, and that this cumulative be completely known. We then construct the statistic:
+Let $H_0$ be the simple hypothesis that the cumulative of $X$ is a certain $F(x)$, and that this cumulative be completely known (no free parameters). We then construct the statistic:
 
 \begin{equation}
 	D_N \equiv \max_i\left|S_i - F\left(x_i\right)\right|
@@ -360,19 +360,72 @@ Let $H_0$ be the simple hypothesis that the cumulative of $X$ be a certain $F(x)
 \label{eq:KS_Test}
 \end{equation}
 
-We are essentially finding the max deviation, over the observed data, between the cumulative of the data and the "sample cumulative", defined as:
+With:
 
 	\[
-	S_i = \sum_{j:x_j<x_i}\frac{1}{N}
+	S_i = \sum_{j:x_j\leq x_i}\frac{1}{N}
 	\]
 
-[can we describe this real quick? "The sample cumulative is essentially..."]
-The critical region for this test is $D_N>q_\alpha$, the threshold for which can be found in tables. 
+$S_i$ goes under the name of "sample cumulative", and is essentially a step function that increases by $\frac{1}{N}$ at the location of each data point, representing the fraction of observations less than or equal to $x$. The K-S test simply looks for the max  deviation (over the data) between the theoretical and sample cumulative. 
 
-We can see that the distribution of $D_N$ assumes higher values under $\cancel{H_0}$ than $H_0$, making it an unbiased right-tailed test. We can also see that $\lim_{N \to \infty} D_N = 0$ under $H_0$ but not if it is rejected, which also makes it a consistent Test. Furthermore, the \emph{pdf} $p(D)$ does not depend on $F(x)$ [WHY??]
+The critical region for this test is $D_N>q_\alpha$, the threshold for which can be found in the appropriate tables. 
 
+We can see that the distribution of $D_N$ assumes higher values under $\cancel{H_0}$ than $H_0$, making it an unbiased right-tailed test. We can also see that $\lim_{N \to \infty} D_N = 0$ under $H_0$ but not if it is rejected, which also makes it a consistent Test.
 
-These properties allow us to establish $D_N$ as a good Test statistic, and especially its independence from $F(x)$ allows us to create tables for the thresholds of $D$ for each $N$, on which the statistic depends.
+Furthermore, the \emph{pdf} $p(D)$ does not depend on $F(x)$, provided it is continuos. Once again, it is the probability integral transform theorem \ref{th:universal_uniform} that states that if a random variable $X$ follows a distribution $F(x)$, then the transformed variable $y = F(X)$ always follows a Uniform distribution. Since every $F(x)$ maps to the same uniform distribution, the distribution of the maximum deviation $D_N$ is universal and depends only on the sample size $N$, allowing us to table the values.
 
+For large $N$, we can use the asymptotic properties of this cumulative to find a $p$-value without tables:
+	\[
+	\lim_{N\to\infty} P\left(\sqrt{N}D_N>z\right) = 2\sum_{i=1}^\infty \left(-1\right)^{i-1}e^{-2i^2z^2}
+	\]
 
+While the sum may look scary what we wish to do is plug in $z= \sqrt{N}D_N$ into the above formula, which by definition gives us the $p$-value.
 
+\begin{example}
+	Suppose we have a small dataset of $N=10$ observations:
+	
+	\input{tables/ks_x_values_row.tex}
+		
+	We wish to test the null hypothesis $H_0$ that these data are drawn from a standard Normal distribution $\N(x;\mu=0, \sigma=1)$. The cumulative is $F(x) = \Phi(x)$, which has no analytical form but is tabled for null mean and unit variance (standard) Normal distributions.
+
+	To calculate $D_N$, we first sort the data (already done) and compute the sample cumulative $S_N(x_i)$ and the theoretical cumulative $\Phi(x_i)$ at each point:
+	
+	\input{tables/ks_example_table.tex}
+	
+	We would then compare this value to a K-S table for $N=10$. For a significance level of $\alpha = 0.05$, the critical value is approximately $0.41$, which we fall below and therefore fail to reject $H_0$ at this level of significance.\sidenotemark
+	
+	When we plot this, the sample cumulative $S_N(x)$ appears as a "staircase" starting at 0 and jumping by $\frac{1}{N} = 0.1$ at each data point. The theoretical $F(x)$ is the smooth sigmoid curve of the Gaussian. The statistic $D_N$ is literally the longest vertical "jump" from one corner of a step to the curve.
+	
+	\begin{figure}[H]
+		\centering
+		\input{images/ks_example.pgf}
+		\caption{Kolmogorov Smirnov test for $10$ samples of a standard Normally distributed $x$. The statistic $D_N(x)$ is plotted against the cumulative distribution $\Phi(x)$.}
+		\label{fig:ks_example}
+	\end{figure}
+\end{example}
+
+\sidenotetext{Good, because this data was indeed generated following a standard Normal!}
+
+\subsubsection{A secondary application: The Two-Sample Test}
+It is possible to construct an analogous statistic to test the hypothesis $H_0$ that two independent datasets, with sizes $N_1$ and $N_2$, are drawn from the same (unknown) distribution.
+
+	\[
+	D = \max_x \left|S_{1,N_1}(x) - S_{2,N_2}(x)\right|
+	\]
+	
+To use standard tables, we often scale this by a factor related to the effective sample size:
+
+	\[
+	\hat{D}=\sqrt{\left(\frac{N_1N_2}{\left(N_1+N_2\right)}\right)}\cdot\max\left|S_{1,i}-S_{2,i}\right|
+	\]
+
+Instead of comparing a dataset to a theoretical curve, we compare two "staircases" to each other. If the two samples come from the same source, their sample cumulatives should fluctuate around each other; if they diverge significantly at any point, $H_0$ is rejected. This is extremely powerful because it requires no prior knowledge of what the underlying distribution actually is.
+
+\todo{I am no so convinced of the following. We can "sweep it under the rug" as far as I am concerned.}
+We must be careful with the following limitations:
+
+\begin{enumerate}
+	\item Composite Hypotheses: The K-S test is not valid for estimating the parameters of $F(x)$ from the data itself. Remember, we assumed a simple $H_0$ so $F(x)$ has no free parameters, and using, for example, the mean of your data to define a Normal distribution and then testing against it would bias the model.
+	\item Discreteness/Binning: The test assumes $F(x)$ is continuous. If applied to binned data, the test becomes conservative (the true $p$-value will be smaller than the one from the table). In these cases we use Tests based on the LLR as we have done before.
+	\item Numeric implementation: not all softwares correctly implement the test for finite $N$.
+\end{enumerate}
