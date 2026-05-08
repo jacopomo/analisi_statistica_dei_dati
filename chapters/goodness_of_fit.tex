@@ -311,6 +311,68 @@ Where we have defined $t$ to be a specific Test that we will talk about in the n
 Annoying derivation, I already did the one above I can't handle two in the same day
 \section{Continuous distributions}
 
-\section{1-d}
+So far, we have seen the Likelihood Ratio GOF test for binned sampled data (histograms). We now ask whether it is possible to generalize this theory to the unbinned case. Specifically, whether a general GOF test exists for \emph{pdf}'s of real-valued observable data. 
 
-Of course all of this has been randomly sectioned, we can touch up on that as we write. 
+Naturally, one might attempt to extend the binned case to the continuous one by asymptotically tightening the bins to an infinitesimal width. In the binned case, we know that the Log-Likelihood Ratio (LLR), $-2\ln \lambda(\hat{\theta})$, asymptotically tends toward a $\chi^2$ distribution, providing a robust GOF statistic. It might seem natural, then, to conclude that the unbinned Maximum Likelihood value, $L_x(\hat{\theta})$, would serve as a good asymptotic GOF test.
+
+This reasoning, however, is flawed. It involves a dangerous confusion between the Log-Likelihood Ratio $\lambda(x, \theta)$, which measures the relative agreement between two hypotheses, and the Likelihood Function $L(x, \theta)$ itself. 
+
+We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, which only depends on the data but not the parameters. Consequently, a single value of $L$ at a fixed $\theta$ cannot be interpreted as a GOF statistic; it has no absolute scale and its distribution is generally unknown.\sidenote{Remember, the Likelihood is not a "probability".} If we were to do a change of variables, the \emph{pdf}, and therefore Likelihood would change through the multiplication of a re-scaling Jacobian term, which cancels out in the LLR. This shows how the two are fundamentally different, and why the \emph{ratio} of Likelihoods has more general asymptotic properties than the Likelihood itself.
+
+\begin{example}
+	To demonstrate the danger of using the maximum Likelihood as a GOF indicator, consider a set of $n$ observations $\{x_i\}$ sampled from a Uniform distribution in the interval $[0, m]$. The PDF is:
+	
+	\[
+	p(x) = \frac{1}{m} \quad \text{for } 0 \le x \le m
+	\]
+	
+	The total Likelihood function for the sample is:
+	
+	\[
+	L(m) = \prod_{i=1}^{n} \frac{1}{m} = m^{-n} \quad \text{for } m \geq \max\left(x_i\right) 
+	\]
+	
+	With \emph{MLE} $\hat{m_{\text{MLE}}} = \max\left(x_i\right)$. Suppose we have two different toy datasets:
+	
+	\begin{itemize}
+		\item Dataset $1$: 100 points uniformly distributed between 0 and 1
+		\item Dataset $2$: 100 points distributed with a tight peak around $0.5$ and less dense tails of points spanning from $[0,1]$ 
+	\end{itemize}
+	
+	In both cases, the  \emph{MLE}  yields $\hat{m_{\text{MLE}}} = 1.0$. Consequently, the maximized Likelihood value for both datasets is identical: $L = (1)^{-100} = 1$.
+	
+	The maximum Likelihood only considers the value of the \emph{pdf} at the points where data exists. It is completely blind to the global distribution of the data, ignoring the fact that dataset $1$ is a much better fit than dataset $2$ for a uniform distribution. 
+	
+	This confirms that the Maximum Likelihood value carries information about the parameters, but is utterly silent regarding the goodness of fit.
+\end{example}
+
+The important take-away is that \textbf{there is no universal goodness of fit test for continuous distributions}.
+
+\subsection{Kolmogorov-Smirnov GOF}
+
+While we have recently learned that for continuos distributions we can't write a general GOF test, we can construct one that is "pretty good" in the case of a one-dimensional real-valued observable $X\in\R$.
+
+Let $H_0$ be the simple hypothesis that the cumulative of $X$ be a certain $F(x)$, and that this cumulative be completely known. We then construct the statistic:
+
+\begin{equation}
+	D_N \equiv \max_i\left|S_i - F\left(x_i\right)\right|
+\tag{Kolmogorov-Smirnov Test}
+\label{eq:KS_Test}
+\end{equation}
+
+We are essentially finding the max deviation, over the observed data, between the cumulative of the data and the "sample cumulative", defined as:
+
+	\[
+	S_i = \sum_{j:x_j<x_i}\frac{1}{N}
+	\]
+
+[can we describe this real quick? "The sample cumulative is essentially..."]
+The critical region for this test is $D_N>q_\alpha$, the threshold for which can be found in tables. 
+
+We can see that the distribution of $D_N$ assumes higher values under $\cancel{H_0}$ than $H_0$, making it an unbiased right-tailed test. We can also see that $\lim_{N \to \infty} D_N = 0$ under $H_0$ but not if it is rejected, which also makes it a consistent Test. Furthermore, the \emph{pdf} $p(D)$ does not depend on $F(x)$ [WHY??]
+
+
+These properties allow us to establish $D_N$ as a good Test statistic, and especially its independence from $F(x)$ allows us to create tables for the thresholds of $D$ for each $N$, on which the statistic depends.
+
+
+
