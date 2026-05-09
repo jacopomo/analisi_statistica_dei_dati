@@ -502,7 +502,7 @@ At first glance, this looks identical to what we have previously stated, but the
 
 We have, in the previous sections, talked about operators such as the distribution, expected value, and variance of random variables. It is now time to generalize these definitions to statistics, which we remind are \emph{functions} of the random variables themselves. 
 
-\subsubsection{Probability distribution of a statistic}
+\subsection{Probability distribution of a statistic}
 Let's begin with the most pressing one: how do we define the \emph{distribution} of a \emph{statistic}? Well, if I know the discrete \emph{pmf} of $x$ then the \emph{pmf} of the statistic $f(x)$ is easily written as $pmf\left(x(f)\right)$, no surprises there. 
 
 Things get more interesting in the continuous case, where the interval in the variable space is does not necessarily have the same measure as its image in the statistic space. As we well know, we must multiply by the derivative of the statistic with respect to the random variable. To be more precise:
@@ -592,16 +592,21 @@ taken with a "$-1$" before if $f$ is monotonically decreasing. The reader can re
 
 \end{example}
 
-\subsubsection{Expected value of a statistic}
+\subsection{Expected value of a statistic}
 Another important operator is the expected value. We defined it for a random variable in Def \ref{def:mean}, and we now look to generalize it to statistics.
 	\[
 	\E[f(X)] = \E_X[f] = \int f(x)p_X(x)\dd x \,\,\, \text{or} \,\,\, \sum_i f(x_i)P_X(x_i) \,\, \text{if X is discrete}
 	\]
 	
-$\E_X$ is a linear operator, and for the LLN $\E_X[x]=\mu$. We also take the opportunity to introduce two helpful properties:
+$\E_X$ is a linear operator, and for the LLN $\E_X[x]=\mu$. We also take the opportunity to introduce some helpful properties:
 	\[
-	\E_x\left[ (x-\mu)^2 \right] = \E_X[x^2] - \mu^2 = \Var[X]
+	\Var[X] = \E_x\left[ (x-\mu)^2 \right] = \E_X[x^2] - \mu^2
 	\]
+
+This gives us a means of calculating the Variance in a much easier way, and easily shows how $\Var[x]\geq0$.
+
+We can also apply the familiar Schwartz inequality:
+
 	\[
 	\E[XY]\leq\sqrt{\E[X^2]\cdot\E[Y^2]} \quad \text{(Schwartz inequality)}
 	\]
@@ -676,7 +681,7 @@ since the distribution is centered at zero, we have that $\E\left[X\right]=\mu=0
 However, because $x^3$ is an odd function, its expected value over a symmetric interval is zero. This results in a null covariance, even though the two variables are clearly not independent.
 \end{example}
 
-\subsubsection{Moments of a statistic}
+\subsection{Moments of a statistic}
 \label{subsec:moments}
 We can further generalize the concept of mean and variance by introducing the \textbf{moments of a distribution}.
 \begin{definition}[$n$\emph{-th} order moment of a distribution]
