@@ -1,6 +1,6 @@
 \chapter{Exercises}
 
-\section{Probability 101}
+\section{Probability 101}\label{exer:probability_101}
 
 The following exercises will be focused on performing variable change and finding the distribution of various statistics.
 
@@ -111,6 +111,42 @@ The following exercises will be focused on performing variable change and findin
 	so all possible decompositions of $s$ must be taken into account.
 	The convolution precisely performs this weighted sum over all
 	possible pairs $(x,s-x)$.
+	
+	Consider now the case where both $X$ and $Y$ follows a uniform distribution between $0$ and $m$ $\mathcal{U}[0,m]$. We have that: $s \in [0, 2m]$.
+	
+	We have then:
+	\[
+	f_S(s)
+	=
+	\int_{0}^{0}
+	\frac{1}{m}p_Y(s-x)\,dx
+	\]
+	knowing that $p_Y(s-x)\neq0 \; \text{if} s-x\leq m$ we must separate the domain of $f_S(s)$. Thus:
+	\[
+		f_S(s)=\begin{cases}
+		\int_0^s\frac{1}{m^2}\;dx=\frac{s}{m^2} \; &\text{if} \; 0\leq s\leq m\\
+		\int_{s-m}^m\frac{1}{m^2}\;dx=\frac{2m-s}{m^2} \; &\text{if} \; m\leq s\leq 2m\\
+		0 \; &\text{otherwise}
+		\end{cases}
+	\]
+	This shows that the density increases linearly up to $s=m$ and then decreases symmetrically. This is expected: there are more ways to obtain intermediate sums than extreme ones.
+	
+	We can verify normalization:
+	\[
+		\int_{0}^{2m}f_S(s)\;ds=\int_0^m\frac{s}{m^2}\;dx+\int_m^{2m}\frac{2m-s}{m^2}\;ds=\frac{5}{2}-\frac{3}{2}=1
+	\]
+	
+	We are now interested in computing the expected value and variance. For the expected value:
+	\[
+		\E[s]=\E[x+y]=\E[x]+\E[y]=\frac{m}{2}+\frac{m}{2}=\frac{m}{2}
+	\]
+	where we've used the nice properties of the expected value. For the variance:
+	\begin{align*}
+		\Var[s]&=\E[(x+y-m)^2]=\E\left[\left(x-\frac{m}{2}+y-\frac{m}{2}\right)^2\right]\\
+		&=\underbrace{\E\left[\left(x-\frac{m}{2}\right)^2\right]}_{\Var[x]}+\underbrace{E\left[\left(y-\frac{m}{2}\right)\right]}_{\Var[y]}+2\underbrace{E\left[\left((x-\frac{m}{2})\right)\left(y-\frac{m}{2}\right)\right]}_{\Cov[x,y]}\\
+		&=\frac{m^2}{16}+\frac{m^2}{16}+0=\frac{m^2}{6}
+	\end{align*}
+	where the covariance is null since $x$ and $y$ independent. The reader can also compute expected value and variance directly from the \emph{pdf} to become comfortable with these types of calculations.
 \end{exercise}
 
 \begin{exercise}
