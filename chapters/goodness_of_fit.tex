@@ -324,10 +324,10 @@ Naturally, one might attempt to extend the binned case to the continuous one by 
 
 This reasoning, however, is flawed. It involves a dangerous confusion between the Log-Likelihood Ratio $\lambda(x, \theta)$, which measures the relative agreement between two hypotheses, and the Likelihood Function $L(x, \theta)$ itself. 
 
-We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, which only depends on the data but not the parameters. Consequently, a single value of $L$ at a fixed $\theta$ cannot be interpreted as a GOF statistic; it has no absolute scale and its distribution is generally unknown.\sidenote{Remember, the Likelihood is not a "probability".} If we were to do a change of variables, the \emph{pdf}, and therefore Likelihood would change through the multiplication of a re-scaling Jacobian term, which cancels out in the LLR. This shows how the two are fundamentally different, and why the \emph{ratio} of Likelihoods has more general asymptotic properties than the Likelihood itself.
+We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, which only depends on the data but not the parameters. Consequently, a single value of $L$ at a fixed $\theta$ cannot be interpreted as a GOF statistic; it has no absolute scale and its distribution is generally unknown\sidenote{Remember, the Likelihood is not a "probability".}. If we were to do a change of variables, the \emph{pdf}, and therefore Likelihood would change through the multiplication of a re-scaling Jacobian term, which cancels out in the LLR. This shows how the two are fundamentally different, and why the \emph{ratio} of Likelihoods has more general asymptotic properties than the Likelihood itself.
 
 \begin{example}
-	To demonstrate the danger of using the maximum Likelihood as a GOF indicator, consider a set of $n$ observations $\{x_i\}$ sampled from a Uniform distribution in the interval $[0, m]$. The PDF is:
+	To demonstrate the danger of using the maximum Likelihood as a GOF indicator, consider a set of $n$ observations $\{x_i\}$ sampled from a Uniform distribution in the interval $[0, m]$. The \emph{pdf} is:
 	
 	\[
 	p(x) = \frac{1}{m} \quad \text{for } 0 \le x \le m
@@ -339,7 +339,7 @@ We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, 
 	L(m) = \prod_{i=1}^{n} \frac{1}{m} = m^{-n} \quad \text{for } m \geq \max\left(x_i\right) 
 	\]
 	
-	With \emph{MLE} $\hat{m_{\text{MLE}}} = \max\left(x_i\right)$. Suppose we have two different toy datasets:
+	With \emph{MLE} $\hat{m}_{\text{MLE}} = \max\left(x_i\right)$. Suppose we have two different toy datasets:
 	
 	\begin{itemize}
 		\item Dataset $1$: 100 points uniformly distributed between 0 and 1
@@ -373,7 +373,7 @@ With:
 	S_i = \sum_{j:x_j\leq x_i}\frac{1}{N}
 	\]
 
-$S_i$ goes under the name of "sample cumulative", and is essentially a step function that increases by $\frac{1}{N}$ at the location of each data point, representing the fraction of observations less than or equal to $x$. The K-S test simply looks for the max  deviation (over the data) between the theoretical and sample cumulative. 
+$S_i$ goes under the name of "sample cumulative", and is essentially a step function that increases by $\frac{1}{N}$ at the location of each data point, representing the fraction of observations less than or equal to $x_i$. The K-S test simply looks for the max  deviation (over the data) between the theoretical and sample cumulative. 
 
 The critical region for this test is $D_N>q_\alpha$, the threshold for which can be found in the appropriate tables. 
 
