@@ -117,7 +117,7 @@ The following exercises will be focused on performing variable change and findin
 	Following the same blueprint as exercise \ref{exer:variable_sum}, we now want to determine the \emph{pdf}
 	$f_{\Pi}(\pi)$ of the statistic
 	\[
-	\Pi = X + Y
+	\Pi = X \cdot Y
 	\]
 	As we've done before, we want to express one of the original variables as a function
 	of the statistic, perform a change of variables, and then marginalize over
@@ -151,6 +151,43 @@ The following exercises will be focused on performing variable change and findin
 		f_{\Pi}(\pi)=\int_{-\infty}^{+\infty}p_{X}(x)p_{Y}\left(\frac{\pi}{x}\right)\frac{1}{\left|x\right|}\; dx
 	\]
 \end{exercise}
+
+\begin{exercise}
+	Now you know the drill. We want to determine the \emph{pdf} $f_{R}(r)$ of the statistic:
+	\[
+		R=\frac{X}{Y}
+	\]
+	We set \sidenotemark:
+	\[
+		(x,y)\longrightarrow (r=x/y,y)
+	\]
+	Thus:
+	\[
+	J = \det 	\begin{pmatrix}
+		\dfrac{\partial r}{\partial x} &
+		\dfrac{\partial r}{\partial y}
+		\\[1em]
+		\dfrac{\partial x}{\partial x} &
+		\dfrac{\partial x}{\partial y}
+	\end{pmatrix} = \det \begin{pmatrix}
+		\frac{1}{y} & -\frac{x}{y^2}\\
+		0 & 1\\
+	\end{pmatrix}=\frac{1}{y}
+	\]
+	We have that:
+	\[
+		p_{R, Y}(r,y)=p_{X,Y}(ry,y)|y|
+	\]
+	marginalizing over $y$:
+	\[
+		f_R(r)=\int_{-\infty}^{+\infty}p_{X,Y}(ry,y)|y|\;dy
+	\]
+	that, for independent variables, becomes:
+	\[
+		f_R(r)=\int_{-\infty}^{+\infty}p_X(rx)p_Y(y)|y|\;dy
+	\]
+\end{exercise}
+\sidenotetext{This time we substituted the variable $x$ with the statistic $r$. Obviously there is no difference in the final result, but the reader can easily verify that this choice greatly simplifies the algebra.}
 
 \section{Functional Inferences}
 
