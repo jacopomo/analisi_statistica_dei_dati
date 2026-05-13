@@ -55,7 +55,7 @@ We now consider the "fortunate" case in which the unknown parameter can be descr
 \pi_x(\theta) = \pi(\theta)\frac{L_x(\theta)}{p(x)}
 \]
 
-We then determine a subset $f(x)$ of the parameter space (typically an interval), depending on the observed data $x$, such that
+We then determine a subset $f(x)$ of the parameter space\sidenote{Yes, $f(x)$ is a subset of the parameter space, at a fixed $x$} (typically an interval), depending on the observed data $x$, such that
 \begin{equation}
 	\int_{f(x)} \pi_x(\theta)\, d\theta = c
 	\label{eq:Bayes_int_eq}
@@ -81,8 +81,9 @@ In this case, the equation becomes:
 
 Where $q(c)$ is a constant that depends on the credibility $c$ in a way such as to satisfy the equation. Usually, this allows us to find one unique solution, given $c$ and the ordering function. Essentially, we are finding an interval in $\theta$ where $o(\theta)\geq q_c$ and the above integral is equal to $c$.
 
-The most common and simple choice is to use \emph{posterior ordering} $o(\theta) =\pi_x(\theta)$, which outputs credible region with the smallest measure in $\dd\theta$. This is desirable, as it intuitively restricts the credible values of the parameters more than any other ordering function. We note that this is not invariant for variable changes in the parameter space. 
+The most common and simple choice is to use \emph{posterior ordering} $o(\theta) =\pi_x(\theta)$, where the $\theta$ that greater contribute to $\pi(\theta)$ are integrated over first. Essentially, we want to prioritize credible" $\theta$ values and so we choose the integral limits so that those are included first. This may seem complicated, but it's nothing more than integrating the posterior starting from its maximum and expanding "outwards", until the area underneath the curve equals the credibility. This algorithm certainly will output a credible region containing the most credible $\theta$, as well as the one with the smallest measure in $\dd\theta$. This is desirable, as it intuitively restricts the credible values of the parameters more than any other ordering function. We note that this is not invariant for variable changes in the parameter space. 
 
+We will talk about ordering algorithms in greater detail in section \ref{subsec:ordering}.
 
 \begin{example}
 	Let's formulate an example: let's imagine to measure an observable that is distributed following a Poisson \emph{pdf} depending on a parameter $\mu$: $p(k;\mu) = \frac{e^{-\mu}\mu^k}{k!}$. However, let's assume that for some reason we know that $\mu$ admits a \emph{pdf} and that it is uniformly distributed between $0$ and $10$. 
@@ -112,9 +113,15 @@ The most common and simple choice is to use \emph{posterior ordering} $o(\theta)
 	
 	We want to find, given a measurement $k$, an interval for $\mu$ with a credibility of $90\%$. We know this to mean that we want to find an interval in $\mu$ of the type $\mu\in[a,b]$ such that $\int_a^bp(\mu)\dd \mu= 0.9$. We can imagine there to be an infinite number of such intervals, and so we define different \emph{ordering functions} that change the type of interval we get.
 	
-	For example, if we choose to integrate over the zone where $p(\mu)\geq q_c$, we define two bounds (the two solutions $a,b$ of $p(\mu)\geq q_c$) such that $\int_{p(\mu)\geq q_c}p(\mu)\dd \mu = 0.9$. This is called "posterior ordering" and is the most natural choice, as it includes the maximum value of the posterior by definition, meaning that it also results in the minimal interval length in $\mu$.
+	For example, if we choose to integrate over the zone where $p(\mu)\geq q_c$, we define two bounds (the two solutions $a,b$ of $p(\mu)\geq q_c$) such that 
 	
-	We can also integrate by starting from the maximum or minimum value of $\mu$, obtaining lower or upper estimates of the parameter. 
+	\[
+	\int_{p(\mu)\geq q_c}p(\mu)\dd \mu = 0.9
+	\]
+	
+	This is called "posterior ordering" and is the most natural choice, as it includes the maximum value of the posterior by definition, meaning that it also results in the minimal interval length in $\mu$.
+	
+	We can also integrate by starting from the maximum or minimum value of $\mu$, obtaining lower or upper estimates of the parameter, respectively. 
 	
 	These different orderings are shown in the following image, assuming to have observed $k=5$.
 	
@@ -127,14 +134,14 @@ The most common and simple choice is to use \emph{posterior ordering} $o(\theta)
 	
 	\input{tables/bayes_interval.tex}
 	
-	As we can see, the posterior ordering results in the smallest interval. One may be tempted to combine the lower and upper bounds into a smaller interval than even the posterior ordering, but doing so would break the definition of credibility (not only in the mathematical term, but also your credibility as a data analyst), as we would be artificially shortening an interval and therefore lowering the credibility. 
+	As we can see, the posterior ordering results in the smallest interval. One may be tempted to combine the lower and upper bounds into a smaller interval than even the posterior ordering, but doing so would break the definition of credibility (not only in the mathematical term, but also your credibility as a data analyst), as we would be artificially shortening an interval and therefore lowering the credibility.
 	
 	One may also be tempted to swap between lower and upper limits depending on the measured value of $k$. However, this temptation must be resisted, and in the future we will go into detail as to why this habit is to be avoided (\emph{flip-flopping} between ordering functions).
 \end{example}
-\todo{I think there is an error in the lower bound ordering case. The upper bound is set to 10, but to me it seems like a limit imposed in the python script, not the true results of the integration.}
+
 \todo{Add to the example the variable change stuff?} 
 
-We can see the power of this Bayesian case, and it's not hard to understand what an interval estimate looks like and means under this formulation. However, it is not always applicable, as the unknown parameters must admit \emph{pdf's} themselves.
+We can see the power of this Bayesian case, and it's not hard to understand what an interval estimate looks like and means under this formulation. However, it is not always applicable, as the unknown parameters must admit \emph{pdf's} themselves, and we must know or assign them, risking the loss of generality.
 
 \section{The standard interval estimator}
 
@@ -214,6 +221,7 @@ From this whole part we want to take away one very important concept: when we ob
 \textcolor{red}{This section seems like a huge pain but there are two slides of suffering that we must get through. Don't show the Gauss example as I will put that later.}
 
 \subsection{Ordering algorithms}
+\label{subsec:ordering}
 
 We have already talked about ordering algorithms up until this point, and justifiably so: they are imperative to implement when we want clear, unique solutions and to show the differences between the choices we can make. We'll expand on what we have already introduced and complete our arsenal of ordering functions with a few more neat algorithms.
 
