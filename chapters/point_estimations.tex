@@ -12,7 +12,7 @@ Remember, we can't measure parameters, so usually when we read that a parameter 
 Our job during this chapter will be to explore the different kinds of point estimators and to understand their properties so that we can decide, in the course of our data analyst careers, which tool is right for which job. Unfortunately, there is no "best way" that fits all of the situations we might find ourselves in, and the expert analyst is the one that knows how to justify their choice in a convincing matter.\sidenote{Note: not the one who makes the \emph{best} choice, as often it's unclear which properties we can afford to abandon in favor of others.}
 
 \section{Bayesian point estimator}
-Let's, as we have done before, discuss the Bayesian case first, where our parameter $\theta$ follows a \emph{pdf}. In this case, it's natural to start from the posterior as described in (\ref{def:posterior}), $p(\theta|x_0)$, and take its maximum as the estimator $\hat{\theta}$ for $\theta$. 
+Let's, as we have done before, discuss the Bayesian case first, where our parameter $\theta$ follows a pdf. In this case, it's natural to start from the posterior as described in (\ref{def:posterior}), $p(\theta|x_0)$, and take its maximum as the estimator $\hat{\theta}$ for $\theta$. 
 
 This is a natural yet unsatisfying approach - I know everything I could ever hope to know about $\theta$ through the full knowledge of the posterior and I waste the whole shape of the distribution only considering the maximum? We can definitely do better than that, and often when we are fortunate enough to find ourselves in this situation we can choose to abandon point estimates entirely in favor of other techniques that fully use the information contained in the posterior. 
 
@@ -35,7 +35,7 @@ For example, I can choose $\hat{\theta}=42$\sidenote{It is the answer to the lif
 
 Let's take a look at the situation we find ourselves in. Differently from the Bayesian case, we want to estimate a parameter that is not governed by a probability function, much less defined on a metric, and try to build a formalism that quantitatively tells us how "close" we are to estimating the parameter itself.\sidenote{Naturally, we can't talk about the "probability of guessing" $\theta$, as the phrase itself is not well defined, and we can't attribute a "real" value to the parameter any better than we can estimate it.} So how do we approach this daunting task?
 
-The answer lies in the fact that, much like the measurements, the estimate can be repeated an infinite number of times. Therefore, there exists the \emph{pdf} of $s(x)$ (and the estimator of $N$ measurements can be generally written as $s_N(\{x_i\})$). 
+The answer lies in the fact that, much like the measurements, the estimate can be repeated an infinite number of times. Therefore, there exists the pdf of $s(x)$ (and the estimator of $N$ measurements can be generally written as $s_N(\{x_i\})$). 
 \begin{definition}[Consistent estimator]
 	The estimator $s_N(\{x_i\})$ is a \emph{consistent} estimator of $\theta$ if
 	\[
@@ -45,13 +45,13 @@ The answer lies in the fact that, much like the measurements, the estimate can b
 \label{def:consistent_estimator}
 \end{definition}
 
-Generally, we believe it's more clear to denote the estimator for $\theta$ as $\hat{\theta}$, and so from now on we'll use this notation, remembering that $\hat{\theta}$ is a statistic (and so is a function of the data) that admits \emph{pdf}.
+Generally, we believe it's more clear to denote the estimator for $\theta$ as $\hat{\theta}$, and so from now on we'll use this notation, remembering that $\hat{\theta}$ is a statistic (and so is a function of the data) that admits pdf.
 
 This property is so important that if $\hat{\theta}$ is not at least consistent for $\theta$ then  it is not even considered an estimator to begin with; frankly, it's non-negotiable that an estimator be at least consistent. For this reason, if we ever talk about any sort of estimator, this property is silently assumed. 
 
 With this property we can re-state the LLN \ref{subsec:LLN} as "the arithmetic mean is a consistent estimator of the mean $\E[x]$ of the distribution." We have already stated this, but it's helpful to remember if things get confusing; when we need a concrete example of an estimator let's think of the sample mean as a (consistent) estimator for the mean of a distribution.
 
-At this point, it becomes interesting to consider the variance of the estimator\sidenote{Remember, $\hat{\theta}$ admits a \emph{pdf}, so talking about the variance makes sense}, and since we know that it converges to the parameter at high statistics, we want to quantify "how precisely" it does so. In fact, when we write 
+At this point, it becomes interesting to consider the variance of the estimator\sidenote{Remember, $\hat{\theta}$ admits a pdf, so talking about the variance makes sense}, and since we know that it converges to the parameter at high statistics, we want to quantify "how precisely" it does so. In fact, when we write 
 	\[
 	\theta = \hat{\theta} \pm e
 	\]
@@ -266,7 +266,7 @@ Question: can we arbitrarily reduce the variance and bias of an estimator or is 
 	&\Rightarrow p(\hat\theta;\theta) = \exp\left[\alpha(\theta)\hat\theta+\beta(\theta)+c(\hat\theta)\right]
 	\end{align*}
 	
-	Which means that to satisfy the first inequality we must be able to express the \emph{pdf} in the exponential form written above which means that statistics that satisfy Darmois \ref{th:darmois} have minimum variance. We also note that this statistic is unbiased for $\E\left[\hat\theta\right]$, and not necessarily unbiased for $\theta$. Unfortunately, to remove the bias in $\theta$ we will have to sacrifice the minimum variance. 
+	Which means that to satisfy the first inequality we must be able to express the pdf in the exponential form written above which means that statistics that satisfy Darmois \ref{th:darmois} have minimum variance. We also note that this statistic is unbiased for $\E\left[\hat\theta\right]$, and not necessarily unbiased for $\theta$. Unfortunately, to remove the bias in $\theta$ we will have to sacrifice the minimum variance. 
 	
 	The other inequality is satisfied for sufficient statistics. 
 \label{def:CR}
@@ -305,7 +305,7 @@ Where by "$\geq$" we intend that the difference between the left and right hand 
 
 \subsection{Point estimates with moments}
 
-What do we do in the unfortunate case that we cannot express our \emph{pdf} as an exponential function? Well then, we don't have the \emph{MV} guaranteed, nor a sufficient statistic. How do we find a decent estimator for $\theta$ in the most general case? Well, we have one estimator for free in general, and the LLN comes to the rescue. Recall that we have stated that the arithmetic mean is a consistent estimator for $\E[x]$, and so in the worst case we can just use the good old arithmetic mean if the expected value is the parameter we are trying to estimate (as long as the latter exists and $x$ has finite variance). 
+What do we do in the unfortunate case that we cannot express our pdf as an exponential function? Well then, we don't have the \emph{MV} guaranteed, nor a sufficient statistic. How do we find a decent estimator for $\theta$ in the most general case? Well, we have one estimator for free in general, and the LLN comes to the rescue. Recall that we have stated that the arithmetic mean is a consistent estimator for $\E[x]$, and so in the worst case we can just use the good old arithmetic mean if the expected value is the parameter we are trying to estimate (as long as the latter exists and $x$ has finite variance). 
 
 And in the other cases? Let's explore a general and powerful technique, recalling the \emph{moments} that we have talked about in section \ref{subsec:moments}. For our point estimation problem, it's natural to consider the statistics of the following kind:
 
@@ -623,7 +623,7 @@ A further simplification is sometimes introduced:
 This expression is asymptotically equivalent, and has the advantage of being quadratic in $\theta$ if $\mu_i(\theta)$ is linear in $\theta$. However, it has significantly worse convergence properties, and the resulting estimator can be biased, sometimes with a bias larger than its statistical uncertainty.
 
 \section{Robustness of a statistic}
-We have seen thus far the basic principles of classic point estimators, where in most cases the \emph{pdf} of the observable is known almost to perfection. However, this is not always the case, and it's important to talk about one final concept: the \emph{robustness} of a statistic. 
+We have seen thus far the basic principles of classic point estimators, where in most cases the pdf of the observable is known almost to perfection. However, this is not always the case, and it's important to talk about one final concept: the \emph{robustness} of a statistic. 
 
 \begin{definition}[Robustness of a statistic]
 	The \emph{robustness} measures how well a statistic maintains its properties even if the underlying distributional assumptions are incorrect. 
@@ -650,8 +650,8 @@ In a sense, a robust statistic is more trustworthy, as it is less volatile to ou
 	\]
 	This means that the efficiency of $d_N$ is significantly worse than that of $s_N$. One might conclude that this settles the question. However, the story does not end here.
 	
-	Consider the case where we are not completely certain about the underlying \emph{pdf}. For example, suppose the data are contaminated by a small fraction $f$ of observations with a larger variance $\sigma_2$.
-	We model the total \emph{pdf} as a mixture of two Gaussians with the same mean $\mu$ but different variances (take $\sigma_2 = 3\sigma_1$):
+	Consider the case where we are not completely certain about the underlying pdf. For example, suppose the data are contaminated by a small fraction $f$ of observations with a larger variance $\sigma_2$.
+	We model the total pdf as a mixture of two Gaussians with the same mean $\mu$ but different variances (take $\sigma_2 = 3\sigma_1$):
 	\[
 	p(x; \mu, \sigma_1, f) = (1-f)\mathcal{N}(x;\mu,\sigma_1) + f\mathcal{N}(x;\mu, 3\sigma_1)
 	\]
@@ -683,7 +683,7 @@ In a sense, a robust statistic is more trustworthy, as it is less volatile to ou
 As we can see, the theory discussed up until now is rather fragile, and we'd like to find some robust estimators that we can trust even when we don't have full knowledge of the distribution of the data. 
 
 \subsection{Least Squares method}
-Let's talk about a robust estimator that is consistent even when the underlying \emph{pdf} is not known. We begin by remembering what we talked about in section \ref{subsec:Implicits} about implicit estimators: all we need is a general function $F$ such that $\E\left[F(x,\theta)\right] = 0$ to build one, and we shall consider the function $F\left(k_i,\theta\right) = k_i -\mu_i(\theta) = k_i - \E\left[k_i\right]$. It's clear to see that the expected value of this function is indeed equal to zero, and we wish to transform it while maintaining this property.\todo{Is it clear here that what comes is not limited to histograms but it can be used every time there's a set of observation depending on a parameter? I think it is -J}
+Let's talk about a robust estimator that is consistent even when the underlying pdf is not known. We begin by remembering what we talked about in section \ref{subsec:Implicits} about implicit estimators: all we need is a general function $F$ such that $\E\left[F(x,\theta)\right] = 0$ to build one, and we shall consider the function $F\left(k_i,\theta\right) = k_i -\mu_i(\theta) = k_i - \E\left[k_i\right]$. It's clear to see that the expected value of this function is indeed equal to zero, and we wish to transform it while maintaining this property.\todo{Is it clear here that what comes is not limited to histograms but it can be used every time there's a set of observation depending on a parameter? I think it is -J}
 
 We apply a generic linear transformation:
 	\[
@@ -716,7 +716,7 @@ Which corresponds to minimizing a quadratic form. In the case of $V_{ij}$ equal 
 
 Whose roots we recognize as the estimators that \emph{minimize the sum of squares}. This \textbf{Least Squares Method} (LSM) allows us to find consistent estimators for the parameters $\theta$. 
 
-Coming from the implicit estimator formalism, it follows that the consistency does not depend from the choice of $V$ (granted it is positively-defined) nor from the \emph{pdf}, making it a way to find robust estimators. However it is necessary that $\exists\; \mu_i(\theta)\equiv \E\left[k_i\right]$, which could be seen as a potential weakness for distributions where this is not the case, for example ones with heavy tails or many outliers.
+Coming from the implicit estimator formalism, it follows that the consistency does not depend from the choice of $V$ (granted it is positively-defined) nor from the pdf, making it a way to find robust estimators. However it is necessary that $\exists\; \mu_i(\theta)\equiv \E\left[k_i\right]$, which could be seen as a potential weakness for distributions where this is not the case, for example ones with heavy tails or many outliers.
 
 \begin{example}
 	Let's look at one specific, yet didactic, case: where the expected values are linear functions of the parameters $\mu_i = A_{ij}\theta_j$.
@@ -737,7 +737,7 @@ Coming from the implicit estimator formalism, it follows that the consistency do
 		&=A^{-1}A\vec{\theta} - \vec\theta = 0 
 	\end{align*}
 	
-	We add one last property to this, and in the case where $V_{ij}^{-1} = \text{cov}\left[k_i,k_j\right]$ then the estimator above is the one with minimum variance among all unbiased estimators that are linear functions of the data. We call this the \textbf{B.L.U.E} (the \emph{Best Linear Unbiased Estimator}). If the \emph{pdf} of $k_i$ is a Normal distribution, then this estimator is also the MVB. 
+	We add one last property to this, and in the case where $V_{ij}^{-1} = \text{cov}\left[k_i,k_j\right]$ then the estimator above is the one with minimum variance among all unbiased estimators that are linear functions of the data. We call this the \textbf{B.L.U.E} (the \emph{Best Linear Unbiased Estimator}). If the pdf of $k_i$ is a Normal distribution, then this estimator is also the MVB. 
 	
 	This is the Gauss-Markov theorem, which we won't prove nor go into further detail upon. 
 \end{example}
@@ -797,7 +797,7 @@ We note that the median always\sidenote{except for pathological cases involving 
 \end{theorem}
 \todo{We could split these into two and prove them individually or not prove, idrk}
 
-The sample median is such an important robust estimator that we also wish to see how it is distributed, since this will be independent of the \emph{pdf} from which the data was extracted.
+The sample median is such an important robust estimator that we also wish to see how it is distributed, since this will be independent of the pdf from which the data was extracted.
 
 Assume that $p(x)$ is a continuous pdf with a unique median $m$. Let us draw an i.i.d. sample of size $2k+1$ and consider the central order statistic, i.e. the sample median $\hat m_1$.
 
@@ -927,7 +927,7 @@ This procedure significantly reduces sensitivity to heavy tails, making it usefu
 
 \section{Systematic uncertainty}
 
-Because an unknown \emph{pdf} compromises our statistical certainty, we must adopt robust principles to minimize information loss. This specific form of ambiguity, which stems from a partial understanding of the \emph{pdf}, is what we term \textbf{systematic uncertainty}. Under this definition, we can see robustness as the property of not being sensible to systematic uncertainties. 
+Because an unknown pdf compromises our statistical certainty, we must adopt robust principles to minimize information loss. This specific form of ambiguity, which stems from a partial understanding of the pdf, is what we term \textbf{systematic uncertainty}. Under this definition, we can see robustness as the property of not being sensible to systematic uncertainties. 
 
 Let's assume we are measuring something that has independent counts, and so we assume a Poisson distribution, where the best estimator\sidenote{The calculation for the MLE for the $N$ Poisson extractions is found in \textcolor{orange}{REF}} for $\mu$ is $\hat\mu = \frac{\sum_i k_i}{N}$ 
 
@@ -956,7 +956,7 @@ Which is a specific case of the more general:
 There isn't a convention that is universally accepted, though usually both the systematic and statistic uncertainties get written separately, and each combine with their own counterparts (though systematic uncertainties are also often summed in quadrature like statistic ones). 
 
 \begin{example}
-	Let's look at an interesting case: along with my observable $k$, distributed like a Poisson $Pois(k,\mu+b)$, we have an observable $q$ that has a \emph{pdf} $p(q;b)$. This means that there is \emph{some} observable that gives me information on my background parameter $b$ (from which I was able to determine that $b$ fell within a certain range, for example). 
+	Let's look at an interesting case: along with my observable $k$, distributed like a Poisson $Pois(k,\mu+b)$, we have an observable $q$ that has a pdf $p(q;b)$. This means that there is \emph{some} observable that gives me information on my background parameter $b$ (from which I was able to determine that $b$ fell within a certain range, for example). 
 	
 	Well, I can now express my experiment as a combination measurement of two observables
 	
@@ -970,7 +970,7 @@ There isn't a convention that is universally accepted, though usually both the s
 \end{example}
 
 \begin{example}
-	Another interesting case is where $b$ has a \emph{pdf} (or \emph{dob} in the Bayesian case) and we can eliminate it by marginalizing:
+	Another interesting case is where $b$ has a pdf (or \emph{dob} in the Bayesian case) and we can eliminate it by marginalizing:
 	
 	\begin{align*}
 	p_q(k;\mu) &= \int p(k,b|q;\mu)\dd b = \int \pi(b)\frac{p(k,1|b;\mu)}{p(q)}\dd b\\
@@ -991,7 +991,7 @@ We also take a moment to talk about non-systematic "uncertainties" that might pl
 	\item Choice of data cuts and limits
 \end{itemize}
 
-Of course, the result of our measurements will depend on these (and so will the \emph{pdf} of the data), though they are not uncertainties. 
+Of course, the result of our measurements will depend on these (and so will the pdf of the data), though they are not uncertainties. 
 
 The important thing is to remain transparent at all times on these arbitrary choices, and to show in your treatment of the data that the results are not very sensitive to the different choices one may make (for example, by changing the binning and proving that the results do not vary significantly).
 

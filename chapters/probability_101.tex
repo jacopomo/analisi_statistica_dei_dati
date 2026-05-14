@@ -293,7 +293,7 @@ Often this gets (somewhat improperly) condensed in literature to be written as $
 
 So much for discrete random variables, let's talk about the interesting stuff and generalize this formalism to continuous\sidenote{Naturally, we will never have a continuous result from an experiment as everything at some scale gets discretized or binned in some way, though we are sure the readers will have no problem with forgiving this abstraction.} observables. The probability mass function, as we have defined it, will be identically zero for each value in a continuous space such as $\Re$, so we will need a new definition, and much like we are used to in physics, the concept of \emph{mass} gets translated to \emph{density}.
 
-\begin{definition}[Probability density function \emph{pdf}]
+\begin{definition}[Probability density function pdf]
 	For a continuous random variable x
 	\[
 	P(x:x\in A)= \int_{A} p_X(x)\dd x
@@ -303,14 +303,14 @@ So much for discrete random variables, let's talk about the interesting stuff an
 
 \todo{Maybe we should include here a brief discussion of pdf's properties, e.g. how they add up, ecc.}
 
-We use the term "function", but if we intend the integral in the Lebesgue sense we can extend the definition to \emph{pdf's} that are not functions but rather distributions. In general, this allows us a series of liberties that functions formally would not allow, such as mixing discrete and continuous variables. It's not guaranteed that a \emph{pdf} satisfies the Kolmogorov axioms, and the following example shows that while $p(x)\geq 0$ not necessarily $p(x) < 1$.
+We use the term "function", but if we intend the integral in the Lebesgue sense we can extend the definition to \emph{pdf's} that are not functions but rather distributions. In general, this allows us a series of liberties that functions formally would not allow, such as mixing discrete and continuous variables. It's not guaranteed that a pdf satisfies the Kolmogorov axioms, and the following example shows that while $p(x)\geq 0$ not necessarily $p(x) < 1$.
 
 	\[
 	p(x) = \begin{cases} 2 & \text{if } x \in [0,\frac{1}{2}] \\ 0 &  \text{otherwise} \end{cases}
 	\]
 
 
-However, it is crucial that $\int p(x)\dd x = P(X\in O_X) = 1$ (we say that the \emph{pdf} is \emph{normalized}), and one can verify that the example above satisfies this.\sidenote{Interesting to note as well that while probabilities in the Kolmogorov sense are pure dimensionless numbers, \emph{pdf's} have the dimensions of $[x]^{-N}$ where $N$ is the dimension of the space. This has natural parallels to the concept of mass and density in physics.} This normalization also brings us to define the \textbf{cumulative density function} of a distribution, as assures us that it is a monotonically increasing function of $x$ from $0$ to $1$.
+However, it is crucial that $\int p(x)\dd x = P(X\in O_X) = 1$ (we say that the pdf is \emph{normalized}), and one can verify that the example above satisfies this.\sidenote{Interesting to note as well that while probabilities in the Kolmogorov sense are pure dimensionless numbers, \emph{pdf's} have the dimensions of $[x]^{-N}$ where $N$ is the dimension of the space. This has natural parallels to the concept of mass and density in physics.} This normalization also brings us to define the \textbf{cumulative density function} of a distribution, as assures us that it is a monotonically increasing function of $x$ from $0$ to $1$.
 
 \begin{definition}[Cumulative density function \emph{cdf}]
 	For a continuous random variable x
@@ -393,7 +393,7 @@ The law of large numbers (LLN) is one of the most fundamental and well-known the
 \end{definition}
 
 \begin{definition}[Mean]
-	If $p_X(x)$ is the \emph{pdf} of $X$, we call the \emph{mean} of the distribution (or the expected value of $X$) the integral (Lebesgue):
+	If $p_X(x)$ is the pdf of $X$, we call the \emph{mean} of the distribution (or the expected value of $X$) the integral (Lebesgue):
 	\[
 	\langle x\rangle\equiv \E[x] \equiv \int_{O_X} x\cdot p_X(x)\dd x
 	\]
@@ -401,7 +401,7 @@ The law of large numbers (LLN) is one of the most fundamental and well-known the
 \end{definition}
 
 \begin{theorem}[Law of large numbers (LLN)]
-	Let $X$ be a real-valued observable, and $p(x)$ its \emph{pdf}. Let's suppose that the mean of $X$ exists and is finite:
+	Let $X$ be a real-valued observable, and $p(x)$ its pdf. Let's suppose that the mean of $X$ exists and is finite:
 	\begin{equation}
 	\mu = \E[x]=\int_{O_X} x\cdot p_X(x)\dd x
 	\label{eq:LLN_mean}
@@ -457,7 +457,7 @@ If we had to write the law of large numbers in words, it would read: "the sample
 	\qed
 \end{example}
 
-Now we can get to proving the LLN, armed with the Čebyšëv inequality. We notice that the \emph{pdf} of the vectorial observable $\{x_i\}_N$ can be written as the product of the \emph{pdf's} of the single observables, assuming that the observations are all independent: $p(x_N)=\prod_i^N p_X(x_i)$. 
+Now we can get to proving the LLN, armed with the Čebyšëv inequality. We notice that the pdf of the vectorial observable $\{x_i\}_N$ can be written as the product of the \emph{pdf's} of the single observables, assuming that the observations are all independent: $p(x_N)=\prod_i^N p_X(x_i)$. 
 
 Therefore, we have that
 \begin{align*}
@@ -851,7 +851,7 @@ The integrand is a holomorphic function with no poles\sidenote{If complex analys
 	&=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{x^2}{2\sigma^2}\right) \equiv \N(x; 0, \sigma)
 	\end{align*}
 
-This is the Gaussian (or normal) \emph{pdf}, and the way we derived it highlights its fundamental importance in statistics. It is important to emphasize that the shape of this limit distribution does not depend on the original distribution of $x$.\\
+This is the Gaussian (or normal) pdf, and the way we derived it highlights its fundamental importance in statistics. It is important to emphasize that the shape of this limit distribution does not depend on the original distribution of $x$.\\
 One can easily verify that the expected value and variance of the Gaussian coincide with those computed for $y_n$ at the beginning of the demonstration. \\
 In passing, we note that the sum of Gaussian distributions it is still a Gaussian. We will not go into detail about the properties of Gaussian distributions now, since we will encounter this important distribution many times throughout the rest of these notes.
 

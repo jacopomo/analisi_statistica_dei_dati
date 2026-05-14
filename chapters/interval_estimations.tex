@@ -31,7 +31,7 @@ We are looking for a way to express, up to a certain degree of \emph{confidence}
 Though you, as an attentive reader and excellent statistician will immediately identify the crucial flaw in this statement: $\sigma_a$ indicates the \emph{variability} of the estimate in the ensemble of repeated experiments, and does not represent the same "hard" upper/lower bound that we are trying to achieve through interval estimations. Really, the values $a-\sigma_a, a+\sigma_a$ have no more significance than any others in the point estimate formulation.
 
 \begin{example}
-	If we take a second, we can even find some edge case examples where the point estimate method breaks down, considering a Poisson \emph{pdf}. We know that the MLE is $\hat\mu=k$ with null bias and $\Var\left[\hat\mu\right] = \mu$. Therefore if I measure one count $k=1$ then I obtain the point estimate for $\mu = 1\pm1$. Only armed with this we would be tempted to say that we can't exclude $\mu\leq0$, even though we know that the counts can, by definition, only be positive.
+	If we take a second, we can even find some edge case examples where the point estimate method breaks down, considering a Poisson pdf. We know that the MLE is $\hat\mu=k$ with null bias and $\Var\left[\hat\mu\right] = \mu$. Therefore if I measure one count $k=1$ then I obtain the point estimate for $\mu = 1\pm1$. Only armed with this we would be tempted to say that we can't exclude $\mu\leq0$, even though we know that the counts can, by definition, only be positive.
 	
 	Even more pathologically, if we measure no counts, we arrive to $\mu=0\pm0$, which, taken at face value, means that we have an infinitely precise estimate of the mean and that it is null. 
 	
@@ -42,7 +42,7 @@ Though you, as an attentive reader and excellent statistician will immediately i
 When we talked about point estimations, we never came to talk about intervals in which the parameter was confined - going to an arbitrarily low probability basically any value was permitted. Now, we want to formulate a theory that limits, up to a certain degree of confidence, what values the parameter can adopt. 
 
 \begin{definition}[Interval estimator]
-	Given a \emph{pdf} $p(x;\theta)$ dependent on an unknown parameter $\theta\in A$, an \emph{interval estimator} is a statistic $f(x): X\rightarrowtail \mathcal{P}(A)$ which outputs a subset of the parameter space.
+	Given a pdf $p(x;\theta)$ dependent on an unknown parameter $\theta\in A$, an \emph{interval estimator} is a statistic $f(x): X\rightarrowtail \mathcal{P}(A)$ which outputs a subset of the parameter space.
 \end{definition}
 
 While a point estimate provides a single "best guess," an interval estimate offers something far more valuable: a measure of uncertainty. At first glance, reporting a range might seem less precise than inferring a specific value, but in practice, they serve distinct and vital roles. Interval estimates are not merely a contingency for when point estimates become unstable, such as in low-count Poisson regimes, but are essential tools for experimental design. They allow us to determine the required duration for data collection to achieve a desired precision. Furthermore, they are often the only rigorous way to report results in "null" observations, such as setting an upper limit on the probability of a rare event that has yet to be measured.
@@ -69,7 +69,7 @@ The importance of this scripture cannot be overstated: we are finding an interva
 
 The credibility $c$ quantifies the degree of belief that the true value of the parameter lies within the region $f(x)$. In practice, $c$ is chosen in advance, typically taking values between $0.9$ and $0.95$.
 
-As usual, the Bayesian formulation brings many nice properties such as respecting the Likelihood principle, obtaining clear, specific, and intuitive results. However, it depends on how we choose the prior, which can greatly influence the type of result we obtain. Also, we need $\theta$ to be able to admit a \emph{pdf} in the first place. \todo{Here we can talk about Jeffrey's prior, if it ever comes up, or reference priors.}
+As usual, the Bayesian formulation brings many nice properties such as respecting the Likelihood principle, obtaining clear, specific, and intuitive results. However, it depends on how we choose the prior, which can greatly influence the type of result we obtain. Also, we need $\theta$ to be able to admit a pdf in the first place. \todo{Here we can talk about Jeffrey's prior, if it ever comes up, or reference priors.}
 
 Integral (\ref{eq:Bayes_int_eq}) admits infinite solutions, so we must introduce a criteria to be able to select the specific solution we want. The most agreed upon way to proceed is by selecting an \emph{ordering function}\sidenote{We will dedicate more time to ordering functions in the near future} $o(\theta)$ that assigns a priority hierarchy to the values of the parameter to include. 
 
@@ -81,12 +81,12 @@ In this case, the equation becomes:
 
 Where $q(c)$ is a constant that depends on the credibility $c$ in a way such as to satisfy the equation. Usually, this allows us to find one unique solution, given $c$ and the ordering function. Essentially, we are finding an interval in $\theta$ where $o(\theta)\geq q_c$ and the above integral is equal to $c$.
 
-The most common and simple choice is to use \emph{posterior ordering} $o(\theta) =\pi_x(\theta)$, where the $\theta$ that greater contribute to $\pi(\theta)$ are integrated over first. Essentially, we want to prioritize credible" $\theta$ values and so we choose the integral limits so that those are included first. This may seem complicated, but it's nothing more than integrating the posterior starting from its maximum and expanding "outwards", until the area underneath the curve equals the credibility. This algorithm certainly will output a credible region containing the most credible $\theta$, as well as the one with the smallest measure in $\dd\theta$. This is desirable, as it intuitively restricts the credible values of the parameters more than any other ordering function. We note that this is not invariant for variable changes in the parameter space. 
+The most common and simple choice is to use \emph{posterior ordering} $o(\theta) =\pi_x(\theta)$, where the $\theta$ that greater contribute to $\pi(\theta)$ are integrated over first. Essentially, we want to prioritize "credible" $\theta$ values and so we choose the integral limits so that those are included first. This may seem complicated, but it's nothing more than integrating the posterior starting from its maximum and expanding "outwards", until the area underneath the curve equals the credibility. This algorithm certainly will output a credible region containing the most credible $\theta$, as well as the one with the smallest measure in $\dd\theta$. This is desirable, as it intuitively restricts the credible values of the parameters more than any other ordering function. We note that this is not invariant for variable changes in the parameter space. 
 
 We will talk about ordering algorithms in greater detail in section \ref{subsec:ordering}.
 
 \begin{example}
-	Let's formulate an example: let's imagine to measure an observable that is distributed following a Poisson \emph{pdf} depending on a parameter $\mu$: $p(k;\mu) = \frac{e^{-\mu}\mu^k}{k!}$. However, let's assume that for some reason we know that $\mu$ admits a \emph{pdf} and that it is uniformly distributed between $0$ and $10$. 
+	Let's formulate an example: let's imagine to measure an observable that is distributed following a Poisson pdf depending on a parameter $\mu$: $p(k;\mu) = \frac{e^{-\mu}\mu^k}{k!}$. However, let's assume that for some reason we know that $\mu$ admits a pdf and that it is uniformly distributed between $0$ and $10$. 
 	
 	I can therefore write my posterior:
 	
@@ -164,19 +164,19 @@ Basically, at its core, we can condense this entire equation into the most basic
 
 If we think about it, on the left side we have an integral in $\dd x$, and on the right a constant that we fix beforehand, namely the "confidence level" \emph{CL}\sidenote{Don't worry about these definitions, they will all get cleared up in the near future. This part aims to provide a general outlook on the math that we will be using, so just bear with us}. Fundamentally, the equation that describes the interval in $\theta$ is, justifiably so, an inequality dependent on the parameter that we must solve. Let's never forget this as it will always be the final step. 
 
-Now, what exactly is this $f(\theta)$? Well, since we are not in the Bayesian case and cannot directly say that the parameter admits a \emph{pdf}, we can only talk about the distribution of the observable: we want that, with probability \emph{CL}, the interval defined by $o_{\theta}(x)$ contains $\theta$\todo{SOS: re-state better}. As we will see, infinite such intervals exist for each fixed $\theta$ (there are infinite ways to integrate a normalized function such that its integral is equal to, say, $0.95$), and $o_{\theta}(x)$ serves as an "ordering function" with the aim of unambiguously defining one such interval by describing which $x$'s to include. 
+Now, what exactly is this $g(\theta)$? Well, since we are not in the Bayesian case and cannot directly say that the parameter admits a pdf, we can only talk about the distribution of the observable: we want that, with probability \emph{CL}, the interval defined by $o_{\theta}(x)$ contains $\theta$\todo{SOS: re-state better}. As we will see, infinite such intervals exist for each fixed $\theta$ (there are infinite ways to integrate a normalized function such that its integral is equal to, say, $0.95$), and $o_{\theta}(x)$ serves as an "ordering function" with the aim of unambiguously defining one such interval by describing which $x$'s to include. 
 
-This integral in eq. \ref{eq:int_definition} is nothing more than the integral of the \emph{pdf} itself, which we know to be the cumulative of the density function\sidenote{\emph{CDF's} start the integration from $0$, as the lower bound is not necessarily $0$ this integral is, at most, the difference of two \emph{CDF's}}, calculated on upper and lower bounds that may, in general, depend on the parameter. 
+This integral in eq. \ref{eq:int_definition} is nothing more than the integral of the pdf itself, which we know to be the cumulative of the density function\sidenote{This integral can be seen as, at most, the difference of two \emph{CDF's} in order to make the bounds work out}, calculated on upper and lower bounds that may, in general, depend on the parameter. 
 
-What this all means is that having fixed an observed $x_0$ (coming from \emph{pdf} $p(x;\theta)$), the ordering function describes a $\theta$-dependent interval for which the integral of the \emph{pdf} is greater than or equal to the \emph{CL}. Therefore, we can solve this expression (which we so naïvely wrote as $f(\theta) - CL \geq 0$) to find an interval in $\theta$, and that will be the estimate that we are looking for. 
+What this all means is that having fixed an observed $x_0$ (coming from pdf $p(x;\theta)$), \textbf{the ordering function describes a $\theta$-dependent $x$-interval for which the integral of the pdf is greater than or equal to the \emph{CL}}. Therefore, we can solve this expression (which we so naïvely wrote as $g_{x_0}(\theta) - CL \geq 0$) to find an interval in $\theta$, and that will be the estimate that we are looking for. 
 
-Solving this equation is rarely simple, and can be done when the \emph{pdf} assumes a closed form cumulative, or at least when the latter is tabled\todo{such as the ones in ref.}. The next sections will break down each part of the process, using examples and visual aids to try to better explain this difficult, yet fundamental concept.
+Solving this equation is rarely simple, and can be done when the pdf assumes a closed form cumulative, or at least when the latter is tabled\todo{such as the ones in ref.}. The next sections will break down each part of the process, using examples and visual aids to try to better explain this difficult, yet fundamental concept.
 
 \subsection{Confidence levels and coverage}
 Let's begin our piece-by-piece breakdown of eq. \ref{eq:int_definition} by being more precise in our definition of \emph{confidence level}:
 
 \begin{definition}[Confidence level]
-	Given a \emph{pdf} $p(x;\theta)$ dependent on an unknown parameter $\theta\in A$, and an interval estimator $f(x): X\rightarrowtail \mathcal{P}(A)$, we define the \emph{confidence level} (\emph{CL}) of $f(x)$:
+	Given a pdf $p(x;\theta)$ dependent on an unknown parameter $\theta\in A$, and an interval estimator $f(x): X\rightarrowtail \mathcal{P}(A)$, we define the \emph{confidence level} (\emph{CL}) of $f(x)$:
 	
 	\[
 	CL(f) \equiv \inf_{\theta} P(f(x)\ni\theta) = \inf_\theta\int_{x:f(x)\ni\theta} p(x;\theta)\dd x
@@ -229,7 +229,7 @@ The idea is to study the different options we have for $o_{\theta}(x)$ in the us
 
 Basically, as we have said before, solving the ordering function equation $o_{\theta}(x)\geq q(CL)$ we are finding the $\theta$-dependent integral bounds that meet the desired confidence level, with the desired ordering. 
 
-We could start with setting $o_{\theta}(x)=p(x;\theta)$ (\textbf{probability ordering}), which is a universal choice that brings the smallest interval in $x$ (which does not necessarily translate to the smallest interval in $\theta$). This means that we are ordering using the \emph{pdf} itself, choosing the most probable values of $x$ in decreasing order.
+We could start with setting $o_{\theta}(x)=p(x;\theta)$ (\textbf{probability ordering}), which is a universal choice that brings the smallest interval in $x$ (which does not necessarily translate to the smallest interval in $\theta$). This means that we are ordering using the pdf itself, choosing the most probable values of $x$ in decreasing order.
 
 Another natural choice would be to use $o_{\theta}(x)=\pm x$, as to start from the lowest value of $x$ and include higher values until the confidence level is reached (essentially finding the value for which the cumulative is equal to \emph{CL}), or vice versa. This is \textbf{lower/upper ordering} (which brings us superior/inferior bounds on the parameter).
 
@@ -301,11 +301,11 @@ For any outcome $x\in\{0,1,2,\dots,20\}$ we can draw a horizontal line in any of
 
 These belts are of great didactic caliber, and are useful in visualizing what it is that we are actually doing under this whole mathematical abstraction. Numerically, we are representing the dependence of the $\dd x$ integral bounds in $\theta$, such that $\int_{}$
 
-Analytically, the goal would be to define a function, or set of functions, of the type $x_{max}(\theta)$, $x_{min}(\theta)$, or their inverses. Sometimes, based on the ordering algorithm, \emph{pdf}, and parameter we are trying to estimate, we are able to build the whole belt analytically and define an interval for $\theta$ for all observed values of $x$. 
+Analytically, the goal would be to define a function, or set of functions, of the type $x_{max}(\theta)$, $x_{min}(\theta)$, or their inverses. Sometimes, based on the ordering algorithm, pdf, and parameter we are trying to estimate, we are able to build the whole belt analytically and define an interval for $\theta$ for all observed values of $x$. 
 
 
 \begin{example}
-	Let's build a Neyman belt analytically! We will study the common case of an observable $x$ distributed following a uniform \emph{pdf} $p(x;m) = \frac{1}{m}$ for $0\leq x \leq m$ and $0$ outside of that support. We observe one $x$ and wish to build an interval estimate for $m$ with a $90\%$ \emph{CL}. 
+	Let's build a Neyman belt analytically! We will study the common case of an observable $x$ distributed following a uniform pdf $p(x;m) = \frac{1}{m}$ for $0\leq x \leq m$ and $0$ outside of that support. We observe one $x$ and wish to build an interval estimate for $m$ with a $90\%$ \emph{CL}. 
 	
 	Let's start by finding a lower limit for $m$, which means using "upper ordering":
 	
@@ -357,7 +357,7 @@ Analytically, the goal would be to define a function, or set of functions, of th
 	In this case, we are more interested in an upper limit for $m$ so Likelihood/lower ordering would bring more information on the parameter, as the observation of $x_0$ itself already provides a natural lower limit for the value of $m$. 
 \end{example}
 
-However, the belt is not always possible to express analytically, and so often we must use numerical techniques or searched tabular data to find the interval we desire. Naturally, not every possible parameter-\emph{pdf} combination will be expressed in tables, and for that reason we must find a way to transform our specific cases into general, standard problems that have already been solved before us. Luckily, in the next section we will introduce \emph{pivotal quantities} and how they can be used to standardize certain types of problems.
+However, the belt is not always possible to express analytically, and so often we must use numerical techniques or searched tabular data to find the interval we desire. Naturally, not every possible parameter-pdf combination will be expressed in tables, and for that reason we must find a way to transform our specific cases into general, standard problems that have already been solved before us. Luckily, in the next section we will introduce \emph{pivotal quantities} and how they can be used to standardize certain types of problems.
 \\
 \todo{I've found that looking at the scripts generating the graphs is really useful to understand how the different ordering algorithms and belts works. It could be a good idea to show small parts of the code as an additional way of displaying such concepts (for those who knows their python, that I suspect are vast majority of the possible readers). If I'm not wrong Prof. Baldini did something similar in his iconic Lab 1 notes.}
 \todo{A clean way to present this material might be to include references, where appropriate, to a dedicated appendix collecting the relevant code. For example: ``To gain further insight into this concept, see Appendix~X, where the corresponding implementation is provided.''}
@@ -366,14 +366,14 @@ However, the belt is not always possible to express analytically, and so often w
 As we have said, determining confidence regions starting from their direct definition can be especially difficult, even numerically. One way to simplify the problem is to search for \textbf{pivotal quantities}, which we take a second to define:
 
 \begin{definition}[Pivotal quantity]
-	Given a \emph{pdf} $p(x;\theta)$, a function $s(x,\theta)$ is said to be a \emph{pivot} if and only if $\forall \theta_1,\theta_2\in A$ we have that:
+	Given a pdf $p(x;\theta)$, a function $s(x,\theta)$ is said to be a \emph{pivot} if and only if $\forall \theta_1,\theta_2\in A$ we have that:
 	
 	\[
 	p\left(s(x,\theta_1);\theta_1\right) = p\left(s(x,\theta_2);\theta_2\right) \equiv p_s(s)
 	\]
 \end{definition}
 
-From this definition some confusion may remain as to what exactly we are looking for: we are trying to find a function\sidenote{Question: is such a function a statistic? Hopefully you answered no, as it is, in general, a function that depends on unknown parameters!} of our observable(s) and parameter(s) such that the \emph{pdf} of that function does not depend on the unknown parameters. In a certain sense, we are finding a transformation such that we "standardize" our \emph{pdf} to a more general form, independent on what we don't know. 
+From this definition some confusion may remain as to what exactly we are looking for: we are trying to find a function\sidenote{Question: is such a function a statistic? Hopefully you answered no, as it is, in general, a function that depends on unknown parameters!} of our observable(s) and parameter(s) such that the pdf of that function does not depend on the unknown parameters. In a certain sense, we are finding a transformation such that we "standardize" our pdf to a more general form, independent on what we don't know. 
 
 For example, consider a Normally distributed observable, coming from $\N(x;\mu,\sigma)$. Let's write:
 
@@ -410,7 +410,7 @@ Other pivotal quantities exist, and when possible it is always a good idea to ab
 Not always are we able to easily identify pivotal quantities for our problems, and therefore it can be useful to build an approximate quantity that works in most cases.
 
 \begin{theorem}[Likelihood Ratio (Wilks') theorem]
-	Let $p(x;\theta)$ be a \emph{pdf} with domain independent from $\theta\in \R^N$, and at least twice differentiable. In this case, the quantity:
+	Let $p(x;\theta)$ be a pdf with domain independent from $\theta\in \R^N$, and at least twice differentiable. In this case, the quantity:
 	
 	\begin{equation}
 	\lambda\left(x,\theta\right) = 2\ln\left[\frac{ p(x;\hat{\theta}_{MLE})}{p(x;\theta)}\right]
@@ -422,7 +422,7 @@ Not always are we able to easily identify pivotal quantities for our problems, a
 
 We note that using $\lambda(x,\theta)> q_{CL}$ as an ordering function is equivalent to using Likelihood Ratio ordering.
 
-This easy to build quantity is a universal pivot for whichever \emph{pdf} we start with, and we know its distribution $p(\lambda)$ is a $\chi^2_\nu$, which means that:
+This easy to build quantity is a universal pivot for whichever pdf we start with, and we know its distribution $p(\lambda)$ is a $\chi^2_\nu$, which means that:
 
 	\begin{equation}
 	p_\nu(\lambda) = \frac{1}{2^{\frac{\nu}{2}} \Gamma(\frac{\nu}{2})}\lambda^{\frac{\nu}{2}-1}e^{-\frac{\lambda}{2}}
@@ -448,7 +448,7 @@ Let's derive the asymptotic distribution of the $LLR$, using the fact that Wilks
 	
 As we can see, $\lambda$ is a pivot for all $N$, distributed like the square of a standard Gaussian variable. We can see that for an $n-$dimensional Gaussian with mean $\vec{\mu}$, we would have the sum of $n$ equal terms like the one above, one for each of the components of $\mu_i$. These universal distributions are called the \textbf{chi squared with $n$ degrees of freedom $\left(\chi^2_n\right)$}.
 	
-Let's start by writing $\chi^2_1$, which we get through squaring a Normally distributed $x$ and finding the \emph{pdf} of this new variable:
+Let's start by writing $\chi^2_1$, which we get through squaring a Normally distributed $x$ and finding the pdf of this new variable:
 	
 	\begin{align*}
 		p_y(y) &= \sum_i^{N_{sol}} p(x) \left|\frac{\dd x}{\dd y}\right| = 2\cdot\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{y}{2}}\cdot\frac{\sigma}{2\sqrt{y}}\\
@@ -478,7 +478,7 @@ Knowing that the distribution of the sum  is the product of the characteristic f
 	\phi_{\chi_\nu^2}(t) = \left(1-2it\right)^{-\frac{\nu}{2}}
 	\]
 	
-We use the inverse transformation to calculate the \emph{pdf} of $\chi_\nu^2$:
+We use the inverse transformation to calculate the pdf of $\chi_\nu^2$:
 	
 	\[
 	p_\nu(\chi^2) = \frac{1}{2\pi}\int_{-\infty}^{+\infty}\phi(t)e^{-itx}\dd t

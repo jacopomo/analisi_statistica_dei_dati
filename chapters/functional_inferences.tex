@@ -1,12 +1,12 @@
 \chapter{Functional Inferences}
 \todo{A quote here like in the previous chapter? Could be cool.}
-So far we have talked about the basics of Probability, and introduced key concepts like probability mass functions. While these abstractions are extremely useful and will follow us through the course of our lives as physicists, realistically we will rarely measure an observable extracted from a completely known \emph{pdf}. Actually, if the probability density function is completely known, measuring the observable brings us no new information other than the measure itself - we learn nothing new about the world. 
+So far we have talked about the basics of Probability, and introduced key concepts like probability mass functions. While these abstractions are extremely useful and will follow us through the course of our lives as physicists, realistically we will rarely measure an observable extracted from a completely known pdf. Actually, if the probability density function is completely known, measuring the observable brings us no new information other than the measure itself - we learn nothing new about the world. 
 
-Things start to get interesting when the distribution itself depends on some unknown parameter\sidenote{This parameter can be anything, it does not have to be observable, follow a \emph{pdf}, be a random variable, it can be anything that the density function of the observable depends on.}, and measuring the observable brings us new information on what that parameter may be. In this section we will write
+Things start to get interesting when the distribution itself depends on some unknown parameter\sidenote{This parameter can be anything, it does not have to be observable, follow a pdf, be a random variable, it can be anything that the density function of the observable depends on.}, and measuring the observable brings us new information on what that parameter may be. In this section we will write
 	\[
 	p_X(x;\theta)
 	\]
-to denote the \emph{pdf} of observable $x\in X$ dependent on some parameter $\theta\in M$, using the semicolon to distinguish observables from parameters. Our goal is that of the \emph{functional inference}, finding a \emph{function} that depends on the observables (statistic) that assigns a sort of "score" to every value of the parameters, indicating their plausibility. In short:
+to denote the pdf of observable $x\in X$ dependent on some parameter $\theta\in M$, using the semicolon to distinguish observables from parameters. Our goal is that of the \emph{functional inference}, finding a \emph{function} that depends on the observables (statistic) that assigns a sort of "score" to every value of the parameters, indicating their plausibility. In short:
 	\[
 	s(x): x\rightarrow f_x(\theta); \quad f:A\rightarrow \R
 	\]
@@ -99,7 +99,7 @@ A few key properties of the Likelihood:
 \begin{enumerate}
 	\item $L$ only inherits the units from the observable, and can otherwise be discrete, continuous, multi-dimensional, independently from the observable's characteristics.
 	\item The Likelihood does not have to be integrable nor normalized, and its integral has no interesting interpretation.
-	\item When transforming variables, the Likelihood transforms like the \emph{pdf} (so with $||J(x)||$), and therefore the ratio $\frac{L\left(\theta_1\right)}{L\left(\theta_2\right)}$ of two Likelihoods remains constant.
+	\item When transforming variables, the Likelihood transforms like the pdf (so with $||J(x)||$), and therefore the ratio $\frac{L\left(\theta_1\right)}{L\left(\theta_2\right)}$ of two Likelihoods remains constant.
 	\item Given a model for the observables, the functional form of the Likelihood is uniquely determined up to a multiplicative constant.
 	\item If we apply an invertible transformation in the 	\emph{parameter} space, the Likelihood changes functional form but maintains its value ($L_x(f(\theta)) = L_x(\theta)$). 
 	\begin{example}
@@ -155,7 +155,7 @@ and using Bayes' theorem (\ref{th:Bayes}) we can write:
  While the Likelihood function is not necessarily integrable, the product $p(\theta)\cdot L_{x_0}(\theta)$ must be, as the posterior must be normalized. 
  
  
- If I can calculate this, i.e if $\theta$ admits a \emph{pdf} and I am lucky enough to know it, then I know everything I will ever need to know and can calculate anything I may be interested in, like the \emph{probability}\sidenote{Not just "plausibility" or likelihood, the actual Probability} of any interval of $M$ or which is the $\theta$ that maximizes the posterior, for example. 
+ If I can calculate this, i.e if $\theta$ admits a pdf and I am lucky enough to know it, then I know everything I will ever need to know and can calculate anything I may be interested in, like the \emph{probability}\sidenote{Not just "plausibility" or likelihood, the actual Probability} of any interval of $M$ or which is the $\theta$ that maximizes the posterior, for example. 
  
  \begin{example}
  	COVID
@@ -195,7 +195,7 @@ Once again, we can talk about credibility ratios
 We have already talked about statistics, which are functions of random variables that do not depend on other parameters or factors that are not the observables themselves. We will now dive deeper into distinguishing the different types of statistics. 
 
 \begin{definition}[Sufficient statistic]
-	Let $p(x;\theta)$ be the \emph{pdf} of $x$, depending on parameter $\theta$. Let $s(x)$ be a statistic (with dimensionality less than or equal to that of $x$) such that the probability of $x$ \emph{given} $s$ does not depend on $\theta$:
+	Let $p(x;\theta)$ be the pdf of $x$, depending on parameter $\theta$. Let $s(x)$ be a statistic (with dimensionality less than or equal to that of $x$) such that the probability of $x$ \emph{given} $s$ does not depend on $\theta$:
 	\[
 	p(x|s;\theta_1) = p(x|s;\theta_2) \forall\theta_1,\theta_2
 	\]
@@ -206,7 +206,7 @@ We have already talked about statistics, which are functions of random variables
 \end{corollary}
 	\sidenotetext{Since $f(s)$ is an invertible function, it uniquely determines $s$, ergo: conditioning on $f(s)$ is the same as conditioning on $s$}
 \begin{definition}[Ancillary statistic]
-	The less used complementary cousin of the sufficient statistic: if $s(x)$ is a statistic such that its \emph{pdf} is not dependent on $\theta$:
+	The less used complementary cousin of the sufficient statistic: if $s(x)$ is a statistic such that its pdf is not dependent on $\theta$:
 	\[
 	p(s;\theta_1) = p(s;\theta_2) \, \forall \theta_1,\theta_2
 	\]
@@ -328,7 +328,7 @@ So now we have talked at lengths about this beautiful concept called the suffici
 \begin{theorem}[Darmois theorem]
 	Given a real observable $x$ distributed according to $p(x;\theta)$ with domain independent from $\theta$, we suppose that, given $N$ observations ${x_k}_N$, there exists a sufficient statistic for $\theta$ $s_i\left({x_k}_N\right)$ with values in $\R^n$ (with $n$ independent from $N$).
 	
-	In this case, the \emph{pdf} can be written as:
+	In this case, the pdf can be written as:
 	\[
 	p(x;\theta) = \exp{\left[ \sum_{i=1}^n \alpha_i(x)a_i(\theta) + \beta(x) +\gamma(\theta)\right]}
 	\]
@@ -340,7 +340,7 @@ So now we have talked at lengths about this beautiful concept called the suffici
 \label{th:darmois}
 \end{theorem}
 
-Basically, what this theorem is saying is that if I can write my \emph{pdf} in exponential form, and seperate it into a sum terms as shown in \ref{th:darmois} then I can identify the sufficient statistic for $p$. This is great and will be used when possible, however it's easy to imagine that the class of functions that can be written as exponentials is not as large as we'd like.
+Basically, what this theorem is saying is that if I can write my pdf in exponential form, and seperate it into a sum terms as shown in \ref{th:darmois} then I can identify the sufficient statistic for $p$. This is great and will be used when possible, however it's easy to imagine that the class of functions that can be written as exponentials is not as large as we'd like.
 
 \section{Fisher Information}
 

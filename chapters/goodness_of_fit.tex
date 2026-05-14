@@ -1,22 +1,22 @@
 \chapter{Goodness of Fit}
 
-Congrats, you've made it this far, and not much more separates you from the back cover of this book\sidenote{Admittedly, there are quite a few pages, but the real "meat" of the course is behind us}. We wrap up our general review of inferences with this final type that differs from all the others in an important way: we want to test if the \emph{pdf} we assume the data to be extracted from is actually the "correct one". Well, without getting ahead of ourselves we want to quantify, in some statistically correct way, \textbf{how much the observed data is in accord with the assumed distribution}. 
+Congrats, you've made it this far, and not much more separates you from the back cover of this book\sidenote{Admittedly, there are quite a few pages, but the real "meat" of the course is behind us}. We wrap up our general review of inferences with this final type that differs from all the others in an important way: we want to test if the pdf we assume the data to be extracted from is actually the "correct one". Well, without getting ahead of ourselves we want to quantify, in some statistically correct way, \textbf{how much the observed data is in accord with the assumed distribution}. 
 
-Up until now we have assumed that the observed data come from a known \emph{pdf} (or class of \emph{pdf's}) depending on some parameter, and we have worked long and hard to try to say \emph{something} about that parameter. Well, now we must zoom out a step, and justify why we are assuming that distribution in the first place. Without this initial justification, whatever we end up discovering about the parameters that govern $p(x)$ must be thrown directly in the bin, as if we have failed to convince ourselves that $x$ is distributed following $p$ in the first place then all our work is for naught.
+Up until now we have assumed that the observed data come from a known pdf (or class of \emph{pdf's}) depending on some parameter, and we have worked long and hard to try to say \emph{something} about that parameter. Well, now we must zoom out a step, and justify why we are assuming that distribution in the first place. Without this initial justification, whatever we end up discovering about the parameters that govern $p(x)$ must be thrown directly in the bin, as if we have failed to convince ourselves that $x$ is distributed following $p$ in the first place then all our work is for naught.
 
-Naturally, this being the last chapter does not mean that it is the last thing we wish to verify during our analysis. Quite the contrary, it can be wise to first verify how well our data is in accord with the assumed \emph{pdf}, and to then analyse it, as to not waste precious resources and time.
+Naturally, this being the last chapter does not mean that it is the last thing we wish to verify during our analysis. Quite the contrary, it can be wise to first verify how well our data is in accord with the assumed pdf, and to then analyse it, as to not waste precious resources and time.
 
 Convinced? Let's get into it:
 
 GOF tests are in many ways similar to hypothesis tests, and once again we choose a Test statistic $T(x)$ and find a threshold $T(x)>q_\alpha$ such that the Test has a significance of $\alpha$ (chosen \emph{a priori}).
 
-In this case, however, only the null hypothesis is specified (simple or composite as it may be), and the alternative is simply "anything else". By anything we really do mean it, as an alternative could be that the data does not even follow a \emph{pdf} (the phenomenon is \emph{non-probabilistic}). Therefore, the alternative space is not defined, and we can't define a power function, much less talk about UMP Tests.
+In this case, however, only the null hypothesis is specified (simple or composite as it may be), and the alternative is simply "anything else". By anything we really do mean it, as an alternative could be that the data does not even follow a pdf (the phenomenon is \emph{non-probabilistic}). Therefore, the alternative space is not defined, and we can't define a power function, much less talk about UMP Tests.
 
 Having said this, we can still talk about Tests that are more "powerful" (in quotes) than others, as this non-definition will include subjective decisions on which Test to prefer.
 
 We struggle even to define the concept of \emph{consistency} in this case, and typically fall upon guaranteeing that the GOF Test be at least \emph{unbiased} on the alternatives that we are able to think of.
 
-Not having defined alternatives, we can't talk about \emph{priors} (there may not even be a \emph{pdf} that follows the data), which is a problem for the Bayesian school, meaning that the very concept of GOF Tests are, at their core, frequentist. To round things out, it also strongly violates the Likelihood principle, as the Likelihood gives no useful information in this formulation.
+Not having defined alternatives, we can't talk about \emph{priors} (there may not even be a pdf that follows the data), which is a problem for the Bayesian school, meaning that the very concept of GOF Tests are, at their core, frequentist. To round things out, it also strongly violates the Likelihood principle, as the Likelihood gives no useful information in this formulation.
 
 \section{p-values}
 
@@ -66,7 +66,7 @@ Let's also take this opportunity, while we are talking about incorrect interpret
 	Perhaps a less philosophical example: suppose that we want to test the fairness of a six-sided die. Our null hypothesis is that the die rolls each number $1-6$ with an equal $\frac{1}{6}$ probability. We decide to test this, roll $100$ times, and only get even numbers for all of them. Can we say that the die only rolls even numbers? No, we cannot, all we can do, with this GOF formalism, is \emph{reject the hypothesis that the die is fair}, though we cannot justify our theory as to \emph{why} it is not fair.
 \end{example}
 
-From these examples we can conclude one thing: \textbf{any "discoveries" based only on GOF tests cannot be accepted}. The goodness-of-fit is a useful and necessary tool that must be implemented to justify any \emph{pdf} we may be inclined to assume, but it absolutely cannot be used as a stand-alone decision-making tool. 
+From these examples we can conclude one thing: \textbf{any "discoveries" based only on GOF tests cannot be accepted}. The goodness-of-fit is a useful and necessary tool that must be implemented to justify any pdf we may be inclined to assume, but it absolutely cannot be used as a stand-alone decision-making tool. 
 
 \subsubsection{Combination of p-values}
 
@@ -95,7 +95,7 @@ To find this, we integrate the joint PDF (which is $1 \cdot 1 = 1$) over the reg
 	\label{images/p_value_comb}
 \end{figure}
 
-As we can see, the cumulative of the joint \emph{pdf} is not simply $x$, and therefore does not describe a uniform distribution, and so simply multiplying the two $p$-values is not a valid way to combine them. It's interesting to see how this mistake can cost us our theory developed thus far, if I want to combine two $p$-values of $0.1$, I would incorrectly state that my combined $p$-value be equal to $0.01$ when I do the banal product. 
+As we can see, the cumulative of the joint pdf is not simply $x$, and therefore does not describe a uniform distribution, and so simply multiplying the two $p$-values is not a valid way to combine them. It's interesting to see how this mistake can cost us our theory developed thus far, if I want to combine two $p$-values of $0.1$, I would incorrectly state that my combined $p$-value be equal to $0.01$ when I do the banal product. 
 
 In reality, under the null hypothesis, the probability of getting a product $\leq 0.01$ is $0.01(1 - \ln(0.01)) \approx 0.056$, which means that I would claim a significant result at the $1\%$ level more than $5\%$ of the time! Clearly this is not the strategy.
 
@@ -133,7 +133,7 @@ This combination of $p$-values is not just a didactic formalism; to be completel
 It would be intellectually dishonest to report only that singular result\sidenote{This is a form of \emph{publication bias} or \emph{p-hacking}, where non-significant results are ignored, often leading to the "Look Elsewhere Effect" or the "File Drawer Problem"}, ignoring the others; in practice, this is no better than simply fabricating data. Therefore, two options come to mind: re-scale $\alpha$ for each trial (the \emph{Bonferroni Correction} used in life sciences), as to compensate for the "multiplicity" of many independent trials, or to combine all of the obtained $p$-values into one singular one. While the first option can be overly conservative, the second (combining them) follows naturally from the methods we have developed in this chapter and is the one most commonly used in our field.
 
 \section{GOF Tests from the LR statistic}
-With a solid understanding of $p$-values under our belt, it's time to move on to the practical applications of this theory. Let's begin with the case where the most general hypothesized \emph{pdf} can be described as a member of a parametrized space $p(x;\theta)$. This space can even have a high number of dimensions, and $H_0$ is the case of $\theta=\theta_0$. As we have done in the previous chapter, $H_0$ can have an arbitrary number of nuisance parameters $\nu$.
+With a solid understanding of $p$-values under our belt, it's time to move on to the practical applications of this theory. Let's begin with the case where the most general hypothesized pdf can be described as a member of a parametrized space $p(x;\theta)$. This space can even have a high number of dimensions, and $H_0$ is the case of $\theta=\theta_0$. As we have done in the previous chapter, $H_0$ can have an arbitrary number of nuisance parameters $\nu$.
 
 Following the formalism developed in \ref{subsec:LR_test}, we once again use the Log Likelihood Ratio (LLR):
 
@@ -149,7 +149,7 @@ Therefore, the Test with critical region $\lambda(x)>q_\alpha$ will be unbiased 
 
 \subsection{Goodness of Fit applied to histograms}
 In this section we will follow the formalism introduced in section \ref{sec:fitting_hist}, revisiting what we have discussed using the new tools we have at our disposal. Specifically, we will look at variable-$N$ histograms, as we cover in section \ref{subsec:variable_N_hist}.
-Considering a sequence of experimental measurements of a real observable $x$, let $k_i$ be the number of events $\{x_j\}$ falling into the bin $i\in \left[1,\dots,n\right]$. Therefore, what we have is a histogram of $n$ bins, $N$ measurements, completely defined by $\{k_i\}_n$ such that $\sum_i^n k_i =N$. We want to estimate the parameters $\theta$ of the \emph{pdf} from which $x$ was extracted, which we know to be $p(x;\theta)$.
+Considering a sequence of experimental measurements of a real observable $x$, let $k_i$ be the number of events $\{x_j\}$ falling into the bin $i\in \left[1,\dots,n\right]$. Therefore, what we have is a histogram of $n$ bins, $N$ measurements, completely defined by $\{k_i\}_n$ such that $\sum_i^n k_i =N$. We want to estimate the parameters $\theta$ of the pdf from which $x$ was extracted, which we know to be $p(x;\theta)$.
 
 As we have already discussed, each bin count is independent and follows a Poisson distribution, such that:
 
@@ -165,7 +165,7 @@ What we are looking for, then, is a point estimation of $\theta$, and we'll use 
 
 We know $\mu_i(\theta)=\E\left[k_i\right]$ to be the expected number of events in the $i$-th bin.
 
-Well, now we are more mature than we were all those chapters ago, and instead of blindly accepting the $\hat{\theta}_{\text{MLE}}$ we would like to confirm that the observed distribution does not statistically differ from the hypothesized \emph{pdf}. We assume that if we add \emph{enough} parameters to our current \emph{pdf}, then we can generally obtain whichever vector of expected values $\mu_i(\theta)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
+Well, now we are more mature than we were all those chapters ago, and instead of blindly accepting the $\hat{\theta}_{\text{MLE}}$ we would like to confirm that the observed distribution does not statistically differ from the hypothesized pdf. We assume that if we add \emph{enough} parameters to our current pdf, then we can generally obtain whichever vector of expected values $\mu_i(\theta)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
 
 In this case, the LLR becomes:
 
@@ -318,16 +318,16 @@ Where we have defined $t$ to be a specific Test that we will talk about in the n
 Annoying derivation, I already did the one above I can't handle two in the same day
 \section{Continuous distributions}
 
-So far, we have seen the Likelihood Ratio GOF test for binned sampled data (histograms). We now ask whether it is possible to generalize this theory to the unbinned case. Specifically, whether a general GOF test exists for \emph{pdf}'s of real-valued observable data. 
+So far, we have seen the Likelihood Ratio GOF test for binned sampled data (histograms). We now ask whether it is possible to generalize this theory to the unbinned case. Specifically, whether a general GOF test exists for pdf's of real-valued observable data. 
 
 Naturally, one might attempt to extend the binned case to the continuous one by asymptotically tightening the bins to an infinitesimal width. In the binned case, we know that the Log-Likelihood Ratio (LLR), $-2\ln \lambda(\hat{\theta})$, asymptotically tends toward a $\chi^2$ distribution, providing a robust GOF statistic. It might seem natural, then, to conclude that the unbinned Maximum Likelihood value, $L_x(\hat{\theta})$, would serve as a good asymptotic GOF test.
 
 This reasoning, however, is flawed. It involves a dangerous confusion between the Log-Likelihood Ratio $\lambda(x, \theta)$, which measures the relative agreement between two hypotheses, and the Likelihood Function $L(x, \theta)$ itself. 
 
-We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, which only depends on the data but not the parameters. Consequently, a single value of $L$ at a fixed $\theta$ cannot be interpreted as a GOF statistic; it has no absolute scale and its distribution is generally unknown\sidenote{Remember, the Likelihood is not a "probability".}. If we were to do a change of variables, the \emph{pdf}, and therefore Likelihood would change through the multiplication of a re-scaling Jacobian term, which cancels out in the LLR. This shows how the two are fundamentally different, and why the \emph{ratio} of Likelihoods has more general asymptotic properties than the Likelihood itself.
+We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, which only depends on the data but not the parameters. Consequently, a single value of $L$ at a fixed $\theta$ cannot be interpreted as a GOF statistic; it has no absolute scale and its distribution is generally unknown\sidenote{Remember, the Likelihood is not a "probability".}. If we were to do a change of variables, the pdf, and therefore Likelihood would change through the multiplication of a re-scaling Jacobian term, which cancels out in the LLR. This shows how the two are fundamentally different, and why the \emph{ratio} of Likelihoods has more general asymptotic properties than the Likelihood itself.
 
 \begin{example}
-	To demonstrate the danger of using the maximum Likelihood as a GOF indicator, consider a set of $n$ observations $\{x_i\}$ sampled from a Uniform distribution in the interval $[0, m]$. The \emph{pdf} is:
+	To demonstrate the danger of using the maximum Likelihood as a GOF indicator, consider a set of $n$ observations $\{x_i\}$ sampled from a Uniform distribution in the interval $[0, m]$. The pdf is:
 	
 	\[
 	p(x) = \frac{1}{m} \quad \text{for } 0 \le x \le m
@@ -348,7 +348,7 @@ We remember thet the Likelihood is defined up to an arbitrary constant, $c(x)$, 
 	
 	In both cases, the  \emph{MLE}  yields $\hat{m_{\text{MLE}}} = 1.0$. Consequently, the maximized Likelihood value for both datasets is identical: $L = (1)^{-100} = 1$.
 	
-	The maximum Likelihood only considers the value of the \emph{pdf} at the points where data exists. It is completely blind to the global distribution of the data, ignoring the fact that dataset $1$ is a much better fit than dataset $2$ for a uniform distribution. 
+	The maximum Likelihood only considers the value of the pdf at the points where data exists. It is completely blind to the global distribution of the data, ignoring the fact that dataset $1$ is a much better fit than dataset $2$ for a uniform distribution. 
 	
 	This confirms that the Maximum Likelihood value carries information about the parameters, but is utterly silent regarding the goodness of fit.
 \end{example}
@@ -379,7 +379,7 @@ The critical region for this test is $D_N>q_\alpha$, the threshold for which can
 
 We can see that the distribution of $D_N$ assumes higher values under $\cancel{H_0}$ than $H_0$, making it an unbiased right-tailed test. We can also see that $\lim_{N \to \infty} D_N = 0$ under $H_0$ but not if it is rejected, which also makes it a consistent Test.
 
-Furthermore, the \emph{pdf} $p(D)$ does not depend on $F(x)$, provided it is continuos. Once again, it is the probability integral transform theorem \ref{th:universal_uniform} that states that if a random variable $X$ follows a distribution $F(x)$, then the transformed variable $y = F(X)$ always follows a Uniform distribution. Since every $F(x)$ maps to the same uniform distribution, the distribution of the maximum deviation $D_N$ is universal and depends only on the sample size $N$, allowing us to table the values.
+Furthermore, the pdf $p(D)$ does not depend on $F(x)$, provided it is continuos. Once again, it is the probability integral transform theorem \ref{th:universal_uniform} that states that if a random variable $X$ follows a distribution $F(x)$, then the transformed variable $y = F(X)$ always follows a Uniform distribution. Since every $F(x)$ maps to the same uniform distribution, the distribution of the maximum deviation $D_N$ is universal and depends only on the sample size $N$, allowing us to table the values.
 
 For large $N$, we can use the asymptotic properties of this cumulative to find a $p$-value without tables:
 	\[

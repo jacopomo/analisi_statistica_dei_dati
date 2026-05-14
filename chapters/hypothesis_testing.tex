@@ -291,7 +291,7 @@ We fall back upon this case when a more general universal maximally powerful tes
 In the case where we have more than two hypotheses, and so the N-P test is not applicable, we aim to find a Test that is the most powerful one for every single alternative simultaneously. That is the idea behind UMP Tests, which are the best choice to use when they exist. The following theorem gives the conditions for when they do:
 
 \begin{theorem}
-	Let $p(x;\theta)$ be the \emph{pdf} of $x\in\R^N$ dependent on a real-valued parameter $\theta$. We consider the null hypothesis $H_0: \theta= \theta_0$ to be tested against the alternative composite hypothesis $H_\theta : \theta > \theta_0$.
+	Let $p(x;\theta)$ be the pdf of $x\in\R^N$ dependent on a real-valued parameter $\theta$. We consider the null hypothesis $H_0: \theta= \theta_0$ to be tested against the alternative composite hypothesis $H_\theta : \theta > \theta_0$.
 	
 	A uniform maximally powerful (UMP) Test exists if we can write:
 	
@@ -308,7 +308,7 @@ In the case where we have more than two hypotheses, and so the N-P test is not a
 	\]
 \end{theorem}
 
-The idea is that if we can separate the \emph{pdf} into a product of functions that depend only on $x$ or $\theta$ in that exponential form, then we know that a UMP Test exists and what it is. Hawk-eyed readers will notice that $T(x)$ is really the sufficient statistic for $p(x;\theta)$, as we have written our \emph{pdf} in the exponential form equivalent to the one used in the factorization theorem \ref{th:factorization}. It's natural after all, we are looking for a Test independent of $\theta$, and the most powerful as well. We know that the way to represent the data independently of parameters with no information loss is through sufficient statistics, and so it seems natural for them to resurface here.\sidenote{Careful: every distribution that allows for a UMP test admits a sufficient statistic, but not vice versa!}
+The idea is that if we can separate the pdf into a product of functions that depend only on $x$ or $\theta$ in that exponential form, then we know that a UMP Test exists and what it is. Hawk-eyed readers will notice that $T(x)$ is really the sufficient statistic for $p(x;\theta)$, as we have written our pdf in the exponential form equivalent to the one used in the factorization theorem \ref{th:factorization}. It's natural after all, we are looking for a Test independent of $\theta$, and the most powerful as well. We know that the way to represent the data independently of parameters with no information loss is through sufficient statistics, and so it seems natural for them to resurface here.\sidenote{Careful: every distribution that allows for a UMP test admits a sufficient statistic, but not vice versa!}
 
 To prove this theorem, we start by fixing a certain $\theta>\theta_0$ and writing the N-P Test\sidenote{Well, actually the reciprocal of the N-P Test, resembling the Likelihood Ratio Test we will talk about in the future. This brings no conceptual change apart from the fact that we return to our "natural" right-tailed test.} for this specific simple hypothesis alternative $H_\theta$:
 
