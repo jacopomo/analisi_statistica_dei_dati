@@ -147,7 +147,7 @@ We can see the power of this Bayesian case, and it's not hard to understand what
 
 We once again move away from the Bayesian outlook, which remains intuitive and extremely descriptive, though limited by the assumption of a \emph{prior} $\pi(\theta)$.
 
-In the general case, in order to find an interval estimate for a certain parameter $\theta$ we will have to solve the following equation:
+In the general case, in order to find an interval estimate for a certain parameter $\theta$ we will have to solve the following equation, which synthetically gives us the \emph{operative definition of a confidence interval}:
 
 \begin{equation}
 	\int_{o_{\theta}(x)\geq q(CL)} p(x;\theta)\dd x \geq CL
@@ -162,48 +162,29 @@ Basically, at its core, we can condense this entire equation into the most basic
 	g_{x_0}(\theta) - CL \geq 0
 	\]
 
-If we think about it, on the left side we have an integral in $\dd x$, and on the right a constant that we fix beforehand, namely the "confidence level" \emph{CL}\sidenote{Don't worry about these definitions, they will all get cleared up in the near future. This part aims to provide a general outlook on the math that we will be using, so just bear with us}. Fundamentally, the equation that describes the interval in $\theta$ is, justifiably so, an inequality dependent on the parameter that we must solve. Let's never forget this as it will always be the final step. 
+If we think about it, on the left side we have an integral in $\dd x$, and on the right a constant that we fix beforehand, namely the "confidence level" \emph{CL}\sidenote{Don't worry about these definitions, they will all get cleared up in the near future. This part aims to provide a general outlook on the math that we will be using, so just bear with us}. Fundamentally, solving the inequality at a fixed $x_0$ dependent on the parameter returns an interval (or family of disconnected intervals) for which the inequality is true. These $\theta$ intervals are the ones we will be studying.
 
-Now, what exactly is this $g(\theta)$? Well, since we are not in the Bayesian case and cannot directly say that the parameter admits a pdf, we can only talk about the distribution of the observable: we want that, with probability \emph{CL}, the interval defined by $o_{\theta}(x)$ contains $\theta$\todo{SOS: re-state better}. As we will see, infinite such intervals exist for each fixed $\theta$ (there are infinite ways to integrate a normalized function such that its integral is equal to, say, $0.95$), and $o_{\theta}(x)$ serves as an "ordering function" with the aim of unambiguously defining one such interval by describing which $x$'s to include. 
+Now, what exactly is this $g_{k_0}(\theta)$? Well, since we are not in the Bayesian case and cannot directly say that the parameter admits a pdf, we can only talk about the distribution of the observable: we want that, with probability \emph{CL}, the interval defined by $g_{k_0}(\theta) - CL \geq 0$ contains $\theta$, to be intended in the frequentist sense. 
+
+As we will see, infinite such intervals exist for each fixed $\theta$ (there are infinite ways to integrate a normalized function such that its integral is equal to, say, $0.95$), and $o_{\theta}(x)$ serves as an "ordering function" with the aim of unambiguously defining one such interval by describing which $x$'s to include. 
 
 This integral in eq. \ref{eq:int_definition} is nothing more than the integral of the pdf itself, which we know to be the cumulative of the density function\sidenote{This integral can be seen as, at most, the difference of two \emph{CDF's} in order to make the bounds work out}, calculated on upper and lower bounds that may, in general, depend on the parameter. 
 
-What this all means is that having fixed an observed $x_0$ (coming from pdf $p(x;\theta)$), \textbf{the ordering function describes a $\theta$-dependent $x$-interval for which the integral of the pdf is greater than or equal to the \emph{CL}}. Therefore, we can solve this expression (which we so naïvely wrote as $g_{x_0}(\theta) - CL \geq 0$) to find an interval in $\theta$, and that will be the estimate that we are looking for. 
+What this all means is that having fixed an observed $x_0$ (coming from pdf $p(x;\theta)$), \textbf{the ordering function describes a $\theta$-dependent $x$-interval over which the integral of the pdf is greater than or equal to the \emph{CL}}. Therefore, after having measured $x_0$, we can solve this expression (which we so naïvely wrote as $g_{x_0}(\theta) - CL \geq 0$) to find an interval in $\theta$, and that will be the estimate that we are looking for. 
 
-Solving this equation is rarely simple, and can be done when the pdf assumes a closed form cumulative, or at least when the latter is tabled\todo{such as the ones in ref.}. The next sections will break down each part of the process, using examples and visual aids to try to better explain this difficult, yet fundamental concept.
+Solving this equation is rarely simple, and can be done when the pdf assumes a closed form cumulative, or when the pdf is written using pivotal quantities so that its cumulative is tabled. The next sections will break down each part of the process, using examples and visual aids to try to better explain this difficult, yet fundamental concept.
 
-\subsection{Confidence levels and coverage}
-Let's begin our piece-by-piece breakdown of eq. \ref{eq:int_definition} by being more precise in our definition of \emph{confidence level}:
+\subsection{Confidence intervals}
+Let's begin our piece-by-piece breakdown of eq. (\ref{eq:int_definition}) by really understanding what our goal here is. For a given observation $x_0$ coming from $p(x;\theta)$, we wish to write an interval in $\theta$ that contains the true value $\theta_t$ of the parameter with a probability of \emph{CL}. In other words, a specific confidence interval is a member of a set, such that the set has the property that\cite{Feldman_1998}:
 
-\begin{definition}[Confidence level]
-	Given a pdf $p(x;\theta)$ dependent on an unknown parameter $\theta\in A$, and an interval estimator $f(x): X\rightarrowtail \mathcal{P}(A)$, we define the \emph{confidence level} (\emph{CL}) of $f(x)$:
-	
-	\[
-	CL(f) \equiv \inf_{\theta} P(f(x)\ni\theta) = \inf_\theta\int_{x:f(x)\ni\theta} p(x;\theta)\dd x
-	\]
-\end{definition} 
+\begin{equation}
+	P\left(\theta\in\left[\theta_1,\theta_2\right]|x_0\right) = CL
+\label{eq:confidence_interval}
+\end{equation}
 
-Basically, we are saying that $f(x)$ has a confidence level \emph{CL} if it outputs an interval that contains the real value of $\theta$ with probability at least \emph{CL} - independently from the real value of $\theta$.
+Here, $\theta_1$ and $\theta_2$ are functions of $x_0$, and are therefore different for each measurement of the observable, even at a fixed $\theta$. For a fixed set of confidence intervals (i.e, for a fixed $x_0$), we wish for the equation to be true for all allowed $\theta$. This means that we can interpret the above statement to be that the interval contains the \emph{fixed, unknown, true} $\theta_t$ in a fraction \emph{CL} of experiments.\sidenote{This is different than the Bayesian case where we could state that the \emph{degree of belief} that $\theta_t\in\left[\theta_1,\theta_2\right]$ is \emph{CL}}
 
-We take a second to note that the above statement is on the probability of $f(x)\ni\theta$, not $\theta\in f(x)$. This distinction is crucial: we are not assigning a probability distribution to the parameter $\theta$; rather, we are describing the stochastic behavior of the interval boundaries themselves across hypothetical repeated experiments, stating the probability that the interval itself will contain the parameter.
-
-Differently from the Bayesian case, the confidence level is a property of the algorithm that we use to estimate $f(x)$ itself, not limited nor based on a single result $f(x_0)$. This definition violates the Likelihood principle.
-
-Alternatively, we could write:
-
-	\[
-	CL(f) \equiv \inf_\theta \mathcal{C}(\theta)
-	\]
-	\begin{equation}
-	\mathcal{C}(\theta) = \int_{x:f(x)\ni\theta} p(x;\theta)\dd x
-	\label{eq:coverage}
-	\end{equation}
-
-We call $\mathcal{C}$ the \emph{coverage} probability of the interval estimation procedure $f(x)$, often a function of the parameter $\theta$. This is an interesting concept: a confidence interval method has $95\%$ coverage if, when repeated over many new samples generated under the same true parameter value, the interval contains the true value of $\theta$ $95\%$ of the time. We don't know what this true value is, but we would like for our method of creating the interval to attain the nominal confidence level (i.e, $95\%$) for all $\theta$. However, coverage is itself a function of the parameter, and certain methods may work better or worse depending on the true parameter value. Oftentimes, it is useful to graph $\mathcal{C}(\theta)$. 
-
-We have \emph{overcoverage} when $\mathcal{C}(\theta)> CL$, and when the coverage does not reach the required \emph{CL} then we have \emph{undercoverage}. 
-
-The most desirable condition is the one where $\mathcal{C}(\theta) = CL\quad \forall\theta$, the existence of which is not guaranteed, especially in the discrete observable case.
+If equation (\ref{eq:confidence_interval}) is satisfied for all $\theta$, then one says that the intervals "cover" $\theta$ at the stated confidence. For any values of $\theta$ in which the equation is not satisfied we say that the interval "undercovers" or "overcovers" for that $\theta$, depending if the probability is less than or greater than \emph{CL}. We naturally don't want undercoverage, and reluctantly accept overcoverage as an unfortunate price to pay in the precision with which we can construct the interval. Generally, a set of intervals for which there is no undercoverage for any $\theta$ and some overcoverage for some $\theta$ is considered "conservative", and while not the end of the world, means that these intervals will generally be wider and less informative on the true value of $\theta$ than the confidence level quoted.
 
 \begin{figure}[H]
 	\centering
@@ -212,26 +193,32 @@ The most desirable condition is the one where $\mathcal{C}(\theta) = CL\quad \fo
 	\label{fig:binomial_coverage}
 \end{figure}
 
+Figure \ref{fig:binomial_coverage} demonstrates the conservatism inherent in discrete interval estimation. Because the number of successes in 20 trials must be an integer, the coverage probability $\mathcal{C}(p)$ cannot be a flat line at $0.95$; instead, it forms a "sawtooth" pattern. Note that all three algorithms satisfy the definition of a $95\%$ confidence level because their global minimum ($\inf_p \mathcal{C}(p)$) is $\ge 0.95$. The probability ordering is generally preferred\sidenote{Well, for now at least, since it is the direct parent of the posterior ordering seen in the Bayesian case. Later, we'll explore the more general two-sided \emph{Likelihood ratio} ordering} for two-sided intervals as it minimizes over-coverage, staying closer to the nominal level. In contrast, the Lower and Upper orderings are essential when one is specifically interested in one-sided bounds, despite their extreme conservatism near $p=0$ and $p=1$.
 
-Figure \ref{fig:binomial_coverage} demonstrates the "conservatism" inherent in discrete interval estimation. Because the number of successes in 20 trials must be an integer, the coverage probability $\mathcal{C}(p)$ cannot be a flat line at $0.95$; instead, it forms a "sawtooth" pattern. Note that all three algorithms satisfy the definition of a $95\%$ confidence level because their global minimum ($\inf_p \mathcal{C}(p)$) is $\ge 0.95$. The probability ordering is generally preferred\sidenote{Well, for now at least, since it is the direct parent of the posterior ordering seen in the Bayesian case. Later, we'll explore the more general two-sided \emph{Likelihood ratio} ordering} for two-sided intervals as it minimizes over-coverage, staying closer to the nominal level. In contrast, the Lower and Upper orderings are essential when one is specifically interested in one-sided bounds, despite their extreme conservatism near $p=0$ and $p=1$.
-
-From this whole part we want to take away one very important concept: when we obtain an interval $[a,b]$ with confidence level \emph{CL}, that does not mean that the parameter lies within that interval with probability \emph{CL}. What it means, instead, is that the interval was generated by a procedure whose repeated use contains the true parameter with probability \emph{CL}.
+From this whole part we want to take away one very important concept: when we obtain an interval $[a,b]$ with confidence level \emph{CL}, that does not mean that the true value of the parameter $\theta_t$ lies within that interval with probability \emph{CL}. What it means, instead, is that the interval was generated by a procedure whose repeated use contains the true parameter with probability \emph{CL}. Before moving on, this concept should be clear, as it highlights the key difference between the Bayesian and frequentist approaches to interval estimations.
 
 \subsubsection{Confidence vs credibility}
-\textcolor{red}{This section seems like a huge pain but there are two slides of suffering that we must get through. Don't show the Gauss example as I will put that later.}
 
 \subsection{Ordering algorithms}
 \label{subsec:ordering}
 
-We have already talked about ordering algorithms up until this point, and justifiably so: they are imperative to implement when we want clear, unique solutions and to show the differences between the choices we can make. We'll expand on what we have already introduced and complete our arsenal of ordering functions with a few more neat algorithms.
+We have already briefly touched upon ordering algorithms up until this point, and now we'll expand on what we have already introduced and complete our arsenal of ordering functions with a few more neat algorithms.
 
-The idea is to study the different options we have for $o_{\theta}(x)$ in the usual equation \ref{eq:int_definition}, with the goal of removing the ambiguity in the way we choose the interval that solves it. What the ordering function is really doing is, for each fixed $\theta$, "ranking" (well, \emph{ordering}) each possible $x$ according to the value of the ordering function $o_{\theta}(x)$. From this, we add $x$ values to the confidence region for that $\theta$ based on this ordering until the sum of probabilities reaches the \emph{CL} to create an interval in $x$ for a fixed $\theta$. We then repeat this for all $\theta$, and obtain the confidence interval for an observed $x_0$ as the set of all $\theta$ values whose acceptance regions contain $x_0$.
+The idea is to study the different options we have for $o_{\theta}(x)$ in the usual equation (\ref{eq:int_definition}), with the goal of removing the ambiguity in the way we choose the interval that solves it. What the ordering function is really doing is, for each fixed $\theta$, "ranking" (well, \emph{ordering}) each possible $x$ according to the value of the ordering function $o_{\theta}(x)$. From this, we add $x$ values to the confidence region for that $\theta$ based on this ordering until the sum of probabilities reaches the \emph{CL} to create an interval in $x$ for a fixed $\theta$.
 
-Basically, as we have said before, solving the ordering function equation $o_{\theta}(x)\geq q(CL)$ we are finding the $\theta$-dependent integral bounds that meet the desired confidence level, with the desired ordering. 
+Later, this will be repeated \emph{using the same ordering algorithm} for all $\theta$, allowing us to obtain the confidence interval for an observed $x_0$ as the set of all $\theta$ values whose acceptance regions contain $x_0$:
 
-We could start with setting $o_{\theta}(x)=p(x;\theta)$ (\textbf{probability ordering}), which is a universal choice that brings the smallest interval in $x$ (which does not necessarily translate to the smallest interval in $\theta$). This means that we are ordering using the pdf itself, choosing the most probable values of $x$ in decreasing order.
+	\[
+	I\left(x_0\right) = \theta: \{x_1(o_{\theta})\leq x_0 \leq x_2(o_{\theta})\} 
+	\]
 
-Another natural choice would be to use $o_{\theta}(x)=\pm x$, as to start from the lowest value of $x$ and include higher values until the confidence level is reached (essentially finding the value for which the cumulative is equal to \emph{CL}), or vice versa. This is \textbf{lower/upper ordering} (which brings us superior/inferior bounds on the parameter).
+This shows that the $x_0$-dependent $\theta$ interval (the interval estimate that we are looking for) is defined as the set of all $\theta$ such that the observed $x_0\in\left[x_1,x_2\right]$, where $x_1,x_2$ are calculated through the ordering function at a fixed $\theta$. This expression is nothing different than what we have already stated before, and can be considered to be a restatement of eq. (\ref{eq:int_definition}), with the goal of repeating the same concept in different ways to aid in understanding what interval estimations are. CITE
+
+Basically, as we have said before, solving the ordering function equation $o_{\theta}(x)\geq q(CL)$ we are finding the $\theta$-dependent integral bounds that meet the desired confidence level, with the desired ordering. Let's look at some common choices for ordering functions.
+
+We could start with setting $o_{\theta}(x)=p(x;\theta)$ (\textbf{probability ordering}), which is a universal choice that brings the smallest interval in $x$ (which does not necessarily translate to the smallest interval in $\theta$). This means that we are ordering using the pdf itself, choosing the most probable values of $x$ in decreasing order. This should be reminiscent of what we did in the Bayesian case, where we were fortunate enough to be able to order through the posterior itself.
+
+Another natural choice would be to use $o_{\theta}(x)=\pm x$, as to start from the lowest value of $x$ and include higher values until the confidence level is reached (essentially finding the value for which the cumulative is equal to \emph{CL}). We call this \textbf{lower ordering}, which brings us \emph{lower limits on} $\theta$ (one-sided intervals of the type $\theta\geq\theta_1$). We could also do the inverse, as in starting from the highest value of $x$ and including lower values until the integral equals \emph{CL} (essentially finding the value for which the cumulative is equal to $\-CL$). We call this \textbf{upper ordering}, which brings us \emph{upper limits on} $\theta$ (one-sided intervals of the type $\theta\leq\theta_2$).
 
 We could also think to take the central band (\textbf{central ordering}), as to exclude $\frac{1-CL}{2}$ from the top and bottom. The ordering function $o_{\theta}(x)$ is defined implicitly by the tails of the distribution. We include $x$ values in our acceptance set starting from the median and expanding outwards until the probability excluded in each tail separately does not exceed $\frac{1-CL}{2}$, or alternatively repeating the upper/lower ordering simultaneously on the tails until half of \emph{CL} is reached. 
 
