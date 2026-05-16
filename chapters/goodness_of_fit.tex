@@ -133,7 +133,10 @@ This combination of $p$-values is not just a didactic formalism; to be completel
 It would be intellectually dishonest to report only that singular result\sidenote{This is a form of \emph{publication bias} or \emph{p-hacking}, where non-significant results are ignored, often leading to the "Look Elsewhere Effect" or the "File Drawer Problem"}, ignoring the others; in practice, this is no better than simply fabricating data. Therefore, two options come to mind: re-scale $\alpha$ for each trial (the \emph{Bonferroni Correction} used in life sciences), as to compensate for the "multiplicity" of many independent trials, or to combine all of the obtained $p$-values into one singular one. While the first option can be overly conservative, the second (combining them) follows naturally from the methods we have developed in this chapter and is the one most commonly used in our field.
 
 \section{GOF Tests from the LR statistic}
-With a solid understanding of $p$-values under our belt, it's time to move on to the practical applications of this theory. Let's begin with the case where the most general hypothesized pdf can be described as a member of a parametrized space $p(x;\theta)$. This space can even have a high number of dimensions, and $H_0$ is the case of $\theta=\theta_0$. As we have done in the previous chapter, $H_0$ can have an arbitrary number of nuisance parameters $\nu$.
+With a solid understanding of $p$-values under our belt, it's time to move on to the practical applications of this theory. Let's begin with the case where the most general hypothesized pdf can be described as a member of a parametrized space $p(x;\theta)$. This space can even have a high number of dimensions, and $H_0$ is the case of $\theta=\theta_0$. As we have done in the previous chapter, $H_0$ can have an arbitrary number of nuisance parameters $\nu$. 
+
+For example, if the null hypothesis is \textit{“the data follow a Gaussian distribution”}, then no parameter is fixed under $H_0$. Both the mean and the variance are therefore treated as nuisance parameters~$\nu$.
+Conversely, if the null hypothesis is \textit{“the data follow a Gaussian distribution with mean $\mu_0$”}, then one parameter is fixed by the hypothesis, namely the mean. In this case, the dimension of $\theta$ is one, while the variance is treated as a nuisance parameter.
 
 Following the formalism developed in \ref{subsec:LR_test}, we once again use the Log Likelihood Ratio (LLR):
 
@@ -170,31 +173,31 @@ Well, now we are more mature than we were all those chapters ago, and instead of
 In this case, the LLR becomes:
 
 	\[
-	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\mathcal{P}\left(k_i;\mu_i(\theta,\nu)\right)}{\sup_\theta\prod_i\mathcal{P}\left(k_i;\mu_i(\theta)\right)}
+	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\mathcal{P}\left(k_i;\mu_i(\theta,\nu)\right)}{\sup_\nu\prod_i\mathcal{P}\left(k_i;\mu_i(\theta_0,\nu)\right)}
 	\]
 
 To evaluate this, let's look at the numerator. The term $\sup_{\theta,\nu}\mu_i(\theta,\nu)$ represents the mean of the Poisson distribution in the $i$-th bin under the most general possible hypothesis. If we assume this general model has enough parameters to "fit any histogram" to any degree of precision, it becomes what is known as the \emph{Saturated Model}. 
 
-In this saturated case, the Likelihood is maximized when each bin's expected value is exactly equal to its observed count, $\hat{\mu}_{i} = k_i$. Essentially, we are allowing each of the $n$ bins to behave as an independent free parameter. Conversely, the denominator represents our specific physical model, which constrains those $n$ bins using only a small set of parameters $\theta$.
+In this saturated case, the Likelihood is maximized when each bin's expected value is exactly equal to its observed count, $\hat{\mu}_{i} = k_i$. Essentially, we are allowing each of the $n$ bins to behave as an independent free parameter. Conversely, the denominator represents our specific physical model, which constrains those $n$ bins using only a small set of parameters $\theta_0$.
 
-Following Wilks' theorem, the degrees of freedom for our test statistic will be the difference in the number of free parameters between these two models. Since the Saturated Model uses $n$ parameters and our model uses $\dim(\theta)$, we find:
+Following Wilks' theorem, the degrees of freedom for our test statistic will be the difference in the number of free parameters between these two models. Since the Saturated Model uses $n$ parameters and our model uses $\dim(\theta_0)$, we find:
 	\[
-	DOF = n - \dim(\theta)
+	DOF = n - \dim(\theta_0)
 	\]
 
-By evaluating the Poisson product at these respective maxima, which are $\hat{\mu}_{i} = k_i$ for the numerator and $\hat{\mu}_i(\hat{\theta})$ for the denominator, our expression becomes:\sidenote{Consider the "hats" to be the \emph{MLE}'s, not explicitly stated for the sake of clarity}
+By evaluating the Poisson product at these respective maxima, which are $\hat{\mu}_{i} = k_i$ for the numerator and $\mu_i(\theta_0, \hat\nu)$ for the denominator, our expression becomes:\sidenote{Consider the "hats" to be the \emph{MLE}'s, not explicitly stated for the sake of clarity}
 
 	\[
-	\lambda(x) = 2\ln\frac{\prod_i^n \mathcal{P}\left(k_i;k_i\right)}{\prod_i^n \mathcal{P}\left(k_i;\hat{\mu}_i(\hat{\theta})\right)}
+	\lambda(x) = 2\ln\frac{\prod_i^n \mathcal{P}\left(k_i;k_i\right)}{\prod_i^n \mathcal{P}\left(k_i;\mu_i(\theta_0,\hat{\nu}\right)}
 	\]
 	
-We expand using the definition of a Poisson statistic:
+We expand using the definition of a Poisson statistic (we use $\hat{\mu_i}\equiv\mu_i(\theta_0,\hat{\nu})$ to simplify the notation\sidenote{We will use the compressed notation during calculations and the extended one in the results.}):
 
 \begin{align*}
 	\lambda(x) &= 2\ln\frac{\prod_i e^{-k_i} k_i^{k_i} \cdot k_i!}{\prod_ik_i! \cdot e^{-\hat{\mu_i}} \hat{\mu_i}^{k_i}} \\
 	&= 2\ln\left[\prod_i e^{\hat{\mu_i}-k_i} \left(\frac{k_i}{\hat{\mu_i}}\right)^{k_i}\right] \\
 	&= 2\sum_i\left[\hat{\mu_i}-k_i+k_i\ln\left(\frac{k_i}{\hat{\mu_i}}\right)\right] \Rightarrow \\
-	\lambda(x) &= 2\sum_i\left[k_i\ln\left(\frac{k_i}{\hat{\mu_i}}\right)-\left(k_i-\hat{\mu_i}\right)\right]
+	\lambda(x) &= 2\sum_i\left[k_i\ln\left(\frac{k_i}{\mu_i(\theta_0,\hat{\nu})}\right)-\left(k_i-\mu_i(\theta_0,\hat{\nu})\right)\right]
 \end{align*}
 
 The above expression presents the GOF statistic for a generic histogram, which in the asymptotic limit is distributed like a $\chi^2_{DOF}$.
@@ -208,17 +211,25 @@ Before we move on, there is a rewarding connection to be made here. If you look 
 Plugging this approximation back into our sum for $\lambda(x)$, and remembering that $\sum (k_i - \hat{\mu}_i) = \sum \delta_i$, a bit of algebra leads us to:
 	
 	\[
-	\lambda(x) \approx \sum_i \frac{(k_i - \hat{\mu}_i)^2}{\hat{\mu}_i}
+	\lambda(x) \approx \sum_i \frac{(k_i - \mu_i(\theta_0,\hat{\nu}))^2}{\mu_i(\theta_0,\hat{\nu})}
 	\]
 	
-This is exactly the \textbf{Pearson's $\chi^2$ statistic}! It turns out that the LLR approach is effectively a more robust, fundamental version of the same idea. While the Pearson version is a second-order approximation, our LLR-based "Likelihood $\chi^2$" (often called the \emph{Deviance}) remains exact for any sample size, only relying on the asymptotic limit to claim its $\chi^2$ distribution. 
+This is exactly the \textbf{Pearson's $\chi^2$ statistic}! It turns out that the LLR approach is effectively a more robust, fundamental version of the same idea. While the Pearson version is a second-order approximation, our LLR-based "Likelihood $\chi^2$" (often called the \emph{Deviance}) remains exact for any sample size, only relying on the asymptotic limit to claim its $\chi^2$ distribution.\todo{It is still not clear what $\mu_i(\theta_0,\hat{\nu})$ do represent. Should we write what it is explicitly (as the probability of falling inside the $i$-th bin etc. ) or should we let the following examples do the explaining.}
+
+\begin{example}
+	Trinomial distribution example
+\end{example}
+
+\begin{example}
+	Uniform distribution example
+\end{example}
 
 \subsection{Goodness of Fit of Normally distributed variables}
 
 Though it can be perhaps seen as a particular case of the previous section, we take a moment to formally flush out the case of $N$ measurements $\{x_i\}_N$ of a Normally distributed variable with known variance $\sigma_i^2$ and unknown mean $\mu_i$. Both the mean and variance can be the same or different for each measure, though in this example the variance is always known. We want to verify the hypothesis $H_0$ that the means $\E\left[x_i\right]=\mu_i$. It's not hard to see how this is a specific case of the histogram problem for high-statistic bins, and so we start with a similar reasoning:
 
 	\[
-	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\N\left(x_i;\mu_i(\theta,\nu),\sigma_i\right)}{\sup_\theta\prod_i\N\left(x_i;\mu_i(\theta),\sigma_i\right)}
+	\lambda(x) = 2\ln\frac{\sup_{\theta,\nu}\prod_i\N\left(x_i;\mu_i(\theta,\nu),\sigma_i\right)}{\sup_\nu\prod_i\N\left(x_i;\mu_i(\nu),\sigma_i\right)}
 	\]
 
 We have that $\sup_{\theta,\nu}\mu_i(\theta,\nu)=x_i$ itself, since the Likelihood is maximized when the expected value of the Normal distribution is exactly equal to its observed count. Therefore, we have:
