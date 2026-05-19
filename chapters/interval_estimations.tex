@@ -39,49 +39,51 @@ Though you, as an attentive reader and excellent statistician will immediately i
 \end{example}
 \todo{Low-n Poisson histogram graph? CBTM (could be the move)}
 
-When we talked about point estimations, we never came to talk about intervals in which the parameter was confined - going to an arbitrarily low probability basically any value was permitted. Now, we want to formulate a theory that limits, up to a certain degree of confidence, what values the parameter can adopt. 
+When we talked about point estimations, we never came to talk about intervals in which the parameter was confined, and going to an arbitrarily low probability basically any value was permitted. Now, we want to formulate a theory that limits, up to a certain degree of confidence, what values the parameter can adopt. 
 
 \begin{definition}[Interval estimator]
 	Given a pdf $p(x;\theta)$ dependent on an unknown parameter $\theta\in A$, an \emph{interval estimator} is a statistic $f(x): X\rightarrowtail \mathcal{P}(A)$ which outputs a subset of the parameter space.
 \end{definition}
 
-While a point estimate provides a single "best guess," an interval estimate offers something far more valuable: a measure of uncertainty. At first glance, reporting a range might seem less precise than inferring a specific value, but in practice, they serve distinct and vital roles. Interval estimates are not merely a contingency for when point estimates become unstable, such as in low-count Poisson regimes, but are essential tools for experimental design. They allow us to determine the required duration for data collection to achieve a desired precision. Furthermore, they are often the only rigorous way to report results in "null" observations, such as setting an upper limit on the probability of a rare event that has yet to be measured.
+While a point estimate provides a single "best guess," an interval estimate offers a quantitative measure of uncertainty. At first glance, reporting a range might seem less precise than inferring a specific value, but in practice, they serve distinct and vital roles. Interval estimates are, but not limited to, merely a contingency for when point estimates become unstable, such as in low-count Poisson regimes, but are essential tools for experimental design and analysis. They allow us, for example, to determine the required duration for data collection to achieve a desired precision. Furthermore, they are often the only rigorous way to report results in "null" observations, such as setting an upper limit on the probability of a rare event that has yet to be measured.
 
 As we have mentioned many times during this course, it is the job of the expert data analyst to know what tools to apply to a certain data set in the specific situation they might find themselves in. 
 
 \section{Bayesian interval estimation}
 We now consider the "fortunate" case in which the unknown parameter can be described by a probability density function, allowing us to perform inference using Bayes' theorem, as discussed in Section \ref{subsec:Inf_Bayes}. Starting from Eq. (\ref{eq:posterior_dob}), we write the posterior distribution as
-\[
-\pi_x(\theta) = \pi(\theta)\frac{L_x(\theta)}{p(x)}
-\]
+	
+	\[
+	\pi_x(\theta) = \pi(\theta)\frac{L_x(\theta)}{p(x)}
+	\]
 
-We then determine a subset $f(x)$ of the parameter space\sidenote{Yes, $f(x)$ is a subset of the parameter space, at a fixed $x$} (typically an interval), depending on the observed data $x$, such that
+We then determine a subset $f_{x}(\theta)$ of the parameter space\sidenote{For this chapter, we will adopt this notation, where the quantity that is fixed will be the subscript and the quantity that represents the domain will be in parentheses. In this case, $f_{x}(\theta)$ is a subset of the parameter space, at a fixed $x$} (typically an interval), depending on the observed data $x$, such that
 \begin{equation}
-	\int_{f(x)} \pi_x(\theta)\, d\theta = c
+	\int_{f_{x}(\theta)} \pi_x(\theta)\, d\theta = c
 	\label{eq:Bayes_int_eq}
 \end{equation}
-where $0 < c < 1$ is a constant called the \emph{credibility}. The set $f(x)$ represents a \emph{credible region}, i.e. a set of plausible values for $\theta$ such that the posterior probability of $\theta$ lying within it is equal to $c$:
-\[
-P(\theta \in f(x)\mid x) = c
-\]
+where $0 < c < 1$ is a constant called the \emph{credibility}. The set $f_{x}(\theta)$ represents a \emph{credible region}, i.e. a set of plausible values for $\theta$ such that the posterior probability of $\theta$ lying within it is equal to $c$:
+	
+	\[
+	P(\theta \in f_{x}(\theta)\mid x) = c
+	\]
 
 The importance of this scripture cannot be overstated: we are finding an interval in the \emph{parameter space}, and this interval \emph{depends on the observed data}.
 
-The credibility $c$ quantifies the degree of belief that the true value of the parameter lies within the region $f(x)$. In practice, $c$ is chosen in advance, typically taking values between $0.9$ and $0.95$.
+The credibility $c$ quantifies the degree of belief that the true value of the parameter lies within the region $f_{x}(\theta)$. In practice, $c$ is chosen in advance, typically taking values between $0.9$ and $0.95$.
 
 As usual, the Bayesian formulation brings many nice properties such as respecting the Likelihood principle, obtaining clear, specific, and intuitive results. However, it depends on how we choose the prior, which can greatly influence the type of result we obtain. Also, we need $\theta$ to be able to admit a pdf in the first place. \todo{Here we can talk about Jeffrey's prior, if it ever comes up, or reference priors.}
 
-Integral (\ref{eq:Bayes_int_eq}) admits infinite solutions, so we must introduce a criteria to be able to select the specific solution we want. The most agreed upon way to proceed is by selecting an \emph{ordering function}\sidenote{We will dedicate more time to ordering functions in the near future} $o(\theta)$ that assigns a priority hierarchy to the values of the parameter to include. 
+Integral (\ref{eq:Bayes_int_eq}) admits infinite solutions, so we must introduce a criteria to be able to select the specific solution we want. The most agreed upon way to proceed is by selecting an \emph{ordering function}\sidenote{We will dedicate more time to ordering functions in the near future} $o_{x}(\theta)$ that assigns a priority hierarchy to the values of the parameter to include. 
 
 In this case, the equation becomes:
 	
 	\[
-	\int_{o(\theta)\geq q_c} \pi_x(\theta)\dd \theta = c
+	\int_{o_{x}(\theta)\geq q_c} \pi_x(\theta)\dd \theta = c
 	\]
 
-Where $q(c)$ is a constant that depends on the credibility $c$ in a way such as to satisfy the equation. Usually, this allows us to find one unique solution, given $c$ and the ordering function. Essentially, we are finding an interval in $\theta$ where $o(\theta)\geq q_c$ and the above integral is equal to $c$.
+Where $q(c)$ is a constant that depends on the credibility $c$ in a way such as to satisfy the equation. Usually, this allows us to find one unique solution, given $c$ and the ordering function. Essentially, we are finding an interval in $\theta$ where $o_{x}(\theta)\geq q_c$ and the above integral is equal to $c$.
 
-The most common and simple choice is to use \emph{posterior ordering} $o(\theta) =\pi_x(\theta)$, where the $\theta$ that greater contribute to $\pi(\theta)$ are integrated over first. Essentially, we want to prioritize "credible" $\theta$ values and so we choose the integral limits so that those are included first. This may seem complicated, but it's nothing more than integrating the posterior starting from its maximum and expanding "outwards", until the area underneath the curve equals the credibility. This algorithm certainly will output a credible region containing the most credible $\theta$, as well as the one with the smallest measure in $\dd\theta$. This is desirable, as it intuitively restricts the credible values of the parameters more than any other ordering function. We note that this is not invariant for variable changes in the parameter space. 
+The most common and simple choice is to use \emph{posterior ordering} $o_{x}(\theta) =\pi_x(\theta)$, where the $\theta$ that greater contribute to $\pi_{x}(\theta)$ are integrated over first. Essentially, we want to prioritize "credible" $\theta$ values and so we choose the integral limits so that those are included first. This may seem complicated, but it's nothing more than integrating the posterior starting from its maximum and expanding "outwards", until the area underneath the curve equals the credibility. This algorithm certainly will output a credible region containing the most credible $\theta$, as well as the one with the smallest measure in $\dd\theta$. This is desirable, as it intuitively restricts the credible values of the parameters more than any other ordering function. We note that this is not invariant for variable changes in the parameter space. 
 
 We will talk about ordering algorithms in greater detail in section \ref{subsec:ordering}.
 
@@ -111,12 +113,12 @@ We will talk about ordering algorithms in greater detail in section \ref{subsec:
 		\label{fig:bayes_posterior}
 	\end{figure}
 	
-	We want to find, given a measurement $k$, an interval for $\mu$ with a credibility of $90\%$. We know this to mean that we want to find an interval in $\mu$ of the type $\mu\in[a,b]$ such that $\int_a^bp(\mu)\dd \mu= 0.9$. We can imagine there to be an infinite number of such intervals, and so we define different \emph{ordering functions} that change the type of interval we get.
+	We want to find, given a measurement $k$, an interval for $\mu$ with a credibility of $90\%$. We know this to mean that we want to find an interval in $\mu$ of the type $\mu\in[a,b]$ such that $\int_a^bp_{k}(\mu)\dd \mu= 0.9$. We can imagine there to be an infinite number of such intervals, and so we define different \emph{ordering functions} that change the type of interval we get.
 	
-	For example, if we choose to integrate over the zone where $p(\mu)\geq q_c$, we define two bounds (the two solutions $a,b$ of $p(\mu)\geq q_c$) such that 
+	For example, if we choose to integrate over the zone where $p_{k}(\mu)\geq q_c$, we define two bounds (the two solutions $a,b$ of $p_{k}(\mu)\geq q_c$) such that 
 	
 	\[
-	\int_{p(\mu)\geq q_c}p(\mu)\dd \mu = 0.9
+	\int_{p_{k}(\mu)\geq q_c}p_{k}(\mu)\dd \mu = 0.9
 	\]
 	
 	This is called "posterior ordering" and is the most natural choice, as it includes the maximum value of the posterior by definition, meaning that it also results in the minimal interval length in $\mu$.
@@ -164,11 +166,11 @@ Basically, at its core, we can condense this entire equation into the most basic
 
 If we think about it, on the left side we have an integral in $\dd x$, and on the right a constant that we fix beforehand, namely the "confidence level" \emph{CL}\sidenote{Don't worry about these definitions, they will all get cleared up in the near future. This part aims to provide a general outlook on the math that we will be using, so just bear with us}. Fundamentally, solving the inequality at a fixed $x_0$ dependent on the parameter returns an interval (or family of disconnected intervals) for which the inequality is true. These $\theta$ intervals are the ones we will be studying.
 
-Now, what exactly is this $g_{k_0}(\theta)$? Well, since we are not in the Bayesian case and cannot directly say that the parameter admits a pdf, we can only talk about the distribution of the observable: we want that, with probability \emph{CL}, the interval defined by $g_{k_0}(\theta) - CL \geq 0$ contains $\theta$, to be intended in the frequentist sense. 
+Now, what exactly is this $g_{x_0}(\theta)$? Well, since we are not in the Bayesian case and cannot directly say that the parameter admits a pdf, we can only talk about the distribution of the observable: we want that, with probability \emph{CL}, the interval defined by $g_{x_0}(\theta) - CL \geq 0$ contains $\theta$, to be intended in the frequentist sense. 
 
 As we will see, infinite such intervals exist for each fixed $\theta$ (there are infinite ways to integrate a normalized function such that its integral is equal to, say, $0.95$), and $o_{\theta}(x)$ serves as an "ordering function" with the aim of unambiguously defining one such interval by describing which $x$'s to include. 
 
-This integral in eq. \ref{eq:int_definition} is nothing more than the integral of the pdf itself, which we know to be the cumulative of the density function\sidenote{This integral can be seen as, at most, the difference of two \emph{CDF's} in order to make the bounds work out}, calculated on upper and lower bounds that may, in general, depend on the parameter. 
+This integral in eq. (\ref{eq:int_definition}) is nothing more than the integral of the pdf itself, which we know to be the cumulative of the density function\sidenote{This integral can be seen as, at most, the difference of two \emph{CDF's} in order to make the bounds work out}, calculated on upper and lower bounds that may, in general, depend on the parameter. 
 
 What this all means is that having fixed an observed $x_0$ (coming from pdf $p(x;\theta)$), \textbf{the ordering function describes a $\theta$-dependent $x$-interval over which the integral of the pdf is greater than or equal to the \emph{CL}}. Therefore, after having measured $x_0$, we can solve this expression (which we so naïvely wrote as $g_{x_0}(\theta) - CL \geq 0$) to find an interval in $\theta$, and that will be the estimate that we are looking for. 
 

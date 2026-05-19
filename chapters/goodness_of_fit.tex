@@ -135,8 +135,8 @@ It would be intellectually dishonest to report only that singular result\sidenot
 \section{GOF Tests from the LR statistic}
 With a solid understanding of $p$-values under our belt, it's time to move on to the practical applications of this theory. Let's begin with the case where the most general hypothesized pdf can be described as a member of a parametrized space $p(x;\theta)$. This space can even have a high number of dimensions, and $H_0$ is the case of $\theta=\theta_0$. As we have done in the previous chapter, $H_0$ can have an arbitrary number of nuisance parameters $\nu$. 
 
-For example, if the null hypothesis is \textit{“the data follow a Gaussian distribution”}, then no parameter is fixed under $H_0$. Both the mean and the variance are therefore treated as nuisance parameters~$\nu$.
-Conversely, if the null hypothesis is \textit{“the data follow a Gaussian distribution with mean $\mu_0$”}, then one parameter is fixed by the hypothesis, namely the mean. In this case, the dimension of $\theta$ is one, while the variance is treated as a nuisance parameter.
+For example, if the null hypothesis is \textit{“the data follows a Gaussian distribution”}, then no parameter is fixed under $H_0$. Both the mean and the variance are therefore treated as nuisance parameters~$\nu$.
+Conversely, if the null hypothesis is \textit{“the data follows a Gaussian distribution with mean $\mu_0$”}, then one parameter is fixed by the hypothesis, namely the mean. In this case, the dimension of $\theta_0$ is one, while the variance is treated as a nuisance parameter.
 
 Following the formalism developed in \ref{subsec:LR_test}, we once again use the Log Likelihood Ratio (LLR):
 
