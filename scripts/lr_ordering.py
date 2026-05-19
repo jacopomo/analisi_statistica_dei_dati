@@ -39,18 +39,18 @@ ax1.fill_between(x, 0, pdf, where=mask, alpha=0.35)
 
 ax1.set_xlabel("x")
 ax1.set_xlim(x[0], x[-1])
-ax1.set_ylabel("pdf")
+ax1.set_ylabel(r"$p(x; \mu)$")
 ax1.set_ylim(0, max(pdf)*1.2)
 
 ax2 = ax1.twinx()
-ax2.plot(x, r, lw=2, ls="--", label=r"$LR(x)$")
+ax2.plot(x, r, lw=2, ls="--", label=r"$LR_{\mu}(x)$")
 ax2.axhline(threshold, ls=":", color="black", lw=1.0, label="Threshold")
 
 for idx in starts + ends:
     x_inter = x[idx]
     ax2.vlines(x_inter, -TRASL, threshold, ls=":", color="black", lw=1.0)
 
-ax2.set_ylabel("LR ratio")
+ax2.set_ylabel(r"$LR_{\mu}(x)$")
 ax2.set_ylim(-TRASL, max(r)*1.1)
 ax1.set_title(r"Likelihood-ratio ordering for $\mu=0.5$")
 ax1.grid(alpha=0.3)
