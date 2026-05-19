@@ -191,10 +191,10 @@ We will expand on all of these different types one by one in the following secti
 When we talk about simple hypotheses, it's fundamental to also talk about the \emph{Neyman-Pearson} (NP) Test, and the associated theorem:
 
 \begin{theorem}[Neyman-Pearson]
-	Given two simple hypotheses $H_0,H_1$, corresponding to the \emph{pdf's} $p_0(x),p_1(x)$, and let $T_{NP}$ be a Test based on the statistic
+	Given two simple hypotheses $H_0,H_1$, corresponding to the the same pdf but with different fixed values of $\theta$ $p(x;\theta_0),p(x;\theta_1)$, and let $T_{NP}$ be a Test based on the Likelihood ratio Test statistic
 	
 	\[
-	T(x) = \frac{p_0}{p_1}
+	T_{NP}(x) = LR(x) = \frac{L_x(\theta_0)}{L_x(\theta_1)}
 	\]
 	
 	with critical region $\C\equiv \{x: T(x)<q\}$\sidenotemark and significance level $P_0(\C)=\alpha$.
