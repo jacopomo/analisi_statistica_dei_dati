@@ -234,9 +234,10 @@ We could also think to take the central band (\textbf{central ordering}), as to 
 
 The final ordering algorithm we will explore for now is one based on the \textbf{Likelihood Ratio} (some texts may call it "Feldman-Cousins ordering"). The idea is to use the Likelihood Ratio as the ordering function
 	
-	\[
+\begin{equation}
 	LR_{\theta}(x) = \frac{p\left(x \middle| \theta\right)}{p\left(x \middle| \hat{\theta}_{MLE}\right)} = \frac{L_{x}\left(\theta\right)}{L_{x}\left(\hat{\theta}_{MLE}\right)}
-	\]
+\label{eq:FC}
+\end{equation}
 
 We have written both versions, explicitly in $p$ and in $L$, and while they represent the same exact quantity both can be found in literature. The important thing to note is that the Likelihood ratio is a \emph{statistic}, that is, it is $x$-dependent quoted at a fixed $\theta$.
 
@@ -274,94 +275,125 @@ Given an observation of $x$, the interval in $\theta$ is found by intersecting t
 	\label{fig:binomial_Neyman_belts}
 \end{figure}
 
-For any outcome $x\in\{0,1,2,\dots,20\}$ we can draw a horizontal line in any of the belts in figure \ref{fig:binomial_Neyman_belts} and find our interval estimation for $p$. As we have already touched upon briefly, it's important to stick to one belt (and therefore ordering algorithm) for all measured values rather than \emph{flip-flopping} between them. If we "artificially" make the interval smaller by choosing a particular intersection or combination of different ordering algorithms, it only means that we have lowered the coverage below our \emph{CL}, and so we lose the very property that defined our intervals in the first place. The choice of ordering should be determined by the goal of the analyst, like choosing Likelihood Ratio for the inclusion of the \emph{MLE} or lower ordering for the upper bound.
+For any outcome $x\in\{0,1,2,\dots,20\}$ we can draw a horizontal line in any of the belts in figure \ref{fig:binomial_Neyman_belts} and find our interval estimation for $p$. As we have already touched upon briefly, it's important to stick to one belt (and therefore ordering algorithm) for all measured values rather than \emph{flip-flopping} between them. If we "artificially" make the interval smaller by choosing a particular intersection or combination of different ordering algorithms, it only means that we have lowered the coverage below our \emph{CL}, and so we lose the very property that defined our intervals in the first place. The choice of ordering should be determined by the goal of the analyst, like choosing Likelihood Ratio for the inclusion of the \emph{MLE} or lower ordering for the upper bound, and must be maintained for all values of $\theta$.
 
 
 \begin{example}
 \label{ex:LR_vs_p_ordering}
-	Let's build the Neyman band for a Normally distributed $x$ with unknown parameter $\mu$ (let's say $\sigma=1$ for simplicity). We choose, for the sake of this example, to use probability-ordering. We can't integrate the Normal distribution analytically, so we'll have to fall back on the tables found in Appendix \ref{tables:normal}.
+	Let's build the Neyman band for a Normally distributed $x$ with unknown parameter $\mu$ (let's say $\sigma=1$ for simplicity). We choose, for the sake of this example, to use probability-ordering, finding a two-sided interval for $\mu$ at a $95\% CL$.
 	
-	Specifically, what we want 
+	Specifically, what we want is to solve (\ref{eq:int_definition}), which in our case corresponds to:
+	
+	\[
+	\int_{x_1}^{x_2} \frac{1}{\sqrt{2\pi}}e^{-\frac{\left(x-\mu\right)^2}{2}}\dd x \geq 0.95
+	\]
+	
+	
+	
+	Having ordered using p-ordering, we know that our $x$-interval will be symmetric about the mean, and so we can apply a variable change to arrive to the following:
+	
+	\[
+	\int_{z_1}^{-z_1} \frac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}\dd z \geq 0.95
+	\]
+	
+	Having applied this change of variables, we have written the null mean unitary variance (standard) Normal distribution, whose integral is found tabled in Appendix \ref{tables:normal}. In this case, we find $z_1 = 1.96$, which means that the probability-ordered belt will always be $2*z_1$ wide about $\mu$ for all $\mu$. This belt can then be inverted to find the interval for $\mu$ at a certain $z$ (or, quite simply, at a certain $x$).
 	
 	\begin{figure}[H]
 		\centering
 		\input{images/neyman_gauss.pgf}
-		\caption{Neyman belt for a Normally distributed $x$ with fixed unitary variance. Here, we have used probability ordering and we note that an interval exists for all possible values of $x$.}
+		\caption{Neyman belt for a Normally distributed $x$ with fixed unitary variance. Here, we have used probability ordering at $95\% CL$ and we note that an interval exists for all possible values of $x$.}
 		\label{fig:neyman_gauss}
 	\end{figure}
 	
-	As seen in \ref{fig:neyman_gauss}, the belt is of simple interpretation: having fixed the variance the interval estimate is centered on the measured value with a defined width, and such an interval exists for all measured $x$. However, let us restrict ourselves in the particular case of $\mu>0$. In this case, if we simply use probability ordering again, it would be analogous to truncating the above belt, excluding all negative $\mu$ values.
+	As seen in \ref{fig:neyman_gauss}, the belt is of simple interpretation: having fixed the variance the interval estimate is centered on the measured value with a defined width, and such an interval exists for all measured $x$, meaning that $\mu$ is \emph{covered}. However, let us restrict ourselves in the particular case of $\mu>0$. In this case, if we simply use probability ordering again, it would be analogous to truncating the above belt, excluding all negative $\mu$ values.
 	
 	However, doing this we realize that not all observable values of $x$ correspond to a possible interval in $\mu$, as the following plot shows:
 	
 	\begin{figure}[H]
 		\centering
 		\input{images/neyman_gauss_limited.pgf}
-		\caption{Neyman belts for a Normally distributed $x$ with fixed unitary variance and $\mu>0$. On the left, we have used probability ordering, and on the right Likelihood Ratio ordering. Plotted also is the line for an observation at $x=-2.5$}
+		\caption{Neyman belts for a Normally distributed $x$ with fixed unitary variance and $\mu>0$. On the left, we have used probability ordering, and on the right Likelihood Ratio ordering, both at $95\% CL$. Plotted also is the line for an observation at $x=-2.5$}
 		\label{fig:neyman_gauss_limited}
 	\end{figure}
 	
 	Figure \ref{fig:neyman_gauss_limited} shows the breaking point of the probability ordering, where it fails to find an interval for $\mu$ for a negative $x$. On the right, the same belt is constructed with the sole difference of using a different ordering function: the Likelihood Ratio. As we can see, this new ordering function once again allows us to correspond every measure of $x$ to an interval, and takes into consideration the limits on the parameter itself. 
 	
-	We can also see that the interval in $x$ defined for $\mu=0.5$ corresponds to what we have shown in figure \ref{fig:lr_ordering}.
+	It is instructive to note that if we were to draw a vertical line at $\mu=0.5$ in the LR-ordered belt, we would intersect it at two $x$ points that define the same interval shown in figure \ref{fig:lr_ordering}.
 \end{example}
 
-These belts are of great didactic caliber, and are useful in visualizing what it is that we are actually doing under this whole mathematical abstraction. Numerically, we are representing the dependence of the $\dd x$ integral bounds in $\theta$, such that $\int_{}$
-
-Analytically, the goal would be to define a function, or set of functions, of the type $x_{max}(\theta)$, $x_{min}(\theta)$, or their inverses. Sometimes, based on the ordering algorithm, pdf, and parameter we are trying to estimate, we are able to build the whole belt analytically and define an interval for $\theta$ for all observed values of $x$. 
-
-
 \begin{example}
-	Let's build a Neyman belt analytically! We will study the common case of an observable $x$ distributed following a uniform pdf $p(x;m) = \frac{1}{m}$ for $0\leq x \leq m$ and $0$ outside of that support. We observe one $x$ and wish to build an interval estimate for $m$ with a $90\%$ \emph{CL}. 
+	Let's build a Neyman belt analytically, in the fortunate case where the cumulative admits a clean, closed form. We will study the common case of an observable $x$ distributed following a uniform pdf $p(x;m) = \frac{1}{m}$ for $0\leq x \leq m$ and $0$ otherwise. We observe one $x$ and wish to build an interval estimate for $m$ with a $90\%$ \emph{CL}. 
 	
-	Let's start by finding a lower limit for $m$, which means using "upper ordering":
+	Let's start by finding a lower limit for $m$, which means using "lower ordering":
 	
 	\[
 	\int_0^{x_{max}} \frac{1}{m}\dd x = CL
 	\]
 	
-	Remember, we integrate with a fixed $m$, and have set $x_{min}=0$ thanks to our ordering function. We can easily solve to find:
+	Remember, we integrate with a fixed $m$, and we are doing nothing more than finding the $x$ for which the cumulative equals $CL$: $F_{m}(x_{max}) = CL$. We can easily solve to find:
 	
 	\[
-	x_{min} = 0 \quad x_{max} = m\cdot CL
+	x_{max} = m\cdot CL
 	\]
 	
-	These two equations define a Neyman belt, from which we easily see that the one-sided interval for $m$ is $m\geq \frac{x_0}{CL}$, where $x_0$ is the result of our measured observable. This belt is seen on the left side of figure \ref{fig:uniform_belts}.
+	This equation defines a Neyman belt, from which we easily see that the one-sided interval for $m$ (after measuring $x_0$) is: 
 	
-	Let's solve the same problem, this time using \emph{LR} ordering to obtain a two-sided interval for our parameter. We know that for a uniform distribution, as we have worked out in appendix \textcolor{red}{REF} the \emph{MLE} for $m$ is $m=x$ itself, and the \emph{LR} function can be written as:
+	\[
+	m\geq \frac{x_0}{CL}
+	\]
+	
+	This belt is seen on the left side of figure \ref{fig:uniform_belts}.
+	
+	Let's solve the same problem, this time using \emph{LR} ordering to obtain a two-sided interval for our parameter. We know that for a uniform distribution, as we have worked out in appendix \ref{sec:uniform} the \emph{MLE} for $m$ in the case of one observation is $m=x$ itself, and the \emph{LR} function can be written as:
 	
 	\[
 	LR(x) = \frac{x}{m}
 	\]
 	
-	To satisfy Likelihood Ratio ordering, we pick the x with the largest values of \emph{LR} first, and so our interval in $x$ will be $[x_{min}, m]$, chosen so that:
+	To satisfy Likelihood Ratio ordering, we need to pick the x with the largest values of \emph{LR} first, and we see that the Likelihood ratio is monotonously increasing in $x$: we are using nothing other than upper ordering. In this case, our interval in $x$ will be $[x_{min}, m]$, chosen so that:
 	
 	\[
 	\int_{x_{min}}^m \frac{1}{m}\dd x = CL
 	\]
 	
-	Solving the above integral, we get that
+	To show that the above integral corresponds to upper ordering, we also show the following steps that bring it in the familiar form written in section \ref{subsec:ordering}:
+
+	\[
+	\int_{x_{min}}^m \frac{1}{m}\dd x = \underbrace{\int_0^m \frac{1}{m}\dd x}_{1} - \underbrace{\int_0^{x_{min}} \frac{1}{m}\dd x}_{F_{m}(x_{min})} = CL
+	\]
+	
+	\[
+	\int_{x_{min}}^m \frac{1}{m}\dd x = CL \iff F_{m}(x_{min}) = 1 - CL
+	\]
+	
+	Either way one chooses to do it, solving the above integral, we get that
 	
 	\[
 	x_{min} = (1-CL)\cdot m \quad x_{max} = m
 	\]
 	
-	which, after a measurement $x_0$, translates to an interval of $x_0\leq m \leq \frac{x_0}{1-CL}$. We also note that in this particular case, \emph{LR} ordering corresponds exactly to having used lower ordering (which gives us the upper bound, though the lower bound is fixed by the fact that $x\leq m$).
+	which, after a measurement $x_0$, translates to an interval of:
+	
+	\[
+	x_0\leq m \leq \frac{x_0}{1-CL}
+	\]
+	
+	In this case, upper ordering gives us the correct upper limit, and we impose the lower limit knowing that $m$ must be greater than the measured $x_0$.
 	
 	The following figure shows the two different belts that we were able to construct analytically for this problem, and it's clear how inverting the $x$ limits as a function of $m$ brings us the interval for $m$.
 	
 		\begin{figure}[H]
 		\centering
 		\input{images/uniform_belts.pgf}
-		\caption{Different Neyman belts for the interval estimate on $m$, the parameter for a uniform distribution with minimum point $0$ and maximum $m$. On the left, upper ordering is shown and on the right Likelihood Ratio ordering. An example measurement of $x_0=1$ is shown, to highlight how the belt can be inverted to obtain a one or two sided interval estimate.}
+		\caption{Different Neyman belts for the interval estimate on $m$, the parameter for $U\left[0,m\right]$. On the left, lower ordering is shown and on the right Likelihood Ratio ordering, both with $90\%$ \emph{CL}. An example measurement of $x_0=1$ is shown, to highlight how the belt can be inverted to obtain a one or two sided interval estimate.}
 		\label{fig:uniform_belts}
 	\end{figure}
 	
-	In this specific case with $90\%$ \emph{CL}, we use as an example the measurement $x_0=1$, which brings the intervals of:
+	In this specific case with $90\%$ \emph{CL}, we use the measurement $x_0=1$ as an example, which brings the intervals of:
 		
 		\input{tables/uniform_belts.tex}
 		
-	In this case, we are more interested in an upper limit for $m$ so Likelihood/lower ordering would bring more information on the parameter, as the observation of $x_0$ itself already provides a natural lower limit for the value of $m$. 
+	In this case, we are more interested in an upper limit for $m$ so Likelihood/upper ordering would bring more information on the parameter, as the observation of $x_0$ itself already provides a natural lower limit for the value of $m$. 
 \end{example}
 
 However, the belt is not always possible to express analytically, and so often we must use numerical techniques or searched tabular data to find the interval we desire. Naturally, not every possible parameter-pdf combination will be expressed in tables, and for that reason we must find a way to transform our specific cases into general, standard problems that have already been solved before us. Luckily, in the next section we will introduce \emph{pivotal quantities} and how they can be used to standardize certain types of problems.
@@ -388,13 +420,13 @@ For example, consider a Normally distributed observable, coming from $\N(x;\mu,\
 	z\left(x,\mu,\sigma\right) = \frac{x-\mu}{\sigma}
 	\]\sidenote{For this specific pivot the variable $z$ is most commonly used.}
 
-Well, now to write out $p_z(z)$, we need to use the change of variable rule that we worked out way in definition \ref{def:pdf_var_change}, essentially substituting and multiplying by the Jacobian of the inverse transformation:
+Well, now to write out $p_z(z)$, we need to use the change of variable rule that we worked out way back in definition \ref{def:pdf_var_change}, essentially substituting and multiplying by the Jacobian of the inverse transformation:
 
 	\[
 	p_z(z) = \N(x(z))\left|\frac{\dd x}{\dd z}\right| = \frac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}
 	\]
 
-We see that the above expression is nothing more than a "standard Gaussian", which is a Normal distribution with null mean and unitary variance. This is independent of our original parameters, and all of the information we could ever hope to have on this distribution can be found on tables\todo{Perhaps ref ours when we have them} and in literature, as it is an extensively researched function. 
+We see that the above expression is nothing more than a "standard Gaussian", which is a Normal distribution with null mean and unitary variance. This is independent of our original parameters, and all of the information we could ever hope to have on this distribution can be found on tables and in literature, as it is an extensively researched function. For example, appendix \ref{tables:normal} contains the integrals of the tails of this standard Gaussian, and some other helpful tables built off of pivotal quantities can be found at the end of these notes.
 
 A possible strategy for when we have to deal with Normal distributions could then be to transform them through the pivotal quantity $z$, solve whatever problem it is that we are looking to solve (for example, but not limited to, finding an interval estimate for a parameter), and then transform $z$ back to obtain the necessary information on our parameters. 
 

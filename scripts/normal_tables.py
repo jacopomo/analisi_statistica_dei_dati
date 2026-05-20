@@ -28,7 +28,7 @@ def format(value):
 
 
 # TABLE 1: alpha (significance level) → z (critical z-value)
-alpha_values = [0.25, 0.1, 0.05, 0.01, 0.001, 0.0001]
+alpha_values = [0.25, 0.1, 0.05, 0.025, 0.01, 0.001]
 
 alpha_col = [f"${alpha}$" for alpha in alpha_values]
 z_col = []
@@ -81,8 +81,8 @@ y = norm.pdf(x)
 # Plot the curve
 ax.plot(x, y, 'k-', linewidth=2, label=r'$\mathcal{N}(z;0, 1)$')
 
-# Example: alpha = 0.05, z = 1.645
-alpha_example = 0.05
+# Example: alpha = 0.025, z = 1.96
+alpha_example = 0.025
 z_example = norm.ppf(1 - alpha_example)
 
 # Fill the right tail (alpha region)

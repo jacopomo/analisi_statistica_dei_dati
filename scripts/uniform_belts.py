@@ -10,15 +10,15 @@ from asd.interval_estimation import interval as asdinterval
 # Define parameters
 CL = 0.9
 X0 = 1
-LO_UPPER = X0 / CL
+LO_LOWER = X0 / CL
 LO_LR = X0
 HI_LR = X0 / (1 - CL)
 
 m_grid = np.linspace(0.0, 12, 500)
 x_grid = np.linspace(0, 6, 500)
 
-def upper_acceptance(m, x ,cl=CL):
-    '''Upper ordering: accept x in [0, cl*m]'''
+def lower_acceptance(m, x ,cl=CL):
+    '''Lower ordering: accept x in [0, cl*m]'''
 
     lower = 0
     upper = cl * m
@@ -46,7 +46,7 @@ def build_belt(acceptance_func, mu_grid, x, cl=CL):
 
     return np.array(x_low), np.array(x_high)
 
-xlow_upper, xhigh_upper = build_belt(upper_acceptance, m_grid, x_grid)
+xlow_lower, xhigh_lower = build_belt(lower_acceptance, m_grid, x_grid)
 xlow_lr, xhigh_lr = build_belt(lr_acceptance, m_grid, x_grid)
 
 # Generate table
@@ -58,7 +58,7 @@ def fmt(a, b):
 utils.table_generator(
     n_columns=2,
     labels=("Method", r"90\% confidence interval"),
-    content=(["Lower bound", "LR bound"], [rf"$ {LO_UPPER:.2f} \leq m$", fmt(LO_LR, HI_LR)]),
+    content=(["Lower bound", "LR bound"], [rf"$ {LO_LOWER:.2f} \leq m$", fmt(LO_LR, HI_LR)]),
     output_file_name="uniform_belts.tex"
     )
 
@@ -66,7 +66,7 @@ utils.table_generator(
 fig, axes = utils.pgf_generator(nrows=1, ncols=2, figsize=(5.5, 3.5), sharey=True)
 
 plots = [
-    ("Upper ordering", xlow_upper, xhigh_upper),
+    ("Lower ordering", xlow_lower, xhigh_lower),
     ("LR ordering", xlow_lr, xhigh_lr),
 ]
 
