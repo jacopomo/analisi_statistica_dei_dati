@@ -520,6 +520,16 @@ This simplifies considerably if we consider a monotonically increasing $f$, in w
 	\]
 taken with a "$-1$" before if $f$ is monotonically decreasing. The reader can readily verify that deriving the above expression one finds the one written in definition \ref{def:pdf_var_change}
 
+If we consider, for example, the transformation $y=\frac{x}{c}$, where $c$ is a constant, we get:
+\[
+	F_y(y)=F_x(yc)
+\]
+Conversely, if $y=xc$:
+\[
+	F_y(y)=F_x\left(\frac{y}{c}\right)
+\]
+These two situations appear frequently in practice, so it is useful to keep these relations in mind.
+
 \begin{example}
 	Suppose we start from a known distribution in $x$, and want to find the \emph{function} $f$ that brings us to a known distribution $p_f(f)$. The, inverting \ref{def:pdf_var_change} we arrive at:
 	\[
