@@ -563,10 +563,12 @@ Now we know that this distribution was obtained through the sum of $\nu$ variabl
 	
 	Differences are most visible at small $n$: the Wilks intervals are typically narrower, while the central ones are more conservative, whereas Feldman-Cousins provides the reference construction with correct coverage. As $n$ increases, all methods converge, reflecting the asymptotic validity of the likelihood-ratio approximation.
 
-	This behavior can be quantified through the coverage function (see \ref{eq:coverage}):
+	This behavior can be quantified through the coverage function:
+	
 	\[
 	\mathcal{C}(\mu) = \sum_{n \in \text{accepted}} \text{Poisson}(n;\mu)
 	\]
+	
 	where the sum runs over all values of $n$ for which $\mu$ lies inside the corresponding interval. 
 	
 	As shown in Fig.~\ref{fig:llr_poisson_coverage}, the coverage is not exactly constant and oscillates around the nominal value. These oscillations are a direct consequence of discreteness, as seen before in \ref{fig:binomial_coverage}, and the use of an asymptotic approximation.
