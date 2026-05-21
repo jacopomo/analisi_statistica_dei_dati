@@ -148,14 +148,11 @@ We now compute the likelihood $L_x(m)$ for a single observation $x$ (see example
 L_x(m)=\frac{1}{m}\,\mathbb{I}_{\{m \geq x\}}, \quad m>0
 \]
 
-\textbf{Remark:} The likelihood is not differentiable at $m=x$, so standard regularity conditions do not hold.
-
-The Fisher information is formally:
+We note that the domain of the observable $x$ is clearly dependent on the parameter $m$, thus, to compute the Fisher information, we resort to it's definition \ref{def:fisher_information}:
 \[
 I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]
 =\frac{1}{m^2}
 \]
-although this result must be treated with care due to the non-regularity of the model.
 
 To find the MLE for $m$, we observe that the likelihood is decreasing in $m$ for $m \ge x$ (see fig \ref{fig:uniform_likelihood}), hence its maximum is attained at the boundary:
 \[
@@ -173,11 +170,11 @@ The log-likelihood (for $m \ge \max_i [x_i]$) is:
 \[
 \ln L_{\text{tot}}(m) = -N \ln m
 \]
-so formally:
+then:
 \[
-I_{\text{tot}}(m)=\frac{N}{m^2}
+I_{\text{tot}}(m)=\E \left[\left(\frac{\partial \ln L_{\text{tot}}(m)}{\partial m}\right)^2 \right]=\frac{N^2}{m^2}
 \]
-again with the same caveat about regularity.
+If you're puzzled by the fact that the Fisher Information is not linear in the sample size $N$ remember that this property emerges in the case of sufficient regularity we talked about when we first introduced the concept of the Fisher Information (see \ref{def:fisher_information}). As we previously said, in the case of uniform distribution, where the bound is dependent on the parameter, those regularity conditions do not hold.
 
 By the same argument as before, the MLE is:
 

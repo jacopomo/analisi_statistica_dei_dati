@@ -371,7 +371,7 @@ We note that, if the domain of $x$ is independent of $\theta$ and we have suffic
 
 This means that under sufficient regularity (and if the domain of the observable is independent of the parameter), then the expected value of the Fisher score is identically null.
 
-\begin{definition}[Fisher Information function]
+\begin{definition}[Fisher Information function]\label{def:fisher_information}
 	\[
 	I(\theta) = \E\left[ S^2_x(\theta) \right] = \E\left[\left( \frac{\partial \ln L_x(\theta)}{\partial\theta}\right)^2\right]
 	\]
@@ -397,7 +397,12 @@ This matrix, under the usual regularity requisites, can be expanded in the follo
 	&= \E\left[-\frac{\partial^2\ln L(\theta)}{\partial\theta_i\partial\theta_j}\right]
 \end{align*}
 
-This expression makes it clear that the Fisher Information is linear in $\ln L$, and since the Likelihood is multiplicative in the number of observations, the Fisher Information is additive (under the usual assumptions). Since we want the Information to represent how much the observations tell us about the parameter $\theta$, this is a property that we happily accept. 
+That, in the usual case of a single parameter, is:
+\[
+	I(\theta)=\E\left[-\frac{\partial^2\ln L(\theta)}{\partial\theta^2}\right]
+\]
+
+This expression makes it clear that the Fisher Information is linear in $\ln L$, and since the Likelihood is multiplicative in the number of observations, the Fisher Information is additive (\textbf{under the usual assumptions}). Since we want the Information to represent how much the observations tell us about the parameter $\theta$, this is a property that we happily accept.\todo{We should review this section. I think there's margin of improvement and we could make the "Fisher Information is additive" part more clear and rigorous.}
 
 To put everything together, let's extend the concept of Fisher Information to \emph{statistics}, given a statistic $s(x)$ let's call the \emph{Information} of $s$ on $\theta$ the quantity:
 	\[
