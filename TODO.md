@@ -1,2 +1,4 @@
-TODO list:
-- [] Fix CLT ambiguities
+##TODO list
+
+- [ ] Fix CLT ambiguities  
+- [ ] :)  
