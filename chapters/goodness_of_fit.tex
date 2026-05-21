@@ -157,18 +157,13 @@ Considering a sequence of experimental measurements of a real observable $x$, le
 As we have already discussed, each bin count is independent and follows a Poisson distribution, such that:
 
 	\[
-	p(x;\theta) = \prod_i^n \mathcal{P}\left(k_i,\mu_i(\theta)\right)
+	p(x;\theta, \nu) = \prod_i^n \mathcal{P}\left(k_i,\mu_i(\theta,\nu)\right)
 	\]
 	
-where we know $\mu_i(\theta)=\E\left[k_i\right]$ to be the expected number of events in the $i$-th bin. We'll come back later on what $\mu_i$ represent, for the following calculations we don't need further information.
+where we know $\mu_i(\theta,\nu)=\E\left[k_i\right]$ to be the expected number of events in the $i$-th bin. We'll come back later on what $\mu_i$ represent, for the following calculations we don't need further information.
 
-What we are looking for, then, is a point estimation of $\theta$, and we'll use the \emph{MLE}:
 
-	\[
-	\hat{\theta}_{\text{MLE}} = \arg \max \prod_i^n \mathcal{P}\left(k_i;\mu_i(\theta)\right)
-	\]
-
-Well, now we are more mature than we were all those chapters ago, and instead of blindly accepting the $\hat{\theta}_{\text{MLE}}$ we would like to confirm that the observed distribution does not statistically differ from the hypothesized pdf. We assume that if we add \emph{enough} parameters, that we might call $\xi$, to our current pdf, then we can generally obtain whichever vector of expected values $\mu_i(\theta)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
+Our goal here is to confirm that the observed distribution does not statistically differ from the hypothesized pdf, essentially fitting our data to the model we assume. Adding \emph{enough} parameters, that we might call $\xi$, to our current pdf, then we can generally obtain whichever vector of expected values $\mu_i(\theta,\nu)$. In a certain sense, we can't explicit the most general alternative hypothesis, but proceeding in this way we can convince ourselves that we could arbitrarily "fit any histogram" given enough parameters.
 
 In this case, the LLR becomes:
 
@@ -178,7 +173,7 @@ In this case, the LLR becomes:
 
 To evaluate this, let's look at the numerator. The term $\sup_{\theta,\nu,\xi}\mu_i(\theta,\nu,\xi)$ represents the mean of the Poisson distribution in the $i$-th bin under the most general possible hypothesis. If we assume this general model has enough parameters to "fit any histogram" to any degree of precision, it becomes what is known as the \emph{Saturated Model}. 
 
-In this saturated case, the Likelihood is maximized when each bin's expected value is exactly equal to its observed count, $\hat{\mu}_{i} = k_i$. Essentially, we are allowing each of the $n$ bins to behave as an independent free parameter. Conversely, the denominator represents our specific physical model, which constrains those $n$ bins using only a small set of parameters $\theta$.
+In this saturated case, the Likelihood is maximized when each bin's expected value is exactly equal to its observed count, $\hat{\mu}_{i} = k_i$. Essentially, we are allowing each of the $n$ bins to behave as an independent free parameter. Conversely, the denominator represents our specific physical model, which constrains those $n$ bins through fixing $\theta_0$ and using only a small set of parameters $\nu$.
 
 Following Wilks' theorem, the degrees of freedom for our test statistic will be the difference in the number of free parameters between these two models. Say the Saturated Model uses $m$ parameters\sidenotemark\sidenotetext{Consider the case of $N$ observations distributed among $n$ bins, with $N$ fixed. The saturated model treats the expected count in each bin as an independent parameter, except for one parameter that is constrained by the normalization condition
 	\[
@@ -187,7 +182,7 @@ Following Wilks' theorem, the degrees of freedom for our test statistic will be 
 As a consequence, there are not $n$ independent parameters, but rather $m=n-1$. You have probably encountered this result at least once in your life when fitting histograms}.
 We know that our model uses $\dim(\theta)$ parameters, thus:
 	\[
-	DOF = m - \dim(\theta_0)
+	DOF = m - \dim(\theta)
 	\]
 By evaluating the Poisson product at these respective maxima, which are $\hat{\mu}_{i} = k_i$ for the numerator and $\mu_i(\theta_0, \hat\nu)$ for the denominator, our expression becomes:\sidenote{Consider the "hats" to be the \emph{MLE}'s, not explicitly stated for the sake of clarity}
 
