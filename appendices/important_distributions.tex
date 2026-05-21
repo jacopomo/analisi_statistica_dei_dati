@@ -1,14 +1,15 @@
 \chapter{Important Distributions}
-In this appendix we will highlight the main probability density and mass functions that we will encounter most often during this course, as well as deriving and listing their useful properties. 
+In this appendix we aim to highlight the main probability density and mass functions that we will encounter most often during this course, as well as deriving and listing some of their useful properties. 
 
-For now, here is a framework helped by AI to organize (as you can tell by the titles):
+Naturally it does not constitute an exhaustive treatment of all distributions, and there are many properties that will not be touched upon. Either way, most of what will be discussed during this section should be familiar and worth committing to memory.
 
-Each distribution we will write, plot, derive (some not all), moments, MLE, support, Moment generating function/characteristic function (some not all), cumulative (some not all), some special stuff for some (exponential period-frequency transformation, for example)
-
+\clearpage
 \section{Discrete distributions}
 \label{Appendix:discrete}
+
 \subsection{Bernoulli} %Sub sub sections give a nice bold but don't appear in the TOC... Win-win I'd say
 
+\clearpage
 \subsection{Binomial}
 Support: $k \in \{0, 1, \dots, n\}$ and $p \in [0, 1]$.
 
@@ -25,7 +26,7 @@ The Moment Generating Function (MGF) is the most efficient way to derive the raw
 	\[
 	M_X(t) = \mathbb{E}[e^{tX}] = (1 - p + pe^t)^n
 	\]
-\todo{Not surem, and not sure how it brings us the moments...}
+\todo{Not sure, and not sure how it brings us the moments...}
 Which brings us to the mean and variance of $k$:
 
 	\[
@@ -59,8 +60,11 @@ Fisher Information: This measure tells us how much "information" $k$ carries abo
 
 This shows us at a glance that $\hat{p}_{MLE}$ is the minimum variance estimator.
 
+\clearpage
 \subsection{Multinomial}
 Add the example of the k-median here (distribution of the k-biggest value, it's an important exercise we did in class you'll see)
+
+\clearpage
 \subsection{Poisson}
 
 \label{eq:poisson_mle}
@@ -93,11 +97,10 @@ Evaluating at $\mu = \hat{\mu}$, we obtain:
 \end{equation*}
 
 As expected, the MLE for the Poisson mean coincides with the sample mean. In the simple case of a single observation of $n$ events, we trivially get: $\hat\mu=n$.
-\todo{I wrote this whole section using $\mu$ as the parameter instead of $\theta$ because I feel uneasy using $\theta$ for the expected events of a Poissonian, it just feels wrong. If we want to keep our convention going I can change it, no problem.}
 %Negative Binomial / Geometric: For trials until success. Add if we ever use
 
+\clearpage
 \section{Continuos distributions}
-
 \subsection{Uniform}\label{sec:uniform}
 
 The general Uniform distribution $\mathcal{U}[l, u]$ with $l, u \in \mathbb{R}$ has the pdf:
@@ -415,8 +418,36 @@ Would you look at that, the minimum and the maximum have the same variance! This
 
 \todo{Should we add the Fisher information for $x_{\max}$ and $x_{\min}$?}
 
+\clearpage
 \subsection{Normal (Gaussian)}
 
+	\[
+	\N\left(x;\mu,\sigma^2\right) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{\left(x-\mu\right)^2}{2\sigma^2}}
+	\]
+
+Naturally, $x,\mu\in\R$ and $\sigma^2>0$. 
+
+We know the expected value and variance of $x$ to be:
+
+	\[
+	\E\left[x\right] = \mu \quad \Var\left[x\right] = \sigma^2
+	\]
+
+The distribution is symmetric about the mean, which is also the most probable value, which means that the mean, median and mode all coincide and are $\mu$.
+
+Often, it's useful to apply the change of variables $z = \frac{x-\mu}{\sigma}$ which brings the form of the standard Gaussian:
+
+	\[
+	\N\left(z\right) = \frac{1}{\sqrt{s\pi}}e^{-\frac{z^2}{2}}
+	\]
+
+This naturally represents a pivotal quantity, as the Normal distribution with null mean and unitary variance is well-studied and its integrals tabled.
+
+The Normal distribution is the general distribution for which the ventral limit theorem converges to, and represents the pdf of the sum of many observations. For this reason, the sum of two Normally distributed values follows a Normal distribution. 
+
+Stating this in another way: the convolution of two Gaussians with null mean and variance $\sigma_1^2$, $\sigma_2^2$ is a Gaussian with null mean and variance  $\sigma_1^2 + \sigma_2^2$, which is a helpful property to fall back upon since we can always apply a change of variables to arrive at a null mean Gaussian.
+
+\clearpage
 \subsection{Exponential}
 
 \subsubsection{Truncated exponential}
@@ -429,6 +460,7 @@ Would you look at that, the minimum and the maximum have the same variance! This
 
 %Cauchy: The "pathological" example (useful to show when moments like mean/variance don't exist!).  Add if we ever use
 
+\clearpage
 \section{Sampling distributions}
 %Student’s t: For small sample sizes.  Add if we ever use
 
