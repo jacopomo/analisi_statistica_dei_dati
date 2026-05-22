@@ -816,18 +816,37 @@ In general, this function has analogous properties as $M$, though it exists for 
 Now seems like a great time to introduce what is probably the most important theorem we will talk about in this whole text. 
 
 \begin{theorem}[Central limit theorem]\label{th:central_limit}
-	Let $x$ be a real observable with a distribution $p(x)$ that admits the first two moments. 
-	Then, the distribution of the sample mean 
+	Let $x$ be a real observable with a distribution $p(x)$ that admits the first two moments. Therefore, both the expected value and variance exists finite and are: 
+	
+	\[
+	\E[x] = \mu \quad \Var[x] = \sigma^2
+	\]
+	
+	Then, let $\bar{x}$ be the sample mean:
 	\[
 	\bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
 	\]
-	in the limit of large $N$ tends to a distribution of universal form, independent of the specific shape of $p(x)$.
+	
+	We define the statistic $y = x - \mu$, take its sample mean and multiply by the square root of the sample size. Doing so, we obtain the new N-dependent statistic:
+	
+	\[
+	y_N = \sqrt{N}\left(\bar{x}-\mu\right)
+	\]
+	
+	In the limit of large $N$, this statistic tends to a distribution of universal form, independent of the specific shape of $p(x)$, only its mean and variance.
+	
+\begin{align}
+	p_{y_N}(y_N) &\rightarrow_{N\to\infty} \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{y_N^2}{2\sigma^2}\right) \\
+	&= \N\left(y_N;0,\sigma^2\right)
+	\label{eq:CLT}
+	\tag{Central limit theorem}
+\end{align}
 \end{theorem}
 
 \begin{example}[Proof of the central limit theorem]
 	Let's begin by considering the transformation
 	\[
-	y = x-\mu; \quad y_n = \sqrt{N}\cdot\bar{y}_n = \sum_i\frac{y_i}{\sqrt{N}}
+	y = x-\mu; \quad y_n = \sqrt{N}\cdot\bar{y} = \sum_i\frac{y_i}{\sqrt{N}}
 	\]
 	We note that already we have $\E[y_n]=0$ and $\Var[y_n]=\sigma^2$ independently of $n$, as the variance is additive and goes with the square of any multiplicative constant. Using the properties of the characteristic function we have just seen, we define:
 	\[
