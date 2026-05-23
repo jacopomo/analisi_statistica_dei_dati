@@ -8,3 +8,4 @@
     - [ ] Multinomial
     - [ ] Cauchy  
     - [x] Uniform  
+- [ ] Insert somewhere how to compute an arithmetic progression (could be useful in some exercises)
