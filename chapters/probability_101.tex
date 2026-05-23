@@ -862,7 +862,7 @@ Now seems like a great time to introduce what is probably the most important the
 	from which we write
 	\begin{align*}
 		\log\left(\phi_N(t)\right) =& N\log\left[ \phi_y \left(\frac{t}{\sqrt{N}}\right) \right] \\
-		\simeq& N\log\left[ 1 + \frac{\partial\phi_y}{\partial t}\frac{t}{\sqrt{N}} + \frac{\partial^2\phi_y}{\partial t^2}\frac{t^2}{2N} + o\left(\frac{t}{\sqrt{N}}\right)^2\right]\\
+		\simeq& N\log\left[ 1 + \frac{\partial\phi_y}{\partial t}\bigg\vert_{t=0}\frac{t}{\sqrt{N}} + \frac{\partial^2\phi_y}{\partial t^2}\bigg\vert_{t=0}\frac{t^2}{2N} + o\left(\frac{t}{\sqrt{N}}\right)^2\right]\\
 		=&N\log\left[1+0-\frac{\sigma^2t^2}{2N}+ o\left(\frac{t}{\sqrt{N}}\right)^2\right]\\
 		\simeq& N \left(-\frac{\sigma^2t^2}{2N}+ o\left(\frac{t}{\sqrt{N}}\right)^2\right)\\
 		=&-\frac{\sigma^2t^2}{2}+ N\cdot o\left(\frac{t^2}{N}\right)\\
