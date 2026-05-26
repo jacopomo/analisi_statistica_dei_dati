@@ -37,7 +37,7 @@ Though you, as an attentive reader and excellent statistician will immediately i
 	
 	Of course, this example shows a breaking point for our theory up until this point, and it invites us to explore new methods particularly useful for cases such as this one.
 \end{example}
-\todo{Low-n Poisson histogram graph? CBTM (could be the move)}
+
 
 When we talked about point estimations, we never came to talk about intervals in which the parameter was confined, and going to an arbitrarily low probability basically any value was permitted. Now, we want to formulate a theory that limits, up to a certain degree of confidence, what values the parameter can adopt. 
 
@@ -71,7 +71,7 @@ The importance of this scripture cannot be overstated: we are finding an interva
 
 The credibility $c$ quantifies the degree of belief that the true value of the parameter lies within the region $f_{x}(\theta)$. In practice, $c$ is chosen in advance, typically taking values between $0.9$ and $0.95$.
 
-As usual, the Bayesian formulation brings many nice properties such as respecting the Likelihood principle, obtaining clear, specific, and intuitive results. However, it depends on how we choose the prior, which can greatly influence the type of result we obtain. Also, we need $\theta$ to be able to admit a pdf in the first place. \todo{Here we can talk about Jeffrey's prior, if it ever comes up, or reference priors.}
+As usual, the Bayesian formulation brings many nice properties such as respecting the Likelihood principle, obtaining clear, specific, and intuitive results. However, it depends on how we choose the prior, which can greatly influence the type of result we obtain. Also, we need $\theta$ to be able to admit a pdf in the first place.
 
 Integral (\ref{eq:Bayes_int_eq}) admits infinite solutions, so we must introduce a criteria to be able to select the specific solution we want. The most agreed upon way to proceed is by selecting an \emph{ordering function}\sidenote{We will dedicate more time to ordering functions in the near future} $o_{x}(\theta)$ that assigns a priority hierarchy to the values of the parameter to include. 
 
@@ -140,8 +140,6 @@ We will talk about ordering algorithms in greater detail in section \ref{subsec:
 	
 	One may also be tempted to swap between lower and upper limits depending on the measured value of $k$. However, this temptation must be resisted, and in the future we will go into detail as to why this habit is to be avoided (\emph{flip-flopping} between ordering functions).
 \end{example}
-
-\todo{Add to the example the variable change stuff?} 
 
 We can see the power of this Bayesian case, and it's not hard to understand what an interval estimate looks like and means under this formulation. However, it is not always applicable, as the unknown parameters must admit \emph{pdf's} themselves, and we must know or assign them, risking the loss of generality.
 

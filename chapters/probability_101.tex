@@ -42,20 +42,19 @@ where $n(E)$ is the number of times that event $E$ is verified out of $N$ trials
 
 $X$ is the space of the possible outcomes of the observable $x$, and in the simple discrete example of a mix of colored balls inside of a box $X=\{ \text{red, blue, green}\}$ and $E$ can be any single extraction of a ball, or any combination. Each event defined this way will have its own probability, and as long as the experiment is infinitely repeatable this probability well defined and given by the frequentist (Von Mises) definition provided above. 
 
-
-However, as mathematical limits are, for a limit to be well defined it must equal the same value in whichever way $N$ decides to reach infinity, no matter how the events are selected. This means that if I repeat an experiment to infinity, the probability of event $E$ must be the same if I consider all of the events, just the even ones, just the prime numbered ones, etc. 
+However, for a probability to represent a stochastic process rather than a deterministic law, the limit must be invariant under whichever way we choose a subsequence of trials, provided our choice does not depend on the outcome of those trials (\emph{place selection invariance}). If the limit changes when we sample a subsequence based on prior outcomes, the sequence is predictable, and a frequentist probability cannot be defined.
 
 \begin{example}
-	If in the previous situation I extract (with replacement), the colored balls randomly to infinity, the sequence 
+	In the previous example of extracting colored balls with replacement, I obtain the following sequence:
+	
 	\[
 	\text{red, blue, green, red, blue, green, red, blue, green, red, }\dots
 	\]
 	
-	does not have $P(\text{red})$ well defined, as if I consider all of the events in the limit I get $P(\text{red})=\frac{1}{3}$, but if I consider all of the events that follow the extraction of a green ball, $P(\text{red})=1$ and all those following a blue extraction $P(\text{red})=0$. These three limits were all taken in the mathematical sense to infinity, though they are not equal to the same value and therefore the limit is not well defined, and in fact this deterministic sequence does not have a probability defined. 
+	In this sequence, $P(\text{red})$ is not well defined, as if I consider all of the events in the limit I get $P(\text{red})=\frac{1}{3}$, but if I consider all of the events that follow the extraction of a green ball, $P(\text{red})=1$ and all those following a blue extraction $P(\text{red})=0$. These three limits were all taken in the mathematical sense to infinity, though they are not equal to the same value and therefore the limit is not well defined, and in fact this deterministic sequence does not have a probability defined. 
 \end{example}
 
-This means that frequentist probability is defined on an ensemble.\todo{This should be looked upon further, or omitted}
-
+This is precisely what is meant by the assertion that frequentist probability is defined on an ensemble, for the Von Mises definition to hold we must be able to, at least conceptually, repeat identical experiments to infinity. Thus, without a clearly defined ensemble to establish what constitutes an "identical trial," the limit $N \to \infty$ lacks a proper sample space and remains mathematically ambiguous.
 
 \subsection{Kolmogorov probability}
 \label{subsec:kolmogorov}
@@ -72,8 +71,7 @@ This means that frequentist probability is defined on an ensemble.\todo{This sho
 $S$ can be taken as the space of all possible experimental observations, and each element a completely defined observation. In this case, $A$ represents a set of possible observations.
 
 
-From these three axioms we can define a series of simple theorems\todo{Do we want to prove these? Also maybe the formatting could do with some work}:
-
+These three axioms will serve as the backbone for the following definitions and theorems:
 
 \begin{definition}[Conditional probability]
 	Probability of event A given that event B has occurred
@@ -86,9 +84,9 @@ This can be re-written in the more useful form:
 	\]
 \end{definition}
 
-$P(A|B)$ (also denoted with $P_B(A)$) is a Kolmogorov probability and satisfies all of the necessary axioms\todo{Proof?}.
+It's not hard to see that $P(A|B)$ (also denoted with $P_B(A)$) is a Kolmogorov probability and satisfies all of the necessary axioms.
 
-It is important to note that conditional probability has nothing to do with causation, correlation, or temporal relations between two events, simply put it is the probability of an event given another, and therefore is nothing more than a restriction of the probability space to a smaller ensemble. 
+It is important to note that conditional probability has nothing to do with causation, correlation, or temporal relations between two events. Simply put, it is the probability of an event given the fact that another has already taken place, and therefore is nothing more than a restriction of the probability space to a smaller ensemble. 
 
 \begin{theorem}[Total probability law]
 	Let $\{A_i\}$ be a countable partition of $S$ such that $\cup_i A_i = S$. It follows that:
@@ -96,9 +94,9 @@ It is important to note that conditional probability has nothing to do with caus
 	\forall B: P(B)=\sum_i P(B\cap A_i) = \sum_i P(B|A_i)P(A_i)
 	\]
 \label{th:total_prob_law}
-\end{theorem}\todo{Here I omitted the intermediate passages for the proof which can be added in-line or as a proof later}
+\end{theorem}
 
-This theorem is useful when the conditional probabilities are easier to calculate than the total.
+This theorem is useful when the total probability is not readily calculated without considering the single, conditional cases.
 \begin{example}
 	I know that $25\%$ of lightbulbs are produced in Vietnam, while $75\%$ are produced in China. I know that of the Vietnamese lightbulbs, one in a thousand are broken during production while the Chinese ones are broken one percent of the time. I buy a lightbulb from the store. What is the probability that it is broken?
 	
@@ -130,9 +128,10 @@ It is important to remember that independence is not correlation, and the former
 	P(B\cap A) = P(B|A)\cdot P(A) \overset{\scriptscriptstyle \text{symm.}}{=} P(A|B)\cdot P(B)
 	\]
 	It follows naturally that
-	\[
-	P(B|A) = \frac{P(A|B)\cdot P(B)}{P(A)}
-	\]
+	\begin{equation}
+		P(B|A) = \frac{P(A|B)\cdot P(B)}{P(A)}
+	\tag{Bayes' Theorem}
+	\end{equation}
 \label{th:Bayes}
 \end{theorem}	
 
@@ -141,11 +140,11 @@ The last expression takes the name of \textbf{Bayes' theorem}. Interestingly eno
 \begin{example}
 	Before moving on, let's illustrate the concepts we have encountered so far by solving the famous \textbf{Monty Hall problem} (you have \emph{probably} heard of it at least once in your life).
 	
-	Imagine you are suddenly transported from where you're reading this text to the studio of a famous game show. The host, Mr.~Monty, explains the rules of the game: there are three closed doors in front of you. Behind one there is a brand new sports car, behind the other two there are goats. You choose one door; if you pick the right one, you win the prize behind it. Of course, Mr.~Monty knows where the car is hidden.
+	Imagine you are suddenly transported from where you're reading this text to the studio of a famous game show. The host, Mr.~Monty, explains the rules of the game: there are three closed doors in front of you. Behind one there is a brand new sports car, behind the other two there are goats. You choose one door; if you pick the right one, you win the prize behind it. Of course, Mr.~Monty knows where the car is hidden, and you do not.
 	
 	From what we discussed before, you know that each door has the same probability $\frac{1}{3}$ of hiding the car. So you pick, say, door number one (it does not really matter which door you choose for what follows).
 	
-	Now Monty wants to spice things up for the audience. After your choice, he opens door number three, revealing a goat (to be clear: he cannot open the door you chose, nor the one hiding the car, revealing the prize immediately would not make for a great show, would it?).
+	Now Monty wants to spice things up for the audience. After your choice, he decides to open a door, differently than the one you chose. He opens door number three, revealing a goat (to be clear: he cannot open the door you chose, nor the one hiding the car, revealing the prize immediately would not make for a great show, would it?).
 	
 	At this point, he asks you to decide: do you want to stick with door number one, or switch to door number two?
 	At first glance, this may seem like a pointless mind game: you might think you still have the same one-third chance of winning. But reality, as often happens in probability, is a bit more subtle and can even feel paradoxical. So you take a moment, pull out your sketchbook in front of the crowd, and do some math.
@@ -216,7 +215,14 @@ The last expression takes the name of \textbf{Bayes' theorem}. Interestingly eno
 \subsubsection{Spoiler: Bayesian probability}
 \label{subsubsec:Bayes}
 
-The Bayesian school uses a concept of probability different than the frequentist (von Mises) concept. To try to minimize the natural confusion that will follow this chapter, we will baptize this concept with a different name: \emph{"degree of belief"} $\pi(x)$. The idea of this subjective reasoning is that events of which we have similar information are by definition equally probable. This concept, differently than the frequentist definition we have studied already, can be applied to whatever quantity, even if the latter is not observable. It does not depend on the ensemble, but on the subject itself, and Bayesian d.o.b (degree of belief) has been shown to satisfy the Kolmogorov axioms. We will be returning on this concept in various chapters\todo{Maybe add which ones through a ref, and perhaps elaborate further once we understand better} and it will be crucial to not confuse it with the frequentist definition of probability. 
+The Bayesian school uses a concept of probability fundamentally different from the frequentist (von Mises) framework. To try to minimize the natural confusion that will follow this chapter, we will baptize this concept with a different name: \emph{"degree of belief"} $\pi(x)$. 
+Under this subjective paradigm, probability represents a measure of plausibility given a specific state of knowledge, rather than a physical property of an infinite sequence. 
+Unlike the frequentist definition, which strictly requires an infinitely replicable experiment, a degree of belief can be assigned to any proposition, even unique, unrepeatable events. Crucially, this allows us to assign degrees of belief directly to constant, non-observable model parameters\sidenote{In the frequentist sense there is no such thing as the probability of a parameter.} (such as the true mass of a particle), treating our uncertainty about nature as a probability distribution.
+Furthermore, while a frequentist uses data to compute an objective limiting frequency, a Bayesian treats probability as dynamic. They start with an initial state of knowledge (the \emph{prior} belief) and use experimental data as evidence to update it into a sharper, modified state of knowledge (the \emph{posterior} belief).
+
+Despite these philosophical departures, the Bayesian degree of belief behaves perfectly under standard mathematical laws and has been shown to satisfy the Kolmogorov axioms. 
+
+Bayesian probability will follow us throughout the rest of this text, and often, when applicable, will be the first interpretation used to explain difficult concepts, thanks to its easy interpretation and possibility of assigning degrees of belief directly to non-observable parameters. For now, the crucial takeaway is to avoid mixing these two entirely separate definitions of the word "probability."
 
 \subsection{Events as physical observables}
 \label{subsec:observables}
