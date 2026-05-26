@@ -256,7 +256,7 @@ In essence, the random variable ensures that every "observable state of the worl
 This may all sound scary right now, but hopefully the following example will clarify that the concept, at its core, is really quite simple. 
 
 \begin{example}
-	Consider the simplest physical experiment: flipping a coin. The Sample Space $S$ contains two physical outcomes: $\{\text{Heads,}$ $\text{Tails}\}$. To perform calculations, we define a Random Variable $X$ as a function that maps these physical states to numbers:
+	Consider the simplest physical experiment: flipping a coin. The Sample Space $S$ contains two physical outcomes: $\{\text{Heads,}$ $\text{Tails}\}$. To perform calculations, we define a random variable $X$ as a function that maps these physical states to numbers:
 	
 	\[
 	X(s) = \begin{cases} 1 & \text{if } s = \text{Heads} \\ 0 & \text{if } s = \text{Tails} \end{cases}
@@ -305,11 +305,13 @@ So much for discrete random variables, let's talk about the interesting stuff an
 	P(x:x\in A)= \int_{A} p_X(x)\dd x
 	\]
 	where $p_X(x)$ is the \emph{probability density function} of $x$ 
-\end{definition}\todo{If we find a better definition, let's be sure to put it here. This one works, but it's not satisfying}
+\end{definition}
 
-\todo{Maybe we should include here a brief discussion of pdf's properties, e.g. how they add up, ecc.}
+Since we have defined pdf's starting from integrals, we can see that they adopt the mathematical properties that we are familiar with. For example, with the same integrands the sum of two integrals with different bounds is the integral over the total bound, which naturally means that if the integral of the pdf is $1$ over the full space then the integral of each of its parts will be less than $1$.
 
-We use the term "function", but if we intend the integral in the Lebesgue sense we can extend the definition to \emph{pdf's} that are not functions but rather distributions. In general, this allows us a series of liberties that functions formally would not allow, such as mixing discrete and continuous variables. It's not guaranteed that a pdf satisfies the Kolmogorov axioms, and the following example shows that while $p(x)\geq 0$ not necessarily $p(x) < 1$.
+Because of this integral definition it also follows that the sum and product of two pdf's is not universally the pdf of the sum or product of the random variables themselves. 
+
+We use the term "function", but if we intend the integral in the Lebesgue sense we can extend the definition to pdf's that are not functions but rather distributions. In general, this allows us a series of liberties that functions formally would not allow, such as mixing discrete and continuous variables. It's not guaranteed that a pdf satisfies the Kolmogorov axioms, and the following example shows that while $p(x)\geq 0$ not necessarily $p(x) < 1$.
 
 	\[
 	p(x) = \begin{cases} 2 & \text{if } x \in [0,\frac{1}{2}] \\ 0 &  \text{otherwise} \end{cases}
@@ -325,7 +327,7 @@ However, it is crucial that $\int p(x)\dd x = P(X\in O_X) = 1$ (we say that the 
 	\]
 \end{definition}
 
-The fundamental theorem of calculus also tells us that $\dv{F}{x}=p(x)$. We will find the cumulative easier to calculate than the density function itself in many cases. 
+The fundamental theorem of calculus also tells us that $\dv{F}{x}=p(x)$. We will find the cumulative easier to calculate than the density function itself in many cases. Naturally, if the domain of $x$ is restricted, then the integral is defined from its lowest value until $x$ itself, instead of starting from $-\infty$.
 
 An interesting and somewhat unexpected result can be reached when talking about \emph{CDF's}: the \textbf{probability integral transform} \cite{david1948probability} (also known as the \emph{universality of the uniform}\sidenote{If you haven't done so already, take a moment to brush up on what a Uniform distribution is, by heading over to the appendix \ref{sec:uniform}}).
 
