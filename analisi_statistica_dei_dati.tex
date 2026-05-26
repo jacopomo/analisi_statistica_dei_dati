@@ -52,7 +52,6 @@
 {20pt} % Space between label and title
 {\titlerule\vspace{10pt}\Huge} % The Title style
 [\vspace{20pt}\titlerule]
-
 \titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
 %------------------------------------------------
@@ -145,6 +144,11 @@
 \newcommand{\dv}[2]{\frac{\dd #1}{\dd #2}}
 \newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
 
+\newtcolorbox{summarybox}{
+	colback=white,
+	colframe=black
+}
+
 %------------------------------------------------
 % TITLE PAGE (COVER)
 %------------------------------------------------
@@ -203,7 +207,7 @@
 \include{appendices/useful_functions}
 \include{appendices/important_distributions}
 \include{appendices/statistical_tables}
-\include{appendices/code}
+%\include{appendices/code}
 
 \backmatter
 
