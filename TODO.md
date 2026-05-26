@@ -9,3 +9,4 @@
     - [ ] Cauchy  
     - [x] Uniform  
 - [ ] Insert somewhere how to compute an arithmetic progression (could be useful in some exercises)
+- [ ] Update README with a compiling guide
