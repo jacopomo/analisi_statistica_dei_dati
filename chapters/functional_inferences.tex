@@ -217,7 +217,6 @@ We have already talked about statistics, which are functions of random variables
 	\[
 	s \text{ sufficient}\iff p(x;\theta) = f(x)\cdot g(s(x),\theta) \quad \text{with } f,g\geq0
 	\]
-	Important note: the domain of $x$ must be \emph{independent of} $\theta$ (see \ref{ex:uniform_sufficient_statistics})
 \label{th:factorization}
 \end{theorem}
 
@@ -300,7 +299,6 @@ In summary, sufficient statistics "compress" the data without losing any informa
 	
 	Using the factorization theorem we can see that $\max\{\vec{x}\}$ is a sufficient statistic for $m$. We also note that clearly $g(\max\{\vec{x}\},m)$ is not the pdf of $\max\{\vec{x}\}$ given $m$.
 \end{example}
-\todo{I'm still a bit confused by the requirement of a domain of $x$ independent of $\theta$. When presenting the theorem that is said to be a necessary condition, but in the example above we apply the theorem anyway and it is said to work. In the lecture notes the focus of this requirement shifts from a condition necessary for the theorem to work to a condition for the $g$ to be unique and a proper pdf. This is a bit FRANK to me.}
 
 The following principle sums up the concept quite nicely:
 
@@ -320,8 +318,6 @@ Interesting to note that the Likelihood principle implies the sufficiency princi
 	This is equivalent to asking that the information can't be further reduced or compressed. 
 \end{definition}
 \todo{There will be exercises that clear these up quite nicely, add them here or ref them}
-
-\todo{Conditionality principle, Birnbaum argumentation, both things I'd happily skip... Shall we?}
 
 So now we have talked at lengths about this beautiful concept called the sufficient statistic and how it is going to be the resolution to all of our problems, and provided some examples of well-known sufficient statistics for important distributions.\todo{Have we? Either add them or change this phrase to reference the appendix where all the important distributions and their properties will be.} All we need now is a way to more generally find the sufficient statistic for a given distribution, and luckily there is a way through the following theorem:
 
