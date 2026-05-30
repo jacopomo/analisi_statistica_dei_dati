@@ -238,6 +238,32 @@ The following exercises will be focused on performing variable change and findin
 \clearpage
 \section{Point Estimations}\label{exer:point_est}
 
+During the critical years of 1941 and 1942, Allied command faced a daunting question: exactly how many formidable Mark IV and V Panzer tanks was Germany producing? Conventional military intelligence relied on traditional espionage: spies, reconnaissance, and battlefield counts. However, these methods yielded wildly contradictory and inflated estimates, suggesting a staggering production rate of around $1,400$ tanks per month \cite{The_Guardian_2006}. Facing the daunting prospect of a continental invasion, the Allies needed certainty, so they turned to an unconventional weapon: statistical intelligence. 
+
+The breakthrough came from analyzing the serial numbers on captured German tanks. They noticed that the Germans, with characteristic bureaucratic precision, stamped a serial number on almost every component, and assumed that those serial numbers were sequential. Using a remarkably small sample, the Allies were able to estimate a production rate of $246$ tanks per month between June 1940 and September 1942. When post-war records were finally uncovered, the actual German production logs revealed the true number to have been $245$ per month. The statisticians had achieved near-perfect accuracy, proving that a handful of sequential serial numbers could out-spy an entire intelligence network.
+
+In the exercise below, we will step into the shoes of those Allied statisticians and give our own estimate for the maximum of a sample of uniformly-distributed numbers.
+
+\begin{exercise}
+	We assume the serial numbers of the captured tanks to be uniformly distributed integers between $1$ and $N$, where $N$ is the total number of tanks produced, which we aim to estimate. Let's use the \emph{MLE}, which we know to be (see appendix \ref{sec:uniform}), for a uniform distribution, $\hat{N}_{MLE} = \max{x_i}$, where $\{x_i\}$ are the individual serial numbers of the captured tanks. Let's assume to have captured and analyzed $k$ tanks.
+	
+	It's important to know the bias of this estimate, as the fate of important strategic decisions is on the line and we would not want to over or under estimate the number of tanks produces. Once again dipping into appendix \ref{sec:uniform} we see that the expected value for $x_{max}$ is:
+	
+	\[
+	\E\left[x_{max}\right] = N \frac{k}{k+1} \Rightarrow b\left[{N}_{MLE}\right] = -N\frac{1}{k+1}
+	\]
+	
+	Since the Allies only captured a few tanks, an asymptotically unbiased estimate was not good enough, and we build a new, unbiased estimate of $N$:
+	
+	\[
+	\hat{N}^\prime = \frac{k+1}{k} x_{max}
+	\]
+	
+	Which proves to be an efficient estimator for the number of tanks produced. This exercise, though simple, illustrates an important historical usage of the concepts learned in this course.	
+\end{exercise}
+
+
+\clearpage
 PROBLEMA 3 COMPITO 10/01/18 PUNTO 3
 
 \clearpage
