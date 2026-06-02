@@ -746,16 +746,30 @@ The moments are quite a powerful tool, as if I know them all I can actually univ
 	\]
 \end{theorem}
 
-As we have seen, knowing the moments of a distribution is a powerful tool that has numerous implications, though actually calculating them can be non trivial. Luckily, we physicists love our good, old Taylor approximations and this is a good a time as any to put it into practice.
+As we have seen, knowing the moments of a distribution is a powerful tool that has numerous implications, though actually calculating them can be non trivial. For example, let's take the case where we have a non-linear function $f(\vec{x})$ of some vector of observables $\vec{x}$, and we happen to know that $\E[\vec{x}]=\vec\mu$. We want to try to find the expected value (well, any moment really), of the function $f(x)$. What we can do is expand using Taylor around the mean, as we can imagine that $f(\vec{x}) \simeq f(\vec\mu) +$ corrections. Doing so:
 
-\todo{are these mu's or thetas? BOH}
-\begin{align*}
-	f(\vec{x}) = f(\vec{\mu}) + &\frac{\partial f}{\partial x_i}(x_i-\mu_i)+\frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}(x_i-\mu_i)(x_j-\mu_j)+o\left(\left(\vec{x}-\vec{\mu}\right)^3\right) \\
-	\Rightarrow \E[f(\vec{x})] &\simeq \E[f(\vec{\mu})] + \frac{\partial f}{\partial x_i}\cancelto{0}{\E[x_i-\mu_i]} \quad + \frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}\E[(x_i-\mu_i)(x_j-\mu_j)] \\
-	&\simeq f(\vec{\mu}) + \frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}\operatorname{cov}[x_i,x_j]
-\end{align*}
+	\[
+	f(\vec{x}) \simeq f(\vec{\mu}) + \frac{\partial f}{\partial x_i}\bigg\vert_{x_i = \mu_i}(x_i-\mu_i)+\frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}\bigg\vert_{x_{i,j} = \mu_{i,j}}(x_i-\mu_i)(x_j-\mu_j)
+	\]
+	
+We can now take the expected value of both sides, as it is a linear function:
+	\[
+	\E[f(\vec{x})] \simeq \E[f(\vec{\mu})] + \frac{\partial f}{\partial x_i}\cancelto{0}{\E[x_i-\mu_i]} \quad + \frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}\E[(x_i-\mu_i)(x_j-\mu_j)]
+	\]
 
-We now consider the linear approximation (where $\E[f(\vec{x})]\approx f(\vec{\mu})$ and $f(\vec{x}) \approx f(\vec{\mu}) + \frac{\partial f}{\partial x_i}(x_i-\mu_i)$). In this regime, we have:
+Where in the linear term we have identified the expected value of each $x_i$ subtracted from their respective means, which is null by definition. We have also not explicitly written that the derivatives are to be evaluated in the respective means for clarity. What this leaves us with is:
+
+	\[
+	\E[f(\vec{x})] \simeq f(\vec{\mu}) + \frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}\operatorname{cov}[x_i,x_j]
+	\]
+
+Which in the case of a one-dimensional observable simplifies to:
+
+	\[
+	\E[f(x)] \simeq f(\mu) + \frac{1}{2}f^{\prime\prime}\Var[x]
+	\]
+
+In this way we have approximately calculated the expected value of a non-linear function of the observable, without having to explicitly change variables and integrate. This form is also useful if we take it a step further. Going back to the multi-dimensional case, we now consider the linear (first order) approximation (where $\E[f(\vec{x})]\approx f(\vec{\mu})$ and $f(\vec{x}) \approx f(\vec{\mu}) + \frac{\partial f}{\partial x_i}(x_i-\mu_i)$). In this regime, we have:
 
 	\[
 	f(\vec{x}) - \E[f(\vec{x})] \approx \sum_i \frac{\partial f}{\partial x_i}(x_i-\mu_i)
@@ -775,11 +789,19 @@ Which directly leads to:
 	\]
 Which for uncorrelated $x$ (diagonal covariance matrix) simplifies to:
 	\[
-	\sigma_f^2 = \Var[f] = \sum_i \left| \frac{\partial f}{\partial x_i} \right|^2\sigma_i^2 +\dots
+	\sigma_f^2 = \Var[f(\vec{x})] = \sum_i \left| \frac{\partial f}{\partial x_i} \right|^2\sigma_{x_i}^2 +\dots
 	\]
 	
-We recognize this as our familiar \textbf{formula for the propagation of errors}. Interesting to note that this formula comes from a Taylor approximation.\todo{I tried to rewrite this part to make it clearer. I don't know if I accomplished the goal}
-	
+We recognize this as our familiar \textbf{formula for the propagation of errors}. Interesting to note that this formula comes from a Taylor approximation.
+
+Essentially, using the moments we can approximate the expected value and variance of non-linear functions of the (in this case uncorrelated) observables, with:
+
+\begin{align*}
+\E[f(\vec{x})] &\simeq f(\vec{\mu}) + \frac{1}{2}\frac{\partial^2f}{\partial x_i \partial x_j}\Var[x_i] \\
+\Var[f(\vec{x})] &\simeq \sum_i \left| \frac{\partial f}{\partial x_i} \right|^2\sigma_{x_i}^2
+\end{align*}
+
+Where the derivatives in $x_i$ and $x_j$ are evaluated in $\mu_i$ and $\mu_j$, respectively.
 \begin{definition}[Moment generating function]
 	We define \emph{moment generating function} for a distribution 
 	\[
