@@ -7,449 +7,633 @@ Naturally it does not constitute an exhaustive treatment of all distributions, a
 \section{Discrete distributions}
 \label{Appendix:discrete}
 
-\subsection{Bernoulli} %Sub sub sections give a nice bold but don't appear in the TOC... Win-win I'd say
+\subsection{Bernoulli}
+
+The Bernoulli distribution is the simplest discrete probability distribution, modeling a single trial with two possible outcomes: "success" (encoded as $1$) and "failure" (encoded as $0$). It serves as the fundamental building block for both the binomial and geometric distributions.
+
+\subsubsection{Probability Mass Function}
+The support for a Bernoulli random variable $X$ is $k \in \{0, 1\}$, and the parameter $p \in [0, 1]$ represents the probability of success. The probability mass function (PMF) can be elegantly expressed in a single algebraic form:
+
+\begin{equation}
+	P(X = k) = p^k (1-p)^{1-k} \quad \text{for } k \in \{0, 1\}
+	\label{pmf:bern}
+\end{equation}
+
+\subsubsection{Moment Generating Function and Moments}
+Because the support contains only two values, the Moment Generating Function (MGF) is straightforward to compute directly from the definition:
+
+	\[
+	M_X(t) = \E[e^{tX}] = e^{t(0)}P(X=0) + e^{t(1)}P(X=1) = (1-p) + pe^t
+	\]
+	
+We can derive the raw moments by differentiating $M_X(t)$ with respect to $t$ and evaluating at $t = 0$. The first derivative yields the mean:
+
+	\[
+	\E[X] = \left. \frac{d}{dt} M_X(t) \right|_{t=0} = \left. pe^t \right|_{t=0} = p
+	\]
+	
+The second derivative likewise yields $\E[X^2] = p$. Using these raw moments, the mean and variance are:
+
+	\[
+	\E[X] = p \quad \text{and} \quad \Var[X] = \E[X^2] - (\E[X])^2 = p(1-p)
+	\]
+
+\subsubsection{Maximum Likelihood Estimation}
+Consider an independent and identically distributed (i.i.d.) sample of size $m$, where each observation $k_i \in \{0, 1\}$. The log-likelihood function is given by:
+
+	\[
+	\ln L(p) = \sum_{i=1}^m \left[ k_i \ln p + (1-k_i) \ln(1-p) \right]
+	\]
+	
+Taking the first derivative with respect to $p$ and setting it to zero:
+
+	\[
+	\frac{d\ln L(p)}{dp} = \frac{\sum_{i=1}^m k_i}{p} - \frac{m - \sum_{i=1}^m k_i}{1-p} = 0
+	\]
+	
+Solving for $p$ yields the Maximum Likelihood Estimator (MLE) $\hat{p}$, which is simply the sample proportion:
+
+	\[
+	\hat{p} = \frac{1}{m} \sum_{i=1}^m k_i = \bar{k}
+	\]
+	
+The estimator is unbiased ($\E[\hat{p}] = p$), and its variance across the sample is:
+
+	\[
+	\Var[\hat{p}] = \Var\left[\frac{1}{m} \sum_{i=1}^m k_i\right] = \frac{1}{m^2} \sum_{i=1}^m \Var[k_i] = \frac{mp(1-p)}{m^2} = \frac{p(1-p)}{m}
+	\]
+
+\subsubsection{Fisher Information}
+The Fisher information measures the amount of information that a single observed trial carries about the unknown success probability $p$. Using the negative expected value of the second derivative of the log-likelihood for a single observation ($m=1$):
+
+	\[
+	\mathcal{I}(p) = -\E\left[ \frac{\partial^2 \ln L(p)}{\partial p^2} \right] = -\E\left[ -\frac{X}{p^2} - \frac{1-X}{(1-p)^2} \right]
+	\]
+
+Substituting $\E[X] = p$ and $\E[1-X] = 1-p$ simplifies to:
+
+	\[
+	\mathcal{I}(p) = \frac{p}{p^2} + \frac{1-p}{(1-p)^2} = \frac{1}{p(1-p)}
+	\]
+	
+By comparing the variance of a single observation's estimator ($\Var[\hat{p}_1] = p(1-p)$) to the Cram\'{e}r-Rao lower bound ($1/\mathcal{I}(p)$), we see that the bound is perfectly met. 
 
 \clearpage
 \subsection{Binomial}
-Support: $k \in \{0, 1, \dots, n\}$ and $p \in [0, 1]$.
 
-The probability of having exactly $k$ successes in $n$ independent Bernoulli trials is:
+The binomial distribution models the number of successes, $k$, in a fixed number, $n$, of independent Bernoulli trials, where each individual trial has a success probability $p$.
+
+\subsubsection{Probability Mass Function}
+The support for the number of successes is $k \in \{0, 1, \dots, n\}$, and the parameter space for the probability of success is $p \in [0, 1]$. The probability mass function (PMF) is given by:
 
 \begin{equation}
-	\mathcal{B}_n(k;p) = \binom{n}{k}p^k\left(1-p\right)^{n-k}
-\tag{Binomial pmf}
-\label{pmf:binom}
+	P(X = k) = \binom{n}{k}p^k\left(1-p\right)^{n-k}
+	\label{pmf:binom}
 \end{equation}
 
-The Moment Generating Function (MGF) is the most efficient way to derive the raw moments:
+\subsubsection{Moment Generating Function and Moments}
+The Moment Generating Function (MGF) provides an elegant and efficient way to derive the raw moments of the distribution. For a binomial random variable $X$, the MGF is:
 
 	\[
-	M_X(t) = \mathbb{E}[e^{tX}] = (1 - p + pe^t)^n
+	M_X(t) = \E[e^{tX}] = \sum_{k=0}^n e^{tk} \binom{n}{k}p^k(1-p)^{n-k} = (1 - p + pe^t)^n
 	\]
-\todo{Not sure, and not sure how it brings us the moments...}
-Which brings us to the mean and variance of $k$:
+	
+To find the raw moments, we take successive derivatives of $M_X(t)$ with respect to $t$ and evaluate them at $t = 0$. For instance, the first raw moment (the expected value) is derived as follows:
 
 	\[
-	\E\left[k\right] = np \quad \Var\left[k\right] = np(1-p)
+	\E[X] = \left. \frac{d}{dt} M_X(t) \right|_{t=0} = \left. n(1 - p + pe^t)^{n-1} \cdot pe^t \right|_{t=0} = np
+	\]
+	
+Using a similar approach for the second derivative, $\E[X^2] = n(n-1)p^2 + np$, which yields the familiar expressions for the mean and variance:
+	
+	\[
+	\E[X] = np \quad \text{and} \quad \Var[X] = np(1-p)
 	\]
 
-The log-Likelihood for a sample of size $m$ (where each observation $k_i$ is the number of successes in $n$ trials) is:
+\subsubsection{Maximum Likelihood Estimation}
+Consider a sample of size $m$, where each independent observation $k_i$ represents the number of successes observed in $n$ trials. The log-likelihood function is:
 
 	\[
 	\ln L(p) = \sum_{i=1}^m \left[ \ln\binom{n}{k_i} + k_i\ln p + (n-k_i)\ln(1-p) \right]
 	\]
-
-which brings the MLE for $p$:
+	
+Maximizing this function by setting the first derivative with respect to $p$ to zero yields the Maximum Likelihood Estimator (MLE) $\hat{p}$:
 
 	\[
-	\hat{p}_{MLE} = \frac{1}{mn} \sum_{i=1}^m k_i = \frac{\bar{k}}{n}
+	\hat{p} = \frac{1}{mn} \sum_{i=1}^m k_i = \frac{\bar{k}}{n}
+	\]
+	
+The estimator $\hat{p}$ is unbiased ($\E[\hat{p}] = p$) and its variance across the sample is:
+	
+	\[
+	\Var[\hat{p}] = \Var\left[\frac{\bar{k}}{n}\right] = \frac{1}{m^2n^2} \sum_{i=1}^m \Var[k_i] = \frac{mnp(1-p)}{m^2n^2} = \frac{p(1-p)}{mn}
 	\]
 
-Which is an unbiased estimator with variance:
+\subsubsection{Fisher Information}
+The Fisher information measures the amount of information that an observable random variable carries about an unknown parameter $p$. For a single observation ($m=1$), it is defined via the negative expected value of the second derivative of the log-likelihood:
 
 	\[
-	\Var\left[\hat{p}_{MLE}\right] = \frac{1}{n^2}\Var[k] = \frac{np(1-p)}{n^2} = \frac{p(1-p)}{n}
-	\]
-
-
-Fisher Information: This measure tells us how much "information" $k$ carries about the unknown parameter $p$. For a single observation:
-
-	\[
-	\mathcal{I}(p) = -\E\left[ \frac{\partial^2 \ell}{\partial p^2} \right] = \frac{n}{p(1-p)}
+	\mathcal{I}(p) = -\E\left[ \frac{\partial^2 \ln L(p)}{\partial p^2} \right] = \frac{n}{p(1-p)}
 	\] 
+	
+By comparing the variance of our estimator for a single observation ($\Var[\hat{p}_1] = \frac{p(1-p)}{n}$) with the Cram\'{e}r-Rao lower bound ($1/\mathcal{I}(p)$), we immediately see that the bound is achieved. This proves that $\hat{p}$ is an efficient, minimum-variance unbiased estimator (MVUE).
 
-This shows us at a glance that $\hat{p}_{MLE}$ is the minimum variance estimator.
+\clearpage
+\subsection{Geometric}
+
+The geometric distribution models the number of independent Bernoulli trials required to achieve the first success, where each trial has a success probability $p$. 
+
+\subsubsection{Definition 1: Number of Trials ($N \in \{1, 2, \dots\}$)}
+If we define the random variable $N$ as the total number of trials up to and including the first success, the support starts at $1$ (since you need at least one trial to get a success). Its probability mass function (PMF) is given by:
+
+\begin{equation}
+	P(N = n) = (1-p)^{n-1}p \quad \text{for } n = 1, 2, \dots
+	\label{pmf:geom1}
+\end{equation}
+
+\subsubsection{Definition 2: Number of Failures ($Y \in \{0, 1, \dots\}$)}
+Alternatively, the geometric distribution can model the number of \emph{failures} before the first success occurs. In this case, it is possible to have $0$ failures, so the support starts at $0$. Its PMF is given by:
+
+\begin{equation}
+	P(Y = y) = (1-p)^y p \quad \text{for } y = 0, 1, \dots
+	\label{pmf:geom2}
+\end{equation}
+
+\begin{center}
+	\textit{Note: For the remainder of this section, we will use \textbf{Definition 1}, counting the total number of trials until the first success.}
+\end{center}
+
+\subsubsection{Properties}
+The geometric distribution can be derived as a special case of the negative binomial distribution, and conceptually, it can be viewed as a discrete analog to the continuous exponential distribution due to its \emph{memoryless property}.
+
+The expected value and variance for the number of trials $N$ are:
+	\[
+	\E[N] = \frac{1}{p} \quad \text{and} \quad \Var[N] = \frac{1-p}{p^2}
+	\]
+
+The Fisher information of the parameter $p$ is:
+	\[
+	I(p) = \frac{1}{p^2(1-p)}
+	\]
 
 \clearpage
 \subsection{Multinomial}
-Add the example of the k-median here (distribution of the k-biggest value, it's an important exercise we did in class you'll see)
+
+The multinomial distribution is a multivariate generalization of the binomial distribution. Instead of modeling trials with only two possible outcomes (success or failure), it models the joint probability of counts across $k$ mutually exclusive categories over $n$ independent trials, where each category has a fixed success probability.
+
+\subsubsection{Probability Mass Function}
+Let $n$ be the total number of independent trials, and let $k$ be the number of distinct categories. The parameter vector is $\mathbf{p} = (p_1, p_2, \dots, p_k)$, where $p_i \in [0, 1]$ represents the probability of a trial resulting in category $i$, subject to the constraint $\sum_{i=1}^k p_i = 1$. 
+
+The random vector $\mathbf{X} = (X_1, X_2, \dots, X_k)$ represents the counts of outcomes in each category, where $\sum_{i=1}^k X_i = n$. The joint probability mass function (PMF) is given by:
+\begin{equation}
+	P(\mathbf{X} = \mathbf{x}) = \frac{n!}{x_1! x_2! \dots x_k!} p_1^{x_1} p_2^{x_2} \dots p_k^{x_k}
+	\label{pmf:multinom}
+\end{equation}
+where $\mathbf{x} = (x_1, x_2, \dots, x_k)$ consists of non-negative integers such that $\sum_{i=1}^k x_i = n$.
+
+\subsubsection{Moment Generating Function and Joint Moments}
+The multivariate Moment Generating Function (MGF) for $\mathbf{X}$ is defined for a vector $\mathbf{t} = (t_1, t_2, \dots, t_k)$ as:
+
+	\[
+	M_{\mathbf{X}}(\mathbf{t}) = \E[e^{\mathbf{t}^T \mathbf{X}}] = \left( p_1 e^{t_1} + p_2 e^{t_2} + \dots + p_k e^{t_k} \right)^n
+	\]
+	
+By taking partial derivatives of the MGF, we can find the marginal means, marginal variances, and joint covariances:
+
+	\[
+	\E[X_i] = np_i, \quad \Var[X_i] = np_i(1-p_i), \quad \operatorname{Cov}(X_i, X_j) = -np_i p_j \quad (i \neq j)
+	\]
+	
+The negative covariance intuitively reflects the constraint of a fixed $n$: an increase in the count of one category directly restricts the available trials for the others.
+
+\subsubsection{Maximum Likelihood Estimation}
+Consider a single observation vector $\mathbf{x}$ from a multinomial trial. To find the Maximum Likelihood Estimator (MLE) for $\mathbf{p}$, we must maximize the log-likelihood function subject to the constraint $\sum_{i=1}^k p_i = 1$. Utilizing a Lagrange multiplier $\lambda$, the objective function is:
+
+	\[
+	\mathcal{L}(\mathbf{p}, \lambda) = \ln\left(\frac{n!}{\prod_{i=1}^k x_i!}\right) + \sum_{i=1}^k x_i \ln p_i + \lambda \left( 1 - \sum_{i=1}^k p_i \right)
+	\]
+	
+Taking the partial derivative with respect to each $p_i$ and setting it to zero yields $x_i / p_i = \lambda$, or $p_i = x_i / \lambda$. Summing over all $k$ categories to solve for $\lambda$ reveals that $\lambda = n$. Thus, the MLE vector $\hat{\mathbf{p}}$ is the vector of sample proportions:
+
+	\[
+	\hat{p}_i = \frac{x_i}{n} \quad \text{for } i = 1, 2, \dots, k
+	\]
+
+\subsubsection{Application: Deriving Order Statistics via the Multinomial Framework}
+A powerful and elegant application of the multinomial distribution is the derivation of the probability density function of order statistics. Let $Y_1, Y_2, \dots, Y_n$ be an i.i.d. sample from a continuous distribution with CDF $F(y)$ and PDF $p(y)$, and let $Y_{(1)} \le Y_{(2)} \le \dots \le Y_{(n)}$ be the corresponding ordered sample.
+
+To find the distribution of the $k$-th order statistic $Y_{(k)}$ falling in an infinitesimal interval $[y, y+dy]$, we can treat the $n$ independent observations as a multinomial trial with $c = 3$ categories mapped onto the real line:
+\begin{enumerate}
+	\item \textbf{Category 1 (Below $y$):} Observations less than $y$. The probability is $p_1 = F(y)$, and we require exactly $x_1 = k - 1$ observations.
+	\item \textbf{Category 2 (At $y$):} The single observation falling exactly in the interval $[y, y+dy]$. The probability is $p_2 = p(y)dy$, and we require exactly $x_2 = 1$ observation.
+	\item \textbf{Category 3 (Above $y$):} Observations greater than $y+dy$. The probability is $p_3 = 1 - F(y)$, and the remaining $x_3 = n - k$ observations must fall here.
+\end{enumerate}
+
+Substituting these category counts ($x_1 = k-1, x_2 = 1, x_3 = n-k$) and probabilities into the multinomial PMF (Equation \ref{pmf:multinom}) yields:
+
+	\[
+	p_{Y_{(k)}}(y)dy = \frac{n!}{(k-1)! \, 1! \, (n-k)!} \left[F(y)\right]^{k-1} \left[p(y)dy\right]^1 \left[1 - F(y)\right]^{n-k}
+	\]
+	
+Dividing by $dy$, we obtain the general marginal density of the $k$-th order statistic:
+
+\begin{equation}
+	p_{Y_{(k)}}(y) = \frac{n!}{(k-1)!(n-k)!} \left[F(y)\right]^{k-1} \left[1 - F(y)\right]^{n-k} p(y)
+	\label{eq:order_k}
+\end{equation}
+
+By utilizing specific values for $k$, this multinomial formulation seamlessly handles the sample extremums and central tendencies:
+
+\paragraph{The Sample Minimum ($Y_{(1)}$):}
+Setting $k = 1$ implies $x_1 = 0$ observations below $y$, $x_2 = 1$ observation at $y$, and $x_3 = n-1$ observations above $y$. The multinomial structure simplifies directly to:
+
+	\[
+	p_{Y_{(1)}}(y) = n \left[1 - F(y)\right]^{n-1} p(y)
+	\]
+
+\paragraph{The Sample Maximum ($Y_{(n)}$):}
+Setting $k = n$ implies $x_1 = n-1$ observations below $y$, $x_2 = 1$ observation at $y$, and $x_3 = 0$ observations above $y$. The multinomial structure simplifies directly to:
+
+	\[
+	p_{Y_{(n)}}(y) = n \left[F(y)\right]^{n-1} p(y)
+	\]
+
+\paragraph{The Sample Median:}
+For an odd sample size $n$, the median is the middle statistic where $k = \frac{n+1}{2}$. This splits the remaining observations equally, resulting in $x_1 = \frac{n-1}{2}$ observations below the median and $x_3 = \frac{n-1}{2}$ observations above it. Substituting these into Equation \ref{eq:order_k} gives the density of the sample median:
+
+	\[
+	p_{\text{median}}(y) = \frac{n!}{\left(\frac{n-1}{2}\right)!\left(\frac{n-1}{2}\right)!} \left[F(y)(1 - F(y))\right]^{\frac{n-1}{2}} p(y)
+	\]
+	
 
 \clearpage
 \subsection{Poisson}
 
-\label{eq:poisson_mle}
-We now want to find the maximum likelihood estimator (MLE) for a Poisson distribution. 
-Given a sample of $N$ independent observations $\{x_i\}$, the total likelihood is:
-\begin{align*}
-	L_{\text{tot}}(\mu) &= \prod_{i=1}^N \frac{\mu^{x_i} e^{-\mu}}{x_i!}
-\end{align*}
-Taking the logarithm, we obtain the log-likelihood:
-\begin{align*}
-	\ln L_{\text{tot}}(\mu) 
-	&= \sum_{i=1}^N \ln \left( \frac{\mu^{x_i} e^{-\mu}}{x_i!} \right) \\
-	&= \sum_{i=1}^N x_i \ln \mu - \sum_{i=1}^N \mu - \sum_{i=1}^N \ln(x_i!)
-\end{align*}
-Since the last term does not depend on $\mu$, it can be neglected. Therefore,
-\[
-\ln L_{\text{tot}}(\mu) = \sum_{i=1}^N x_i \ln \mu - N\mu
-\]
+The Poisson distribution models the number of events occurring within a fixed interval of time or space, assuming these events happen with a known constant mean rate and independently of the time since the last event.
 
-To find the MLE, we solve the \ref{eq:likelihood}:
-\[
-\frac{\partial \ln L_{\text{tot}}(\mu)}{\partial \mu} 
-= \sum_{i=1}^N \frac{x_i}{\mu} - N = 0
-\]
-Evaluating at $\mu = \hat{\mu}$, we obtain:
-\begin{equation*}
-	\hat{\mu} = \frac{1}{N} \sum_{i=1}^N x_i
-	\label{eq:poissonian_mle}
-	\tag{Poisson MLE}
-\end{equation*}
+\subsubsection{Probability Mass Function}
+The support for a Poisson random variable $X$ is the set of non-negative integers $k \in \{0, 1, 2, \dots\}$, and the rate parameter satisfies $\mu > 0$. The probability mass function (PMF) is given by:
+\begin{equation}
+	P(X = k) = \frac{\mu^k e^{-\mu}}{k!}
+	\label{pmf:poisson}
+\end{equation}
 
-As expected, the MLE for the Poisson mean coincides with the sample mean. In the simple case of a single observation of $n$ events, we trivially get: $\hat\mu=n$.
-%Negative Binomial / Geometric: For trials until success. Add if we ever use
+\subsubsection{Moment Generating Function and Moments}
+The Moment Generating Function (MGF) for a Poisson random variable $X$ can be derived directly from its PMF by utilizing the Taylor series expansion for the exponential function, $\sum_{k=0}^{\infty} \frac{x^k}{k!} = e^x$:
+
+\begin{align*}
+	M_X(t) = \E[e^{tX}] &= \sum_{k=0}^{\infty} e^{tk} \frac{\mu^k e^{-\mu}}{k!} \\
+	&= e^{-\mu} \sum_{k=0}^{\infty} \frac{(\mu e^t)^k}{k!} \\
+	&= e^{-\mu} \cdot e^{\mu e^t} = e^{\mu(e^t - 1)}
+\end{align*}
+
+We can evaluate the raw moments by differentiating $M_X(t)$ with respect to $t$ at $t = 0$. The first derivative yields the expected value:
+
+	\[
+	\E[X] = \left. \frac{d}{dt} M_X(t) \right|_{t=0} = \left. \mu e^t e^{\mu(e^t - 1)} \right|_{t=0} = \mu
+	\]
+
+Differentiating a second time yields the second raw moment:
+
+	\[
+	\E[X^2] = \left. \frac{d^2}{dt^2} M_X(t) \right|_{t=0} = \left. \left( \mu e^t + (\mu e^t)^2 \right) e^{\mu(e^t - 1)} \right|_{t=0} = \mu + \mu^2
+	\]
+
+Using these results, the mean and variance of the Poisson distribution are found to be identically equal to the rate parameter:
+
+	\[
+	\E[X] = \mu \quad \text{and} \quad \Var[X] = \E[X^2] - (\E[X])^2 = (\mu + \mu^2) - \mu^2 = \mu
+	\]
+
+\subsubsection{Maximum Likelihood Estimation}
+Consider an independent and identically distributed (i.i.d.) sample of $N$ observations $\{k_1, k_2, \dots, k_N\}$. The joint likelihood function $L(\mu)$ across the entire sample is the product of their individual probabilities:
+
+\begin{align*}
+	L(\mu) &= \prod_{i=1}^N \frac{\mu^{k_i} e^{-\mu}}{k_i!}
+\end{align*}
+
+To simplify optimization, we take the natural logarithm to obtain the log-likelihood function:
+
+\begin{align*}
+	\ln L(\mu) &= \sum_{i=1}^N \ln \left( \frac{\mu^{k_i} e^{-\mu}}{k_i!} \right) \\
+	&= \sum_{i=1}^N \left( k_i \ln \mu - \mu - \ln(k_i!) \right) \\
+	&= \sum_{i=1}^N k_i \ln \mu - N\mu - \sum_{i=1}^N \ln(k_i!)
+\end{align*}
+
+Since the final term involving the factorials does not depend on the parameter $\mu$, it acts as a constant relative to the optimization and can be neglected when maximizing. This leaves:
+
+	\[
+	\ln L(\mu) \propto \sum_{i=1}^N k_i \ln \mu - N\mu
+	\]
+
+To find the Maximum Likelihood Estimator (MLE), we take the first derivative with respect to $\mu$ and set it equal to zero:
+
+	\[
+	\frac{\partial \ln L(\mu)}{\partial \mu} = \sum_{i=1}^N \frac{k_i}{\mu} - N = 0
+	\]
+
+Evaluating this expression at $\mu = \hat{\mu}$ yields the estimator:
+
+\begin{equation}
+	\hat{\mu} = \frac{1}{N} \sum_{i=1}^N k_i = \bar{k}
+	\label{eq:poisson_mle}
+\end{equation}
+
+As derived, the Maximum Likelihood Estimator for the Poisson rate parameter directly coincides with the sample mean $\bar{k}$. 
 
 \clearpage
 \section{Continuos distributions}
-\subsection{Uniform}\label{sec:uniform}
+\subsection{Uniform}
+\label{sec:uniform}
 
-The general Uniform distribution $\mathcal{U}[l, u]$ with $l, u \in \mathbb{R}$ has the pdf:
-\[
-p(x; l, u)=
-\begin{cases}
-	\frac{1}{u-l} & \text{if } x \in [l, u] \\
-	0 & \text{otherwise}
-\end{cases}
-\]
+The continuous uniform distribution models a scenario where all outcomes within a bounded interval are equally likely to occur. 
 
-One can equivalently parameterize the distribution in terms of the interval length $\delta$ and its center $\mu$:
-\[
-p(x; \delta, \mu)=
-\begin{cases}
-	\frac{1}{\delta} & \text{if } x \in [\mu-\delta/2, \mu+\delta/2] \\
-	0 & \text{otherwise}
-\end{cases}
-\]
-
-To simplify the following derivations, we consider a Uniform $\mathcal{U}[0, m]$ (any other case can be reduced to this one through a simple change of variables).
-
-The expected value is:
-\begin{align*}
-	\E[x]
-	&=\int_{-\infty}^{+\infty} x\,p(x;0,m)\,dx
-	=\int_{0}^{m} x\frac{1}{m}\,dx
-	=\frac{m}{2}
-\end{align*}
-
-and the variance:
-\begin{align*}
-	\operatorname{Var}[x]
-	&=\E[x^2]-\E[x]^2 \\
-	&=\int_{0}^{m} x^2\frac{1}{m}\,dx - \frac{m^2}{4} \\
-	&=\frac{m^2}{3}-\frac{m^2}{4}
-	=\frac{m^2}{12}
-\end{align*}
-
-The characteristic function is:
-\[
-\phi(t)=\E[e^{itx}]
-=\frac{e^{imt}-1}{imt}
-\]
-
-We now compute the likelihood $L_x(m)$ for a single observation $x$ (see example \ref{ex:uniform_likelihood}):
-\[
-L_x(m)=\frac{1}{m}\,\mathbb{I}_{\{m \geq x\}}, \quad m>0
-\]
-
-We note that the domain of the observable $x$ is clearly dependent on the parameter $m$, thus, to compute the Fisher information, we resort to it's definition \ref{def:fisher_information}:
-\[
-I(m)=\E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right]
-=\frac{1}{m^2}
-\]
-
-To find the MLE for $m$, we observe that the likelihood is decreasing in $m$ for $m \ge x$ (see fig \ref{fig:uniform_likelihood}), hence its maximum is attained at the boundary:
-\[
-\hat{m}=x
-\]
-
-Given $N$ independent observations $\{x_i\}$ drawn from a uniform distribution, we have:
-\begin{align*}
-	L_{\text{tot}}(m)
-	&=\prod_{i=1}^N\frac{1}{m}\mathbb{I}_{\{m\geq x_i\}}\\
-	&=\frac{1}{m^N}\mathbb{I}_{\{m\geq \max_i [x_i]\}}
-\end{align*}
-
-The log-likelihood (for $m \ge \max_i [x_i]$) is:
-\[
-\ln L_{\text{tot}}(m) = -N \ln m
-\]
-then:
-\[
-I_{\text{tot}}(m)=\E \left[\left(\frac{\partial \ln L_{\text{tot}}(m)}{\partial m}\right)^2 \right]=\frac{N^2}{m^2}
-\]
-If you're puzzled by the fact that the Fisher Information is not linear in the sample size $N$ remember that this property emerges in the case of sufficient regularity we talked about when we first introduced the concept of the Fisher Information (see \ref{def:fisher_information}). As we previously said, in the case of uniform distribution, where the bound is dependent on the parameter, those regularity conditions do not hold.
-
-By the same argument as before, the MLE is:
-
-\[
-	\hat m = \max_i [x_i]
-\]
-
-Further treatment of this fundamental statistic, and it's sufficiency, can be found in example \ref{ex:uniform_sufficient_statistics}.
-
-It is often useful to determine the distributions of 
-\[
-x_{\max} = \max_i [x_i]
-\quad \text{and} \quad
-x_{\min} = \min_i [x_i]
-\]
-
-We start with $x_{\max}$. Its distribution can be derived in two equivalent ways:
-
-\begin{itemize}
-	\item Using the cumulative distribution function:
-	\[
-	F_{x_{\max}}(x)=P(x_{\max}\leq x)
-	\]
-	The condition $x_{\max}\leq x$ means that all observations satisfy $x_i \leq x$, hence:
-	\[
-	P(x_{\max}\leq x)=P(x_1\leq x, \dots, x_N \leq x)
-	=\prod_{i=1}^{N}P(x_i\leq x)
-	\]
-	where we used independence.
-	
-	For the uniform distribution:
-	\[
-	P(x_i\leq x)=
+\subsubsection{Probability Density Function}
+The general uniform distribution $\mathcal{U}[l, u]$ with parameters $l, u \in \mathbb{R}$ ($l < u$) has the probability density function:
+\begin{equation}
+	p(x; l, u)=
 	\begin{cases}
-		0 & \text{if } x<0\\
-		\frac{x}{m} & \text{if } 0\leq x \leq m\\
-		1 & \text{if } x> m
+		\frac{1}{u-l} & \text{if } x \in [l, u] \\
+		0 & \text{otherwise}
 	\end{cases}
-	\]
-	
-	Thus, for $x\in [0,m]$:
+	\label{pmf:uniform_general}
+\end{equation}
+
+Equivalently, one can parameterize the distribution in terms of its center $\mu$ and interval length $\delta$:
+
 	\[
-	F_{x_{\max}}(x)=\left(\frac{x}{m}\right)^N
-	\]
-	
-	Differentiating:
-	\[
-	p_{x_{\max}}(x)=\frac{d}{dx}F_{x_{\max}}(x)
-	=
+	p(x; \delta, \mu)=
 	\begin{cases}
-		\frac{N}{m}\left(\frac{x}{m}\right)^{N-1} & \text{if } 0 \leq x \leq m\\
+		\frac{1}{\delta} & \text{if } x \in \left[\mu-\frac{\delta}{2}, \mu+\frac{\delta}{2}\right] \\
 		0 & \text{otherwise}
 	\end{cases}
 	\]
 	
-	\item Another way to arrive at the same result is to view the problem in terms of a multinomial experiment. 
-	
-	We consider $N$ independent draws and imagine ordering them. Fix a value $x$ and focus on the $k$-th order statistic $x_k$. Each observation can fall into one of three categories:
-	\begin{itemize}
-		\item it lies below $x$
-		\item it falls in an infinitesimal interval $[x, x+dx]$
-		\item it lies above $x$
-	\end{itemize}
-	
-	These three outcomes have probabilities:
-	\[
-	p_{<} = F(x), \qquad
-	p_{=} = p(x)\,dx, \qquad
-	p_{>} = 1 - F(x)
-	\]
-	
-	For $N$ trials, the probability that exactly $k-1$ points lie below $x$, one point falls in $[x, x+dx]$, and the remaining $N-k$ lie above $x$ is given by the multinomial distribution:
-	\[
-	\frac{N!}{(k-1)!(N-k)!1!}
-	p_{<}^{\,k-1}\,
-	p_{=}\,
-	p_{>}^{\,N-k}
-	\]
-	
-	Dividing by $dx$, we obtain the density of the $k$-th order statistic:
-	\[
-	p_{x_k}(x)
-	=
-	\frac{N!}{(k-1)!(N-k)!}
-	[F(x)]^{k-1}
-	[1-F(x)]^{N-k}
-	p(x)
-	\]
-	
-	In the case of the maximum, we set $k=N$. Then there are $N-1$ points below $x$ and none above, giving:
-	\begin{align*}
-		p_{x_{\max}}(x)
-		&= N [F(x)]^{N-1} p(x) \\
-		&= N \left(\frac{x}{m}\right)^{N-1}\frac{1}{m} \\
-		&= \frac{N}{m}\left(\frac{x}{m}\right)^{N-1}
-	\end{align*}
-	
-	which coincides with the result obtained via the cumulative distribution.
-\end{itemize}
+To simplify the following derivations without loss of generality, we consider the standard scaled uniform distribution $\mathcal{U}[0, m]$. Any arbitrary case can be reduced to this support via a simple linear change of variables.
 
-We now turn to $x_{\min}$. Its distribution can be derived in analogous ways:
+\subsubsection{Moments and Characteristic Function}
+The expected value and variance are calculated directly via integration over the support $[0, m]$:
 
-\begin{itemize}
-	\item Using the cumulative distribution function:
 	\[
-	F_{x_{\min}}(x)=P(x_{\min}\leq x)
+	\E[X] = \int_{0}^{m} \frac{x}{m}\,dx = \frac{m}{2}
 	\]
-	It is often more convenient to compute the complementary probability:
+
 	\[
-	P(x_{\min} > x)
+	\Var[X] = \E[X^2] - (\E[X])^2 = \int_{0}^{m} \frac{x^2}{m}\,dx - \frac{m^2}{4} = \frac{m^2}{3} - \frac{m^2}{4} = \frac{m^2}{12}
 	\]
-	The condition $x_{\min} > x$ means that all observations satisfy $x_i > x$, hence:
+
+The characteristic function $\phi(t)$ is given by:
+
 	\[
-	P(x_{\min} > x)=P(x_1 > x, \dots, x_N > x)
-	=\prod_{i=1}^{N}P(x_i > x)
+	\phi(t) = \E[e^{itX}] = \int_{0}^{m} \frac{e^{itx}}{m}\,dx = \frac{e^{imt}-1}{imt}
 	\]
-	
-	For the uniform distribution:
+
+\subsubsection{Maximum Likelihood Estimation \& Fisher Information}
+For a single observation $x$, the likelihood function is bounded by the indicator parameter:
+
 	\[
-	P(x_i > x)=
-	\begin{cases}
-		1 & \text{if } x<0\\
-		1-\frac{x}{m} & \text{if } 0\leq x \leq m\\
-		0 & \text{if } x> m
-	\end{cases}
+	L_x(m) = \frac{1}{m}\,\mathbb{I}_{\{m \geq x\}}, \quad m>0
 	\]
-	
-	Thus, for $x\in [0,m]$:
+
+Because the support depends explicitly on the parameter $m$, regular differentiability conditions do not hold. Resorting directly to the foundational expectation definition (\ref{def:fisher_information}), the Fisher Information for a single trial is:
+
 	\[
-	P(x_{\min} > x)=\left(1-\frac{x}{m}\right)^N
+	I(m) = \E \left[\left(\frac{\partial \ln L_x(m)}{\partial m}\right)^2 \right] = \frac{1}{m^2}
 	\]
-	
-	and therefore:
+
+Given an i.i.d. sample of $N$ observations $\{x_1, x_2, \dots, x_N\}$, the joint likelihood is restricted by the sample extremum:
+
 	\[
-	F_{x_{\min}}(x)=1-\left(1-\frac{x}{m}\right)^N
+	L_{\text{tot}}(m) = \prod_{i=1}^N\frac{1}{m}\mathbb{I}_{\{m\geq x_i\}} = \frac{1}{m^N}\mathbb{I}_{\{m\geq \max_i [x_i]\}}
 	\]
-	
-	Differentiating:
+
+For $m \ge \max_i [x_i]$, the log-likelihood function simplifies to $\ln L(m) = -N \ln m$. This function is strictly decreasing in $m$; hence, its maximum is constrained to the lower boundary of the parameter space, yielding the Maximum Likelihood Estimator (MLE):
+
+\begin{equation}
+	\hat{m} = \max_i [x_i] = X_{(n)}
+	\label{eq:uniform_mle}
+\end{equation}
+
+Evaluating the joint Fisher Information yields:\sidenote{Note: The non-linearity of $I_{\text{tot}}(m)$ with respect to $N$ highlights the violation of standard regularity conditions (see \ref{def:fisher_information}), a typical feature of distributions with parameter-dependent boundaries.}
+
 	\[
-	p_{x_{\min}}(x)=\frac{d}{dx}F_{x_{\min}}(x)
-	=
-	\begin{cases}
-		\frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1} & \text{if } 0 \leq x \leq m\\
-		0 & \text{otherwise}
-	\end{cases}
+	I_{\text{tot}}(m) = \E \left[\left(\frac{\partial \ln L_{\text{tot}}(m)}{\partial m}\right)^2 \right] = \frac{N^2}{m^2}
 	\]
-	
-	\item Using the multinomial argument:
-	
-	We proceed as before by fixing a value $x$ and considering the $k$-th order statistic $x_k$.
-	The density of $x_k$ is:
-	\[
-	p_{x_k}(x)
-	=
-	\frac{N!}{(k-1)!(N-k)!}
-	[F(x)]^{k-1}
-	[1-F(x)]^{N-k}
-	p(x)
-	\]
-	
-	For the minimum, we set $k=1$. Then there are no points below $x$ and $N-1$ points above it:
-	\begin{align*}
-		p_{x_{\min}}(x)
-		&= N [1-F(x)]^{N-1} p(x) \\
-		&= N \left(1-\frac{x}{m}\right)^{N-1}\frac{1}{m} \\
-		&= \frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}
-	\end{align*}
-	
-	which agrees with the previous result.
-	
-	\item Variable change from $x_{\max}$:
-	
-	Let $y_i = m - x_i$. Then each $y_i \sim \mathcal{U}[0,m]$ and:
-	\[
-	y_{\max} = m - x_{\min}
-	\]
-	
-	Since we already know the distribution of $y_{\max}$, we can obtain that of $x_{\min}$ by a change of variables:
-	\[
-	p_{x_{\min}}(x)
-	=
-	p_{y_{\max}}(m-x)
-	\left|\frac{d}{dx}(m-x)\right|
-	\]
-	
-	which again yields:
-	\[
-	p_{x_{\min}}(x)
-	=
-	\frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}
-	\]
-\end{itemize}
-While we are at it, we can also find expected value and variance for $x_{\max}$ and $x_{\min}$. Starting from $x_{\max}$:
+
+\subsubsection{Distributions of the Sample Extremums}
+Using the multinomial framework established for generalized order statistics, we can immediately deduce the PDFs of the sample maximum ($X_{\max} = X_{(n)}$) and minimum ($X_{\min} = X_{(1)}$).
+
+Substituting the uniform CDF $F(x) = \frac{x}{m}$ and PDF $p(x) = \frac{1}{m}$ into the generalized order statistic equation, we obtain:
+
+\paragraph{The Sample Maximum ($X_{\max}$):}
+Setting $k=N$ yields the distribution where all $N-1$ observations fall below $x$:
+
 \begin{align*}
-	\E_{x_{\max}}[x]&=\int_{0}^{m}x\frac{N}{m}\left(\frac{x}{m}\right)^{N-1}\;dx=\frac{N}{m^N}\int_{0}^{m}x^N\;dx\\
-	&=\frac{N}{m^N}\left[\frac{1}{N+1}x^{N+1}\right]^m_0=m \frac{N}{N+1}
-\end{align*}
-Things are slightly more involved for $x_{\min}$:
-\begin{align*}
-	\E_{x_{\min}}[x]&=\int_{0}^{m}x\frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}\;dx\\
-	&=\frac{N}{m}m^2\int_0^1y\left(1-y\right)^{N-1}\;dy \quad \left(y=\frac{x}{m}\right)
-\end{align*}
-where we performed the variable change $y=\frac{x}{m}$. Now we recognize the integral to be a Beta function $\mathrm{B}(2, N)$ (see \ref{sec:beta}). Using the identity that relates Beta to Gamma functions (see \ref{eq:beta_gamma}):
-\[
-	\mathrm{B}(2,N)=\frac{\Gamma(2)\Gamma(N)}{\Gamma(N+2)}=\frac{1}{(N+1)N}
-\]
-we obtain\sidenote{The same result can also be obtained via integration by parts. Here, using the Beta function simplifies the computation and illustrates a technique that is often useful in similar integrals.}:
-\begin{align*}
-	\E_{x_{\min}}[x]&=m\frac{1}{N+1}
+	p_{X_{\max}}(x) &= N [F(x)]^{N-1} p(x) = \frac{N}{m}\left(\frac{x}{m}\right)^{N-1} \quad \text{for } x \in [0,m]
 \end{align*}
 
-We now compute the second moments, which are useful to determine the variances:
+\paragraph{The Sample Minimum ($X_{\min}$):}
+Setting $k=1$ yields the distribution where all $N-1$ observations fall above $x$:
+
 \begin{align*}
-	E_{x_{\max}}[x^2]&=\int_0^m x^2 \frac{N}{m}\left(\frac{x}{m}\right)^{N-1}\; dx\\
-	&=\frac{N}{m^N}\int_0^mx^{N+1}\;dx\\
-	&=\frac{N}{N+2}m^2 \\ \\
-	E_{x_{\min}}[x^2]&=\int_0^m x^2 \frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1}\; dx\\
-	&=N m^2\int_0^1y^2(1-y)^{N-1}\;dy\\
-	&=N m^2 \,\mathrm{B}(3,N) = N m^2 \frac{\Gamma(3)\Gamma(N)}{\Gamma(N+3)} \\
-	&=N m^2 \frac{2}{N(N+1)(N+2)} \\
-	&=\frac{2}{(N+1)(N+2)} m^2
-\end{align*}
-Finally for the variances:
-\begin{align*}
-	\operatorname{Var}_{x_{\max}}[x]&=E_{x_{\max}}[x^2]-E_{x_{\max}}[x]^2\\
-	&=\frac{N}{N+2}m^2-\frac{N^2}{(N+1)^2}m^2\\
-	&=\frac{N}{(N+1)^2(N+2)}m^2 \\
-	\\
-	\operatorname{Var}_{x_{\min}}[x]&=E_{x_{\min}}[x^2]-E_{x_{\min}}[x]^2\\
-	&=\frac{2}{(N+1)(N+2)} m^2-\frac{1}{(N+1)^2}m^2\\
-	&=\frac{N}{(N+1)^2(N+2)}m^2
+	p_{X_{\min}}(x) &= N [1-F(x)]^{N-1} p(x) = \frac{N}{m}\left(1-\frac{x}{m}\right)^{N-1} \quad \text{for } x \in [0,m]
 \end{align*}
 
-Would you look at that, the minimum and the maximum have the same variance! This should be of no surprise, really, as the Uniform distribution, by definition, assigns an equal probability to each value in the interval. Therefore, the probability of extracting a value greater than the current max, or less than the current min should be the same, and so they naturally have the same variance.
+\subsubsection{Moments of the Extremums}
+The expected values are found via direct integration and substitution ($y = \frac{x}{m}$):
 
-\todo{Should we add the Fisher information for $x_{\max}$ and $x_{\min}$?}
+	\[
+	\E[X_{\max}] = \frac{N}{m^N}\int_{0}^{m}x^N\;dx = m \frac{N}{N+1}
+	\]
+
+	\[
+	\E[X_{\min}] = \frac{N}{m}\int_{0}^{m}x\left(1-\frac{x}{m}\right)^{N-1}\;dx = m N \int_0^1 y(1-y)^{N-1}\;dy
+	\]
+
+Recognizing this integral as the Beta function $\mathrm{B}(2, N)$ and utilizing its identity with the Gamma function (\ref{sec:beta}):
+
+	\[
+	\mathrm{B}(2,N) = \frac{\Gamma(2)\Gamma(N)}{\Gamma(N+2)} = \frac{1}{N(N+1)} \implies \E[X_{\min}] = m \frac{1}{N+1}
+	\]
+
+To evaluate the variances, we compute their respective second raw moments:
+
+	\[
+	\E[X_{\max}^2] = \frac{N}{m^N}\int_0^mx^{N+1}\;dx = \frac{N}{N+2}m^2
+	\]
+
+	\[
+	\E[X_{\min}^2] = N m^2 \int_0^1 y^2(1-y)^{N-1}\;dy = N m^2 \mathrm{B}(3,N) = \frac{2}{(N+1)(N+2)} m^2
+	\]
+
+Applying the variance algebraic identity ($\Var[X] = \E[X^2] - (\E[X])^2$) resolves both expressions to a shared result:\sidenote{Note: The mathematical identity between $\Var[X_{\max}]$ and $\Var[X_{\min}]$ illustrates the geometric symmetry of the uniform distribution; the probabilistic bounds for boundaries approaching inwards from the edges are perfectly mirrored.}
+
+\begin{equation}
+	\Var[X_{\max}] = \Var[X_{\min}] = \frac{N}{(N+1)^2(N+2)}m^2
+	\label{eq:uniform_extremum_var}
+\end{equation}
 
 \clearpage
-\subsection{Normal (Gaussian)}
+\subsection{The Normal (Gaussian) Distribution}
 
-	\[
-	\N\left(x;\mu,\sigma^2\right) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{\left(x-\mu\right)^2}{2\sigma^2}}
-	\]
+The Normal (or Gaussian) distribution is arguably the most significant continuous probability distribution in statistics, serving as the foundational limiting distribution for numerous statistical theories and real-world phenomena.
 
-Naturally, $x,\mu\in\R$ and $\sigma^2>0$. 
+\subsubsection{Probability Density Function}
+The parameter space is defined by the mean $\mu \in \mathbb{R}$ and the variance $\sigma^2 > 0$. The probability density function for a continuous random variable $X \in \mathbb{R}$ is given by:
 
-We know the expected value and variance of $x$ to be:
+\begin{equation}
+	\mathcal{N}\left(x;\mu,\sigma^2\right) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{\left(x-\mu\right)^2}{2\sigma^2}}
+	\label{pmf:normal}
+\end{equation}
 
-	\[
-	\E\left[x\right] = \mu \quad \Var\left[x\right] = \sigma^2
-	\]
+\subsubsection{Moments and Symmetry}
+The parameters of the distribution correspond directly to its first two central moments:
 
-The distribution is symmetric about the mean, which is also the most probable value, which means that the mean, median and mode all coincide and are $\mu$.
+\[
+\E\left[x\right] = \mu \quad \text{and} \quad \Var\left[x\right] = \sigma^2
+\]
 
-Often, it's useful to apply the change of variables $z = \frac{x-\mu}{\sigma}$ which brings the form of the standard Gaussian:
+The Gaussian density is perfectly symmetric about its mean $\mu$, which also represents the peak of the curve. Consequently, for any Normal random variable, the mean, median, and mode all perfectly coincide at $\mu$.
 
-	\[
-	\N\left(z\right) = \frac{1}{\sqrt{s\pi}}e^{-\frac{z^2}{2}}
-	\]
+\subsubsection{The Standard Normal and Pivotal Quantities}
+Often, it is useful to apply the linear change of variables $z = \frac{x-\mu}{\sigma}$. This transformation yields the standard Gaussian distribution, characterized by a null mean and unitary variance ($\mathcal{N}(0,1)$):
 
-This naturally represents a pivotal quantity, as the Normal distribution with null mean and unitary variance is well-studied and its integrals tabled.
+\[
+\mathcal{N}\left(z\right) = \frac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}
+\]
 
-The Normal distribution is the general distribution for which the ventral limit theorem converges to, and represents the pdf of the sum of many observations. For this reason, the sum of two Normally distributed values follows a Normal distribution. 
+The variable $z$ represents a critical \textit{pivotal quantity} in inferential statistics. Because the distribution has no remaining unknown parameters, its cumulative areas are invariant and universally tabled, simplifying the computation of confidence intervals and hypothesis tests.
 
-Stating this in another way: the convolution of two Gaussians with null mean and variance $\sigma_1^2$, $\sigma_2^2$ is a Gaussian with null mean and variance  $\sigma_1^2 + \sigma_2^2$, which is a helpful property to fall back upon since we can always apply a change of variables to arrive at a null mean Gaussian.
+\subsubsection{The Central Limit Theorem and Convolution}
+The ubiquity of the Normal distribution in nature stems from the Central Limit Theorem (CLT), which establishes that the normalized sum of a large number of independent and identically distributed random variables asymptotically converges to a Gaussian PDF, regardless of the variables' original distribution.
+
+A direct consequence of this stable limiting behavior is the property of closure under addition: the sum of two independent Normally distributed random variables is itself Normally distributed. Stated precisely in terms of probability theory, the convolution of two independent Gaussians with null means and variances $\sigma_1^2$ and $\sigma_2^2$ yields a new Gaussian with a null mean and an additive variance:
+
+\[
+\Var[X_1 + X_2] = \sigma_1^2 + \sigma_2^2
+\]
+
+This additive variance property provides an exceptionally powerful algebraic shortcut, as any non-zero mean Gaussian system can always be shifted via a change of variables to a null-mean state to exploit this convolutional relationship.
 
 \clearpage
 \subsection{Exponential}
+The exponential distribution models the time or distance between successive independent events occurring continuously at a constant average rate. It can be viewed as the continuous analogue to the discrete geometric distribution.
 
-\subsubsection{Truncated exponential}
+\subsubsection{Probability Density Function}
+The support for an exponential random variable $X$ is $x \in [0, \infty)$. The distribution is commonly parameterized in one of two equivalent forms depending on the context: using the rate parameter $\lambda > 0$, or the mean/time-between-events parameter $\tau > 0$, where $\tau = 1/\lambda$.
 
-\subsubsection{Binned exponential}
+The probability density function in terms of the rate parameter $\lambda$ is given by:
+\begin{equation}
+	p(x; \lambda) = \lambda e^{-\lambda x} \quad \text{for } x \ge 0
+	\label{pdf:exponential1}
+\end{equation}
+
+Alternatively, re-parameterizing in terms of the time scale parameter $\tau$ yields:
+
+\begin{equation}
+	p(x; \tau) = \frac{1}{\tau} e^{-\frac{x}{\tau}} \quad \text{for } x \ge 0
+	\label{pdf:exponential2}
+\end{equation}
+
+\subsubsection{Moment Generating Function and Moments}
+The Moment Generating Function (MGF) for an exponential random variable $X$ is evaluated directly via integration. For the rate parameterization (valid for $t < \lambda$), the derivation is:
+
+\begin{align*}
+	M_X(t) = \E[e^{tX}] &= \int_{0}^{\infty} e^{tx} \lambda e^{-\lambda x} \, dx \\
+	&= \lambda \int_{0}^{\infty} e^{-(\lambda - t)x} \, dx \\
+	&= \lambda \left[ -\frac{1}{\lambda - t} e^{-(\lambda - t)x} \right]_0^{\infty} = \frac{\lambda}{\lambda - t} = \left(1 - \frac{t}{\lambda}\right)^{-1}
+\end{align*}
+
+Substituting $\lambda = 1/\tau$, the equivalent MGF under the time parameterization (valid for $t < 1/\tau$) is:
+	
+	\[
+	M_X(t) = \frac{1}{1 - \tau t} = (1 - \tau t)^{-1}
+	\]
+
+Differentiating $M_X(t)$ with respect to $t$ and evaluating at $t = 0$ yields the raw moments. The first derivative provides the expected value:
+
+	\[
+	\E[x] = \left. \frac{d}{dt} M_X(t) \right|_{t=0} = \left. \frac{1}{\lambda}\left(1 - \frac{t}{\lambda}\right)^{-2} \right|_{t=0} = \frac{1}{\lambda} = \tau
+	\]
+
+Differentiating a second time yields the second raw moment:
+
+	\[
+	\E[x^2] = \left. \frac{d^2}{dt^2} M_X(t) \right|_{t=0} = \left. \frac{2}{\lambda^2}\left(1 - \frac{t}{\lambda}\right)^{-3} \right|_{t=0} = \frac{2}{\lambda^2} = 2\tau^2
+	\]
+
+Using these moments, the variance of the exponential distribution is computed as:
+
+	\[
+	\Var[x] = \E[x^2] - \E[x]^2 = \frac{2}{\lambda^2} - \left(\frac{1}{\lambda}\right)^2 = \frac{1}{\lambda^2} = \tau^2
+	\]
+
+\subsubsection{The Memoryless Property}
+A defining characteristic of the exponential distribution is its \textit{memoryless property}. Mathematically, for any constants $s, t \ge 0$, a random variable following this distribution satisfies:
+
+	\[
+	P(X > s + t \mid X > s) = P(X > t)
+	\]
+
+This implies that the probability of an event occurring in the next interval depends only on the length of that interval ($t$), completely independent of how much time has already elapsed ($s$). 
+
+\subsubsection{Maximum Likelihood Estimation}
+Consider an independent and identically distributed (i.i.d.) sample of $N$ observations $\{x_1, x_2, \dots, x_N\}$. The joint likelihood function $L(\lambda)$ is:
+
+\begin{align*}
+	L(\lambda) &= \prod_{i=1}^N \lambda e^{-\lambda x_i} = \lambda^N e^{-\lambda \sum_{i=1}^N x_i}
+\end{align*}
+
+Taking the natural logarithm yields the log-likelihood function:
+
+	\[
+	\ln L(\lambda) = N \ln \lambda - \lambda \sum_{i=1}^N x_i
+	\]
+
+To find the Maximum Likelihood Estimator (MLE), we take the first derivative with respect to $\lambda$ and set it equal to zero:
+
+	\[
+	\frac{\partial \ln L(\lambda)}{\partial \lambda} = \frac{N}{\lambda} - \sum_{i=1}^N x_i = 0
+	\]
+
+Evaluating at $\lambda = \hat{\lambda}$ yields the estimator:
+
+\begin{equation}
+	\hat{\lambda} = \frac{N}{\sum_{i=1}^N x_i} = \frac{1}{\bar{x}}
+\end{equation}
+
+Thus, the MLE for the rate parameter $\lambda$ is the reciprocal of the sample mean $\bar{x}$.
+
+Alternatively, by the invariance property of maximum likelihood estimators or by directly maximizing the log-likelihood function parameterized in terms of the time scale parameter $\tau$, the joint likelihood function $L(\tau)$ is:
+
+\begin{align*}
+	L(\tau) &= \prod_{i=1}^N \frac{1}{\tau} e^{-\frac{x_i}{\tau}} = \tau^{-N} e^{-\frac{1}{\tau} \sum_{i=1}^N x_i}
+\end{align*}
+
+The corresponding log-likelihood function is:
+
+	\[
+	\ln L(\tau) = -N \ln \tau - \frac{1}{\tau} \sum_{i=1}^N x_i
+	\]
+
+Taking the derivative with respect to $\tau$ and setting it to zero:
+
+	\[
+	\frac{\partial \ln L(\tau)}{\partial \tau} = -\frac{N}{\tau} + \frac{1}{\tau^2} \sum_{i=1}^N x_i = 0
+	\]
+	
+Evaluating at $\tau = \hat{\tau}$ yields the estimator:
+
+\begin{equation}
+	\hat{\tau} = \frac{1}{N} \sum_{i=1}^N x_i = \bar{x}
+\end{equation}
+
+Thus, the MLE for the time scale parameter $\tau$ is precisely the sample mean $\bar{x}$
+
+
+%{Truncated exponential}
+
+%{Binned exponential}
 
 %Gamma: The generalized version of Exponential.  Add if we ever use
 
