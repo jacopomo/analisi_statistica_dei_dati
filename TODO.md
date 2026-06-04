@@ -12,3 +12,4 @@
 - [ ] Update README with a compiling guide
 - [ ] Least squares methods
 - [ ] Moments methods
+- [ ] Convolution of Poissonians (useful in practice)
