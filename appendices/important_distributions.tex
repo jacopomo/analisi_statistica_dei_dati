@@ -516,6 +516,155 @@ A direct consequence of this stable limiting behavior is the property of closure
 This additive variance property provides an exceptionally powerful algebraic shortcut, as any non-zero mean Gaussian system can always be shifted via a change of variables to a null-mean state to exploit this convolutional relationship.
 
 \clearpage
+\subsection{Lognormal}
+
+The lognormal distribution naturally arises when the logarithm of a random variable is Normally distributed. More precisely, if
+
+\[
+Y = e^X
+\]
+
+where $X \sim \mathcal{N}(\mu,\sigma^2)$, then the random variable $Y$ is said to follow a lognormal distribution. 
+
+\subsubsection{Probability Density Function}
+Let $X \sim \mathcal{N}(\mu,\sigma^2)$ and define $Y=e^X$. Since the exponential transformation maps $\mathbb{R}$ onto $(0,\infty)$, the support of the lognormal distribution is:
+
+\[
+y \in (0,\infty)
+\]
+
+Applying the standard change-of-variable formula:
+
+\[
+p_Y(y) = p_X(x(y))\left|\frac{dx}{dy}\right|
+\]
+
+with $x = \ln y$ and $\frac{dx}{dy} = \frac{1}{y}$, we obtain:
+
+\begin{align*}
+	p_Y(y) &= \frac{1}{\sqrt{2\pi\sigma^2}}
+	\exp\left[-\frac{(\ln y-\mu)^2}{2\sigma^2}\right]\frac{1}{y}
+\end{align*}
+
+Thus, the probability density function (PDF) of the lognormal distribution is:
+
+\begin{equation}
+	p(y;\mu,\sigma^2)=
+	\frac{1}{y\sqrt{2\pi\sigma^2}}
+	\exp\left[
+	-\frac{(\ln y-\mu)^2}{2\sigma^2}
+	\right]
+	\quad \text{for } y>0
+	\label{pdf:lognormal}
+\end{equation}
+
+\subsubsection{Moments}
+Because $Y=e^X$, the moments of the lognormal distribution can be derived directly from the Moment Generating Function of the Gaussian distribution.
+
+The expected value is:
+
+\begin{align*}
+	\E[Y]
+	&= \E[e^X]
+\end{align*}
+
+Using the Gaussian MGF:
+
+\[
+M_X(t)=\exp\left(\mu t+\frac{\sigma^2 t^2}{2}\right)
+\]
+
+and evaluating it at $t=1$:
+
+\[
+\E[Y]=M_X(1)=e^{\mu+\frac{\sigma^2}{2}}
+\]
+
+The second moment is similarly obtained:
+
+\[
+\E[Y^2]
+=
+\E[e^{2X}]
+=
+M_X(2)
+=
+e^{2\mu+2\sigma^2}
+\]
+
+Therefore, the variance becomes:
+
+\begin{align*}
+	\Var[Y]
+	&=
+	\E[Y^2]-\E[Y]^2 \\
+	&=
+	e^{2\mu+2\sigma^2}
+	-
+	e^{2\mu+\sigma^2}
+\end{align*}
+
+Factoring the common exponential term yields:
+
+\begin{equation}
+	\Var[Y]
+	=
+	e^{2\mu+\sigma^2}
+	\left(e^{\sigma^2}-1\right)
+\end{equation}
+
+Hence, the variance of the lognormal distribution is:
+
+\[
+\Var[Y]
+=
+e^{2\mu+\sigma^2}
+\left(e^{\sigma^2}-1\right)
+\]
+
+\subsubsection{Median and Mode}
+Since $\ln Y \sim \mathcal{N}(\mu,\sigma^2)$ and the Gaussian distribution is symmetric around $\mu$, the median of the lognormal distribution is simply:
+
+\[
+\text{median}(Y)=e^\mu
+\]
+
+The mode corresponds to the maximum of the density function and is found by differentiating the PDF with respect to $y$. The result is:
+
+\[
+\text{mode}(Y)=e^{\mu-\sigma^2}
+\]
+
+Unlike the Gaussian distribution, the lognormal distribution is positively skewed, and therefore:
+
+\[
+\text{mode}(Y)
+<
+\text{median}(Y)
+<
+\E[Y]
+\]
+
+\subsubsection{Closure Under Products}
+A particularly useful property of the lognormal distribution is its stability under multiplication.
+
+If
+
+\[
+Y_1=e^{X_1},
+\quad
+Y_2=e^{X_2}
+\]
+
+where $X_1$ and $X_2$ are independent Gaussian random variables, then:
+
+\[
+Y_1Y_2=e^{X_1+X_2}
+\]
+
+Since the sum of independent Gaussian variables is itself Gaussian, the product of independent lognormal variables is itself lognormal.
+
+\clearpage
 \subsection{Exponential}
 The exponential distribution models the time or distance between successive independent events occurring continuously at a constant average rate. It can be viewed as the continuous analogue to the discrete geometric distribution.
 
