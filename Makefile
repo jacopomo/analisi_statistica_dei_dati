@@ -65,7 +65,7 @@ all: build
 build: $(REQUIRED_DIRS) $(STAMPS) version
 	$(LATEXMK) -jobname=$(MAIN) $(MAIN).tex
 
-production: $(REQUIRED_DIRS) $(STAMPS)
+production: $(REQUIRED_DIRS) $(STAMPS) version
 	$(LATEXMK) -jobname=production_$(MAIN) \
 		-pdflatex='pdflatex %O "\def\draft{0}\input{%S}"' \
 		$(MAIN).tex
