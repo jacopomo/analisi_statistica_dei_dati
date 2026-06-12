@@ -1,0 +1,50 @@
+%------------------------------------------------
+% MATHEMATICS
+%------------------------------------------------
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, cancel, mathrsfs, mathpazo}
+
+
+%------------------------------------------------
+% THEOREM ENVIRONMENTS (BOOK STYLE)
+%------------------------------------------------
+\usepackage[framemethod=TikZ]{mdframed}
+
+% Define the global style for your blocks
+\mdfdefinestyle{blockstyle}{
+	topline=false,
+	bottomline=false,
+	rightline=false,
+	linewidth=2pt,
+	linecolor=black!70, % A nice dark gray
+	leftmargin=0pt,
+	rightmargin=0pt,
+	innerleftmargin=10pt,
+	innerrightmargin=0pt,
+	skipabove=10pt,
+	skipbelow=10pt
+}
+
+% Apply the style to your environments
+\newmdtheoremenv[style=blockstyle]{definition}{Definition}[chapter]
+\newmdtheoremenv[style=blockstyle]{theorem}{Theorem}[chapter]
+\newmdtheoremenv[style=blockstyle]{lemma}{Lemma}[chapter]
+\newmdtheoremenv[style=blockstyle]{proposition}{Proposition}[chapter]
+\newmdtheoremenv[style=blockstyle]{example}{Example}[chapter]
+\newmdtheoremenv[style=blockstyle]{corollary}{Corollary}[chapter]
+\newmdtheoremenv[style=blockstyle]{exercise}{Exercise}[chapter]
+
+%------------------------------------------------
+% COMMANDS
+%------------------------------------------------
+\usepackage{mathrsfs}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\C}{\mathcal{C}}
+
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\dv}[2]{\frac{\dd #1}{\dd #2}}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}

@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt, twoside]{book}
+%------------------------------------------------
+% ENCODING AND LANGUAGE
+%------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+%------------------------------------------------
+% GRAPHICS
+%------------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{minted}
+%------------------------------------------------
+% PAGE, CHAPTER AND SIDENOTE LAYOUT
+%------------------------------------------------
+\usepackage{geometry}
+\geometry{inner=2.5cm, outer=5.5cm, bottom=3cm, top=3cm, marginparsep=0.8cm, marginparwidth=4.2cm, headheight=15pt}
+\usepackage{titlesec}
+\usepackage{marginnote}
+\usepackage{ifoddpage}
+\usepackage{marginfix}
+\usepackage{sidenotes}
+\newcommand{\startexercises}{
+	\cleardoublepage
+	\renewcommand{\thechapter}{E}
+}
+
+%------------------------------------------------
+% BIBLIOGRAPHY
+%------------------------------------------------
+\usepackage{csquotes}
+
+\usepackage[
+    backend=biber
+]{biblatex}
+
+%------------------------------------------------
+% HYPERREF
+%------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+	hypertexnames=false,
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={Statistical Data Analysis Notes},
+    pdfauthor={Michelangelo Leoni}
+}
+
+%------------------------------------------------
+% LICENSE
+%------------------------------------------------
+\usepackage[
+    type={CC},
+    modifier={by},
+    version={4.0},
+]{doclicense}
+\addbibresource{appendices/biblio.bib}
+
+\newcommand{\mathdefault}[1]{#1}
+\renewcommand*{\marginfont}{\footnotesize}
+
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}
+{\filleft\Large\textsf{\chaptertitlename} \Huge\thechapter} % The Label (Chapter 1 or Appendix A)
+{20pt} % Space between label and title
+{\titlerule\vspace{10pt}\Huge} % The Title style
+[\vspace{20pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+%------------------------------------------------
+% COLORS AND BOXES
+%------------------------------<------------------
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbset{colback=gray!5!white, colframe=black!70!black}
+\ifdefined\draft
+  \ifnum\draft=1
+    \usepackage{todonotes}
+  \else
+    \usepackage[disable]{todonotes}
+  \fi
+\else
+  \usepackage{todonotes}
+\fi
+
+%------------------------------------------------
+% HEADER / FOOTER
+%------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+
+%------------------------------------------------
+% HYPERREF
+%------------------------------------------------
+
+
+%------------------------------------------------
+% PARAGRAPH STYLE
+%------------------------------------------------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newtcolorbox{summarybox}{
+	colback=white,
+	colframe=black
+}

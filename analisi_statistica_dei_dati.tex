@@ -1,164 +1,6 @@
-\documentclass[a4paper,12pt, twoside]{book}
-%------------------------------------------------
-% ENCODING AND LANGUAGE
-%------------------------------------------------
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{lmodern}
-%------------------------------------------------
-% AUTO-VERSIONING
-%------------------------------------------------
-\input{.build/version.tex}
-%------------------------------------------------
-% MATHEMATICS
-%------------------------------------------------
-\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, cancel, mathrsfs, mathpazo}
-%------------------------------------------------
-% GRAPHICS
-%------------------------------------------------
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{float}
-\usepackage{pgf}
-\usepackage{tikz}
-\usepackage{minted}
-%------------------------------------------------
-% PAGE, CHAPTER AND SIDENOTE LAYOUT
-%------------------------------------------------
-\usepackage{geometry}
-\geometry{inner=2.5cm, outer=5.5cm, bottom=3cm, top=3cm, marginparsep=0.8cm, marginparwidth=4.2cm, headheight=15pt}
-\usepackage{titlesec}
-\usepackage{marginnote}
-\usepackage{ifoddpage}
-\usepackage{marginfix}
-\usepackage{sidenotes}
-\newcommand{\startexercises}{
-	\cleardoublepage
-	\renewcommand{\thechapter}{E}
-}
-%------------------------------------------------
-% BIBLIOGRAPHY
-%------------------------------------------------
-\usepackage{csquotes}
-
-\usepackage[
-    backend=biber
-]{biblatex}
-\usepackage{hyperref}
-\hypersetup{
-	hypertexnames=false,
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue,
-    pdftitle={Statistical Data Analysis Notes},
-    pdfauthor={Michelangelo Leoni}
-}
-
-\usepackage[
-    type={CC},
-    modifier={by},
-    version={4.0},
-]{doclicense}
-\addbibresource{appendices/biblio.bib}
-
-\newcommand{\mathdefault}[1]{#1}
-\renewcommand*{\marginfont}{\footnotesize}
-
-\titleformat{\chapter}[display]
-{\normalfont\huge\bfseries}
-{\filleft\Large\textsf{\chaptertitlename} \Huge\thechapter} % The Label (Chapter 1 or Appendix A)
-{20pt} % Space between label and title
-{\titlerule\vspace{10pt}\Huge} % The Title style
-[\vspace{20pt}\titlerule]
-\titlespacing*{\chapter}{0pt}{0pt}{40pt}
-
-%------------------------------------------------
-% COLORS AND BOXES
-%------------------------------<------------------
-\usepackage{xcolor}
-\usepackage{tcolorbox}
-\tcbset{colback=gray!5!white, colframe=black!70!black}
-\ifdefined\draft
-  \ifnum\draft=1
-    \usepackage{todonotes}
-  \else
-    \usepackage[disable]{todonotes}
-  \fi
-\else
-  \usepackage{todonotes}
-\fi
-
-%------------------------------------------------
-% HEADER / FOOTER
-%------------------------------------------------
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\nouppercase{\leftmark}}
-\fancyhead[R]{\thepage}
-
-%------------------------------------------------
-% HYPERREF
-%------------------------------------------------
-
-
-%------------------------------------------------
-% PARAGRAPH STYLE
-%------------------------------------------------
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt}
-
-%------------------------------------------------
-% THEOREM ENVIRONMENTS (BOOK STYLE)
-%------------------------------------------------
-\usepackage[framemethod=TikZ]{mdframed}
-
-% Define the global style for your blocks
-\mdfdefinestyle{blockstyle}{
-	topline=false,
-	bottomline=false,
-	rightline=false,
-	linewidth=2pt,
-	linecolor=black!70, % A nice dark gray
-	leftmargin=0pt,
-	rightmargin=0pt,
-	innerleftmargin=10pt,
-	innerrightmargin=0pt,
-	skipabove=10pt,
-	skipbelow=10pt
-}
-
-% Apply the style to your environments
-\newmdtheoremenv[style=blockstyle]{definition}{Definition}[chapter]
-\newmdtheoremenv[style=blockstyle]{theorem}{Theorem}[chapter]
-\newmdtheoremenv[style=blockstyle]{lemma}{Lemma}[chapter]
-\newmdtheoremenv[style=blockstyle]{proposition}{Proposition}[chapter]
-\newmdtheoremenv[style=blockstyle]{example}{Example}[chapter]
-\newmdtheoremenv[style=blockstyle]{corollary}{Corollary}[chapter]
-\newmdtheoremenv[style=blockstyle]{exercise}{Exercise}[chapter]
-
-%------------------------------------------------
-% COMMANDS
-%------------------------------------------------
-\usepackage{mathrsfs}
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\Var}{\operatorname{Var}}
-\newcommand{\Cov}{\operatorname{Cov}}
-\newcommand{\Prob}{\mathbb{P}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathcal{N}}
-\newcommand{\C}{\mathcal{C}}
-
-\newcommand{\dd}{\mathrm{d}}
-\newcommand{\dv}[2]{\frac{\dd #1}{\dd #2}}
-\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
-
-\newtcolorbox{summarybox}{
-	colback=white,
-	colframe=black
-}
+\input{preamble/formatting.tex}
+\input{preamble/math.tex}
+\input{preamble/misc.tex}
 
 %------------------------------------------------
 % TITLE PAGE (COVER)
@@ -185,7 +27,6 @@
 
     \vspace*{2cm}
 \end{titlepage}
-
 
 \frontmatter
 
@@ -223,7 +64,6 @@
 
 \backmatter
 
-%\nocite{*} % This will make it so all sources show up even if not cited with J. does not like!
 \printbibliography[heading=bibintoc]
 
 \end{document}
