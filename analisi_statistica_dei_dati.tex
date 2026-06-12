@@ -40,7 +40,27 @@
 %------------------------------------------------
 % BIBLIOGRAPHY
 %------------------------------------------------
-\usepackage[backend=biber,style=numeric-comp,sorting=none]{biblatex}
+\usepackage{csquotes}
+
+\usepackage[
+    backend=biber
+]{biblatex}
+\usepackage{hyperref}
+\hypersetup{
+	hypertexnames=false,
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={Statistical Data Analysis Notes},
+    pdfauthor={Michelangelo Leoni}
+}
+
+\usepackage[
+    type={CC},
+    modifier={by},
+    version={4.0},
+]{doclicense}
 \addbibresource{appendices/biblio.bib}
 
 \newcommand{\mathdefault}[1]{#1}
@@ -56,7 +76,7 @@
 
 %------------------------------------------------
 % COLORS AND BOXES
-%------------------------------------------------
+%------------------------------<------------------
 \usepackage{xcolor}
 \usepackage{tcolorbox}
 \tcbset{colback=gray!5!white, colframe=black!70!black}
@@ -82,16 +102,7 @@
 %------------------------------------------------
 % HYPERREF
 %------------------------------------------------
-\usepackage{hyperref}
-\hypersetup{
-	hypertexnames=false,
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue,
-    pdftitle={Statistical Data Analysis Notes},
-    pdfauthor={Michelangelo Leoni}
-}
+
 
 %------------------------------------------------
 % PARAGRAPH STYLE
@@ -174,6 +185,7 @@
 
     \vspace*{2cm}
 \end{titlepage}
+
 
 \frontmatter
 
