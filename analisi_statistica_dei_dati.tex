@@ -1,12 +1,15 @@
+%------------------------------------------------
+% PREAMBLE INCLUDES
+%------------------------------------------------
 \input{preamble/formatting.tex}
 \input{preamble/math.tex}
 \input{preamble/misc.tex}
 
+\begin{document}
+
 %------------------------------------------------
 % TITLE PAGE (COVER)
 %------------------------------------------------
-\begin{document}
-
 \begin{titlepage}
     \centering
     \vspace*{3cm}
@@ -48,12 +51,16 @@
 
 \include{chapters/goodness_of_fit}
 
-% --- EXERCISES ---
+%------------------------------------------------
+% EXERCISES
+%------------------------------------------------
 \part*{Exercises}
 \startexercises
 \include{appendices/exercises}
 
-% --- APPENDICES ---
+%------------------------------------------------
+% APPENDICES
+%------------------------------------------------
 \appendix
 \renewcommand{\thechapter}{\Roman{chapter}}
 

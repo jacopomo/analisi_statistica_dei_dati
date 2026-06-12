@@ -1,4 +1,5 @@
 \documentclass[a4paper,12pt, twoside]{book}
+
 %------------------------------------------------
 % ENCODING AND LANGUAGE
 %------------------------------------------------
@@ -6,6 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{lmodern}
+
 %------------------------------------------------
 % GRAPHICS
 %------------------------------------------------
@@ -15,6 +17,7 @@
 \usepackage{pgf}
 \usepackage{tikz}
 \usepackage{minted}
+
 %------------------------------------------------
 % PAGE, CHAPTER AND SIDENOTE LAYOUT
 %------------------------------------------------
@@ -22,13 +25,13 @@
 \geometry{inner=2.5cm, outer=5.5cm, bottom=3cm, top=3cm, marginparsep=0.8cm, marginparwidth=4.2cm, headheight=15pt}
 \usepackage{titlesec}
 \usepackage{marginnote}
-\usepackage{ifoddpage}
-\usepackage{marginfix}
 \usepackage{sidenotes}
 \newcommand{\startexercises}{
 	\cleardoublepage
 	\renewcommand{\thechapter}{E}
 }
+\newcommand{\mathdefault}[1]{#1}
+\renewcommand*{\marginfont}{\footnotesize}
 
 %------------------------------------------------
 % BIBLIOGRAPHY
@@ -63,20 +66,9 @@
 ]{doclicense}
 \addbibresource{appendices/biblio.bib}
 
-\newcommand{\mathdefault}[1]{#1}
-\renewcommand*{\marginfont}{\footnotesize}
-
-\titleformat{\chapter}[display]
-{\normalfont\huge\bfseries}
-{\filleft\Large\textsf{\chaptertitlename} \Huge\thechapter} % The Label (Chapter 1 or Appendix A)
-{20pt} % Space between label and title
-{\titlerule\vspace{10pt}\Huge} % The Title style
-[\vspace{20pt}\titlerule]
-\titlespacing*{\chapter}{0pt}{0pt}{40pt}
-
 %------------------------------------------------
 % COLORS AND BOXES
-%------------------------------<------------------
+%------------------------------------------------
 \usepackage{xcolor}
 \usepackage{tcolorbox}
 \tcbset{colback=gray!5!white, colframe=black!70!black}
@@ -89,6 +81,10 @@
 \else
   \usepackage{todonotes}
 \fi
+\newtcolorbox{summarybox}{
+	colback=white,
+	colframe=black
+}
 
 %------------------------------------------------
 % HEADER / FOOTER
@@ -100,17 +96,14 @@
 \fancyhead[R]{\thepage}
 
 %------------------------------------------------
-% HYPERREF
-%------------------------------------------------
-
-
-%------------------------------------------------
 % PARAGRAPH STYLE
 %------------------------------------------------
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
-
-\newtcolorbox{summarybox}{
-	colback=white,
-	colframe=black
-}
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}
+{\filleft\Large\textsf{\chaptertitlename} \Huge\thechapter}
+{20pt}
+{\titlerule\vspace{10pt}\Huge}
+[\vspace{20pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}

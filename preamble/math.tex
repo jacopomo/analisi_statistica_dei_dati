@@ -3,19 +3,18 @@
 %------------------------------------------------
 \usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, cancel, mathrsfs, mathpazo}
 
-
 %------------------------------------------------
 % THEOREM ENVIRONMENTS (BOOK STYLE)
 %------------------------------------------------
 \usepackage[framemethod=TikZ]{mdframed}
 
-% Define the global style for your blocks
+% Define the global style for the blocks
 \mdfdefinestyle{blockstyle}{
 	topline=false,
 	bottomline=false,
 	rightline=false,
 	linewidth=2pt,
-	linecolor=black!70, % A nice dark gray
+	linecolor=black!70,
 	leftmargin=0pt,
 	rightmargin=0pt,
 	innerleftmargin=10pt,
@@ -24,7 +23,7 @@
 	skipbelow=10pt
 }
 
-% Apply the style to your environments
+% Apply the style to the environments
 \newmdtheoremenv[style=blockstyle]{definition}{Definition}[chapter]
 \newmdtheoremenv[style=blockstyle]{theorem}{Theorem}[chapter]
 \newmdtheoremenv[style=blockstyle]{lemma}{Lemma}[chapter]
@@ -36,7 +35,6 @@
 %------------------------------------------------
 % COMMANDS
 %------------------------------------------------
-\usepackage{mathrsfs}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\operatorname{Var}}
 \newcommand{\Cov}{\operatorname{Cov}}
@@ -44,7 +42,6 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathcal{N}}
 \newcommand{\C}{\mathcal{C}}
-
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\dv}[2]{\frac{\dd #1}{\dd #2}}
 \newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
