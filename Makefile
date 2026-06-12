@@ -1,3 +1,40 @@
+# ============================================================
+# Main Makefile commands
+# ============================================================
+#
+# make
+#   Default command.
+#   Executes the full development build:
+#       • runs all Python scripts
+#       • generates auxiliary/version files
+#       • compiles the LaTeX document
+#
+# make build
+#   Same as `make`.
+#   Produces the standard PDF document.
+#
+# make production
+#   Builds the production version of the document (todo's are removed from the final PDF).
+#   Compiles LaTeX with:
+#
+#       \draft{0}
+#
+#   and generates:
+#
+#       production_$(MAIN).pdf
+#
+# make clean
+#   Removes LaTeX auxiliary/build files
+#   while keeping the generated PDFs and python scripts stamps.
+#
+# make cleanall
+#   Performs a complete cleanup:
+#       • removes auxiliary files
+#       • removes generated PDFs
+#       • removes build/stamp directories
+#
+# ============================================================
+
 RM = rm -rf
 PYTHON = python3
 MKDIR = mkdir -p

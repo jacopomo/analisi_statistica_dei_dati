@@ -1,3 +1,33 @@
+# How to build this project:
+## On Linux or macOS:
+
+1. Clone the repository to your local machine.
+    ```bash
+    git clone <repository-url>
+    ```
+2. Make sure you have a LaTeX distribution installed (e.g., TeX Live, MiKTeX). You might need to install additional LaTeX packages, which can usually be done through your distribution's package manager.
+3. Navigate to the project directory and create a python virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
+4. Install the required Python packages:
+   ```bash
+   pip install .
+   ```
+5. To build the PDF document, run the following command in the terminal:
+   ```bash
+   make
+   ```
+   This will run all the necessary python scripts and compile the LaTeX document into a PDF file.
+   You can also run the command:
+   ```bash
+   make -j
+   ```
+   to speed up the build process by using multiple CPU cores. To learn more about the Makefile and the available commands, you can look at the comments in the Makefile itself.
+
+# Preface:
+
 These notes are intended to be a comprehensive introduction to the field of statistical data analysis, covering both theoretical foundations and practical applications through examples, exercises, and tests. 
 
 The material is organized into chapters that follow the _Analisi statistica dei dati_ course at the univeristy of Pisa, followed by the authors during the 2024-2026 academic years, and held by professor _Paolo Francavilla_ and professor _Giovanni Punzi_. 
