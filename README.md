@@ -30,7 +30,7 @@
 
 These notes are intended to be a comprehensive introduction to the field of statistical data analysis, covering both theoretical foundations and practical applications through examples, exercises, and tests. 
 
-The material is organized into chapters that follow the _Analisi statistica dei dati_ course at the univeristy of Pisa, followed by the authors during the 2024-2026 academic years, and held by professor _Paolo Francavilla_ and professor _Giovanni Punzi_. 
+The material is organized into chapters that follow the _Analisi statistica dei dati_ course at the univeristy of Pisa, followed by the authors during the 2024-2026 academic years, and held by professors _Paolo Francavilla_, _Andrea Carlo Marini_ and _Giovanni Punzi_. 
 
 For this reason, the text will follow their lecture notes very closely, and many of the formulations, examples, and concepts are taken directly from those sources, for which we thank the professors. It is by no means an exhaustive treatment, but we hope to leave the readers with a solid understanding of the core concepts and techniques in statistical data analysis, as well as the ability to apply them to exam-style problems. 
 
