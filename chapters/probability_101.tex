@@ -422,9 +422,9 @@ The law of large numbers (LLN) is one of the most fundamental and well-known the
 \end{theorem}
 
 
-Within this theorem we have defined an interesting property "under the rug", which is convergence in probability, which is nothing more than the limit in (\ref{eq:LLN}).\todo{Maybe, instead of defining it this half-assed way we could add a definition explicitly?}
+Within this theorem we have defined an interesting property "under the rug", which is convergence in probability, which is nothing more than the limit in (\ref{eq:LLN})
 
-If we had to write the law of large numbers in words, it would read: "the sample mean of an observable converges in probability to its expected value whenever the latter exists and is finite". \todo{Here, the professor adds some considerations that I don't think I fully understand. Let's discuss if we want to include them.}\sidenote{For those of you who are not on their first read of these notes, or have some prior knowledge on point estimators, we can say that "the arithmetic mean is a consistent estimator of the mean $\E[x]$ of the distribution."}
+If we had to write the law of large numbers in words, it would read: "the sample mean of an observable converges in probability to its expected value whenever the latter exists and is finite".\sidenote{For those of you who are not on their first read of these notes, or have some prior knowledge on point estimators, we can say that "the arithmetic mean is a consistent estimator of the mean $\E[x]$ of the distribution."}
 
 \begin{example}[Proof of the LLN]
 	The most general proof of the LLN is beyond the scope of this course and therefore this write-up, however we will look at a more limiting but still instructive example. Let's suppose that also the following integral exists (\emph{variance of} $X$):
@@ -492,7 +492,7 @@ Regardless of $\varepsilon$, the right hand side can be made arbitrarily small w
 	\forall \varepsilon \lim_{N\to\infty} P\left( \left| \bar{x}_N-\mu \right| > \varepsilon\right)= 0 
 	\]
 	\qed
-\end{example}\todo{Phew... Look over all that to make sure nothing can be made clearer}
+\end{example}
 \todo{We used here a property of the Var we have not yet stated. While trivial if you look at the Var definition it might be useful to have a list of properties for quick reference}
 
 If that wasn't satisfying enough the reader will be pleased to know that there is a stronger version of the Law of Large Numbers, appropriately called "Strong-LLN". 
@@ -839,8 +839,7 @@ On a similar vein to the moment generating function we can define the \textbf{ch
 	\]
 \end{definition}
 
-In general, this function has analogous properties as $M$, though it exists for a wider class of distributions. Interesting to note that the characteristic function is essentially the Fourier transform of the probability distribution.\todo{Paul Levy theorem, I have never once used this in my life. Should we include?} \\
-\textcolor{red}{To the best of my understanding, Levy's theorem it's useful because allows us to conclude that: if the characteristic function converge to a finite limit (as in the CLT), than the corresponding distribution (or better the CDF) also converge to a finite limit. We could simply talk about the theorem in a strictly qualitative way, saying something along the line of: "The theorem tells us that the limits in the $\phi$-space behave in the same way as in the $F$-space".}
+In general, this function has analogous properties as $M$, though it exists for a wider class of distributions. Interesting to note that the characteristic function is essentially the Fourier transform of the probability distribution.\todo{Paul Levy theorem, I have never once used this in my life. Should we include?} 
 
 \section{Central Limit Theorem}
 Now seems like a great time to introduce what is probably the most important theorem we will talk about in this whole text. 
@@ -939,13 +938,13 @@ In passing, we note that the sum of Gaussian distributions it is still a Gaussia
 \end{center}
 \hrule
 
-\clearpage
-\section*{At a glance:}
-\hrule
-\vspace*{0.4cm}
-\begin{summarybox}
-\[
-p(A|B)=\frac{P(B|A)P(A)}{P(B)}
-\]	
-\end{summarybox}
-\clearpage
+%\clearpage
+%\section*{At a glance:}
+%\hrule
+%\vspace*{0.4cm}
+%\begin{summarybox}
+%\[
+%p(A|B)=\frac{P(B|A)P(A)}{P(B)}
+%\]	
+%\end{summarybox}
+%\clearpage

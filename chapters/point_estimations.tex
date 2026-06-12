@@ -59,8 +59,7 @@ we usually intend
 	\[
 	\theta = \hat{\theta}(x_0) \pm \sqrt{\Var\left[\hat\theta\right]}\bigg\rvert_{\theta=\hat{\theta}}	
 	\]
-where we explicitly write that $\hat{\theta}$ depends on the observations $x_0$ and that $\Var\left[\hat\theta\right]$ is a function of $\theta$ evaluated at $\hat{\theta}$.\todo{There are some questions left as exercises here if we want to include them, it's Saturday and I don't feel like thinking about them right now...}
-
+where we explicitly write that $\hat{\theta}$ depends on the observations $x_0$ and that $\Var\left[\hat\theta\right]$ is a function of $\theta$ evaluated at $\hat{\theta}$.
 
 \begin{example}
 	One could think that having a consistent estimator means that the variance must go to zero:
@@ -199,7 +198,6 @@ Unfortunately, as things often are, reducing the bias of an estimator in this wa
 	
 	Which, as we have verified, is unbiased.
 \end{example}
-\todo{Do we wanna find the variances of these estimators too?}
 
 When we can't make do with an unbiased estimator, we can at least try to find one that is asymptotically so:
 
@@ -268,10 +266,9 @@ Question: can we arbitrarily reduce the variance and bias of an estimator or is 
 	
 	The other inequality is satisfied for sufficient statistics. 
 \label{def:CR}
-\end{example}\todo{Not all of these calculations are totally clear to me I just wrote this on the plane without trying to understand it. Therefore, this section could do with some love. Also note that I am not particularly certain of what I have written...}
+\end{example}
 
-This is awesome, we have an elegant expression that ties together so many concepts that we have studied and justifies their use in the theory of Probability. We also have a way to write the \textbf{Minimum Variance Bound} (MVB), expressing the limit under which the variance of an estimator cannot drop. We can also state that there certainly exists at the most one function of the parameters that can be optimally estimated and without bias\todo{Why? I don't get it. When we understand this, replace this todo with a sidenote saying "this principle goes under the name of the Lehmann-Scheffé theorem"}
-
+This is awesome, we have an elegant expression that ties together so many concepts that we have studied and justifies their use in the theory of Probability. We also have a way to write the \textbf{Minimum Variance Bound} (MVB), expressing the limit under which the variance of an estimator cannot drop. We can also state that there certainly exists at the most one function of the parameters that can be optimally estimated and without bias.
 
  We can quantitatively define the efficiency of an estimator as
  
@@ -299,8 +296,6 @@ Generalizing the Cramer-Rao inequality to multiple statistics and parameters:
 	
 Where by "$\geq$" we intend that the difference between the left and right hand sides returns a positively-defined matrix.
 
-\todo{There are some Cramer-Rao examples (and NON Cramer-Rao) here, let's work them out or should this be stuff to put in the appendix? I vote to prove here and copy results in the appendix. You decide and do, I agree with whatever.}
-
 \subsection{Point estimates with moments}
 
 What do we do in the unfortunate case that we cannot express our pdf as an exponential function? Well then, we don't have the \emph{MV} guaranteed, nor a sufficient statistic. How do we find a decent estimator for $\theta$ in the most general case? Well, we have one estimator for free in general, and the LLN comes to the rescue. Recall that we have stated that the arithmetic mean is a consistent estimator for $\E[x]$, and so in the worst case we can just use the good old arithmetic mean if the expected value is the parameter we are trying to estimate (as long as the latter exists and $x$ has finite variance). 
@@ -324,11 +319,11 @@ It's not hard to imagine why we'd call these the \emph{sample moments}, and they
 	\]
 	\todo{We should rework this whole subsection}
 
-It's not guaranteed that these exist and are finite, but when they do they prove to be helpful statistics that we can readily calculate and update as we gather new data.\todo{More junk here that I happily skipped on my first few takes of this exam} If enough moments exist, this method allows us to easily build consistent estimators with known covariance\todo{if we talk of the cov then we have to include the "junk"} and (for the central limit theorem) asymptotically normal. They are not necessarily unbiased\todo{Said in Italian: potrei aver detto una minchiata.}.
+It's not guaranteed that these exist and are finite, but when they do they prove to be helpful statistics that we can readily calculate and update as we gather new data. If enough moments exist, this method allows us to easily build consistent estimators with known covariance and (for the central limit theorem) asymptotically normal. They are not necessarily unbiased.
 
 The cool thing about these moments is that they often exist finite and are easy to calculate, both in terms of computational power and weight. When you need to make some rapid decisions,\sidenote{Like, LHC GHz level of rapid} they can be pivotal to calculate "on the fly". 
 
-Of course, every good property must be met with an unfavorable one (in certain fields called the "no free lunch principle"), and this method does not grant us particularly efficient estimators, and to increase their efficiency we naturally must calculate more, or increase the complexity of the model, which is in direct contradiction with the whole reason we chose the moment method in the first place.\todo{Bleh. Let's re-write this sentence to flow better.}
+Of course, every good property must be met with an unfavorable one (in certain fields called the "no free lunch principle"), and this method does not grant us particularly efficient estimators, and to increase their efficiency we naturally must calculate more, or increase the complexity of the model, which is in direct contradiction with the whole reason we chose the moment method in the first place.
 
 \subsection{Implicit estimators}
 \label{subsec:Implicits}
@@ -483,7 +478,7 @@ We now distinguish two scenarios, depending on whether $N$ is fixed or not.
 
 \subsection{N-fixed histograms}
 
-If $N$ is fixed \emph{a priori}, the counts $\{k_i\}$ follow a multinomial distribution\todo{Insert here the ref to the appendix with all the distribution defined}:
+If $N$ is fixed \emph{a priori}, the counts $\{k_i\}$ follow a multinomial distribution:
 
 	\[
 		P(\{k_i\};\mathfrak{p}_i(\theta),N)=\frac{N!}{\prod_i{k_i!}}\prod_i \mathfrak{p}_i^{k_i}(\theta)
@@ -530,7 +525,7 @@ In the limit of infinitely fine binning ($n \to \infty$), each bin contains at m
 \subsection{Variable-$N$ histograms}
 \label{subsec:variable_N_hist}
 
-When $N$ is not fixed (for instance, when observations are collected over a fixed time interval), it becomes itself a random variable, following a Poisson distribution:\todo{Insert here the ref to the appendix with all the distribution defined}
+When $N$ is not fixed (for instance, when observations are collected over a fixed time interval), it becomes itself a random variable, following a Poisson distribution:
 \[
 	N \sim \mathcal{P}(N; \mu(\theta))
 \]
@@ -681,7 +676,7 @@ In a sense, a robust statistic is more trustworthy, as it is less volatile to ou
 As we can see, the theory discussed up until now is rather fragile, and we'd like to find some robust estimators that we can trust even when we don't have full knowledge of the distribution of the data. 
 
 \subsection{Least Squares method}
-Let's talk about a robust estimator that is consistent even when the underlying pdf is not known. We begin by remembering what we talked about in section \ref{subsec:Implicits} about implicit estimators: all we need is a general function $F$ such that $\E\left[F(x,\theta)\right] = 0$ to build one, and we shall consider the function $F\left(k_i,\theta\right) = k_i -\mu_i(\theta) = k_i - \E\left[k_i\right]$. It's clear to see that the expected value of this function is indeed equal to zero, and we wish to transform it while maintaining this property.\todo{Is it clear here that what comes is not limited to histograms but it can be used every time there's a set of observation depending on a parameter? I think it is -J}
+Let's talk about a robust estimator that is consistent even when the underlying pdf is not known. We begin by remembering what we talked about in section \ref{subsec:Implicits} about implicit estimators: all we need is a general function $F$ such that $\E\left[F(x,\theta)\right] = 0$ to build one, and we shall consider the function $F\left(k_i,\theta\right) = k_i -\mu_i(\theta) = k_i - \E\left[k_i\right]$. It's clear to see that the expected value of this function is indeed equal to zero, and we wish to transform it while maintaining this property.
 
 We apply a generic linear transformation:
 	\[
@@ -793,7 +788,6 @@ We note that the median always\sidenote{except for pathological cases involving 
 	\]
 	which, put into words, means that the median is less than $1\sigma$ away from the mean. 
 \end{theorem}
-\todo{We could split these into two and prove them individually or not prove, idrk}
 
 The sample median is such an important robust estimator that we also wish to see how it is distributed, since this will be independent of the pdf from which the data was extracted.
 
@@ -910,10 +904,6 @@ Therefore, the sample median $\hat{m}_1$ is:
 This shows that $\hat{m}_1$ has a finite, non-zero asymptotic efficiency.
 
 We enjoy all of these properties independently of the fact that the variance of the observable exists finite or not (and therefore, the sample median is used in cases like the Cauchy distribution). With this we hope to have convinced the readers of just how robust the sample median is as an estimator for the median.
-
-\todo{Hodges-Lehmann? I am feeling lazy but if it ever pops up we could end up including it...}
-
-\todo{Other considerations that I feel like can be skipped or added later, mode and midrange I already touched upon, and truncated means are meh...}
 
 \subsection{Truncated means}
 

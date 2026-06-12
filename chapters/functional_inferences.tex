@@ -23,7 +23,7 @@ We begin with one of the most important definitions of the whole course:
 \end{definition}
 
 The likelihood is not a probability nor probability density, but in general a non-negative function that indicates the "plausibility" (well, \emph{likelihood}) of extracting whichever $\theta$ given the measure $x_0$.
-\todo{In the next example we are going to talk about distributions, such as the Bernoulli, we have not introduced yet. We should find a pleasing way to introduce them before.}
+
 \begin{example}
 	We want to determine the likelihood function for a binomial distribution. The binomial distribution gives the probability of observing $k$ successes in $n$ independent trials:
 	\[
@@ -89,7 +89,7 @@ The likelihood is not a probability nor probability density, but in general a no
 		\caption{Likelihood function for a single observation from a uniform distribution.}
 		\label{fig:uniform_likelihood}
 	\end{figure}
-\end{example}\todo{I totally written this part from scratch, especially the conclusions. We should review this example in the future.}
+\end{example}
 
 \begin{example}
 Likelihood Gauss
@@ -116,10 +116,6 @@ A few key properties of the Likelihood:
 	This means that more measurements can only better your Likelihood and that you can combine it with others to keep track of more observations. 
 	\item $\ell =\ln{L}$ maintains all the same, nice properties as $L$, swapping the multiplicative constant for an additive one. For this reason, it's often used in calculations.
 \end{enumerate}
-
-\begin{example}
-	Here he combines two Gaussian Likelihoods, see if you want.
-\end{example}\todo{this}
 
 It should be pretty clear now why the Likelihood is a natural tool if our goal is to draw conclusions about the parameters that govern the distributions from which we extract our observations. Though not interpretable as a probability, the likelihood still offers crucial information, and higher values can be interpreted as more plausible candidates for the parameter. Most importantly, where $L=0$, that value can be completely excluded as a possibility. Also, the multiplicative nature of repeated measures causes thinner and sharper peaks around the most likely values.
 
@@ -157,21 +153,12 @@ and using Bayes' theorem (\ref{th:Bayes}) we can write:
  
  If I can calculate this, i.e if $\theta$ admits a pdf and I am lucky enough to know it, then I know everything I will ever need to know and can calculate anything I may be interested in, like the \emph{probability}\sidenote{Not just "plausibility" or likelihood, the actual Probability} of any interval of $M$ or which is the $\theta$ that maximizes the posterior, for example. 
  
- \begin{example}
- 	COVID
- \end{example}\todo{do}
- 
  Often times, to avoid calculating the normalization, we talk about the ratio
  	\[
  	\frac{p(\theta_1|x_0)}{p(\theta_2|x_0)} = \overbrace{\frac{L_{x_0}(\theta_1)}{L_{x_0}(\theta_2)}}^{LR_{x_0}(\theta_1,\theta_2)} \cdot \frac{p(\theta_1)}{p(\theta_2)}
  	\]
  where $LR$ (\emph{Bayes' factor}) "updates" the relative probability between two hypotheses (different $\theta$) at each observation. Given the multiplicative nature of the Likelihood, this formula can be used to track the "evolution" of the relative probability. 
  
- \todo{Following example and also something about relative abundance?}
- \begin{example}
- 	PID muoni e pioni etc...
- \end{example}
-
 \subsubsection{Subjectivist Bayesian Inference}
 
 Let's now talk about the more realistic scenario where $\theta$ does not admit a probability function (or it does, but we don't know it). The Bayesian (subjectivist) approach proceeds by \emph{assigning} a prior distribution to $\theta$, based on the \emph{degree of belief} $\pi(\theta)$. Then, the calculations proceed as before, and by treating the degree of belief as a probability we arrive to the posterior degree of belief:
@@ -317,7 +304,6 @@ Interesting to note that the Likelihood principle implies the sufficiency princi
 	\]
 	This is equivalent to asking that the information can't be further reduced or compressed. 
 \end{definition}
-\todo{There will be exercises that clear these up quite nicely, add them here or ref them}
 
 So now we have talked at lengths about this beautiful concept called the sufficient statistic and how it is going to be the resolution to all of our problems, and provided some examples of well-known sufficient statistics for important distributions.\todo{Have we? Either add them or change this phrase to reference the appendix where all the important distributions and their properties will be.} All we need now is a way to more generally find the sufficient statistic for a given distribution, and luckily there is a way through the following theorem:
 
