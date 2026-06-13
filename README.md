@@ -5,7 +5,7 @@
     ```bash
     git clone <repository-url>
     ```
-2. Make sure you have a LaTeX distribution installed (e.g., TeX Live, MiKTeX). You might need to install additional LaTeX packages, which can usually be done through your distribution's package manager.
+2. Make sure you have a LaTeX distribution installed (e.g., TeX Live, MiKTeX). Latexmk is required for the optimized building process done through the Makefile. You might need to install additional LaTeX packages, which can usually be done through your distribution's package manager.
 3. Navigate to the project directory and create a python virtual environment (optional but recommended):
    ```bash
    python -m venv venv
@@ -25,6 +25,20 @@
    make -j
    ```
    to speed up the build process by using multiple CPU cores. To learn more about the Makefile and the available commands, you can look at the comments in the Makefile itself.
+
+## Brute-force method:
+
+If you prefer to build the project without using the Makefile, you can follow the previous guide up to step 4. Then:
+1. Run the necessary Python scripts to generate the required data and figures. You can find these scripts in the `scripts` directory. For example:
+   ```bash
+   python scripts/*.py
+   ```
+   Make sure to run all the scripts that are needed for the document.
+2. Compile the LaTeX document manually using your preferred LaTeX editor or command line targetting the "analisi_statistica_dei_dati.tex" file. For example, you can use:
+   ```bash
+   pdflatex analisi_statistica_dei_dati.tex
+   ```
+**Warning**: This method of compiling the document is not optimized, and you may need to run the compilation command multiple times to resolve all references and citations correctly. Also the process may take significantly more time and auxiliary files may be left in the project directory, so it is recommended to use the Makefile for a more efficient and cleaner build process.
 
 # Preface:
 
