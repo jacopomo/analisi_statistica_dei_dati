@@ -1,44 +1,103 @@
-# How to build this project:
-## On Linux or macOS:
+# Building the Project
 
-1. Clone the repository to your local machine.
-    ```bash
-    git clone <repository-url>
-    ```
-2. Make sure you have a LaTeX distribution installed (e.g., TeX Live, MiKTeX). Latexmk is required for the optimized building process done through the Makefile. You might need to install additional LaTeX packages, which can usually be done through your distribution's package manager.
-3. Navigate to the project directory and create a python virtual environment (optional but recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate
-   ```
-4. Install the required Python packages:
-   ```bash
-   pip install .
-   ```
-5. To build the PDF document, run the following command in the terminal:
-   ```bash
-   make
-   ```
-   This will run all the necessary python scripts and compile the LaTeX document into a PDF file.
-   You can also run the command:
-   ```bash
-   make -j
-   ```
-   to speed up the build process by using multiple CPU cores. To learn more about the Makefile and the available commands, you can look at the comments in the Makefile itself.
+## Linux and macOS
 
-## Brute-force method:
+### 1. Clone the repository
 
-If you prefer to build the project without using the Makefile, you can follow the previous guide up to step 4. Then:
-1. Run the necessary Python scripts to generate the required data and figures. You can find these scripts in the `scripts` directory. For example:
-   ```bash
-   python scripts/*.py
-   ```
-   Make sure to run all the scripts that are needed for the document.
-2. Compile the LaTeX document manually using your preferred LaTeX editor or command line targetting the "analisi_statistica_dei_dati.tex" file. For example, you can use:
-   ```bash
-   pdflatex analisi_statistica_dei_dati.tex
-   ```
-**Warning**: This method of compiling the document is not optimized, and you may need to run the compilation command multiple times to resolve all references and citations correctly. Also the process may take significantly more time and auxiliary files may be left in the project directory, so it is recommended to use the Makefile for a more efficient and cleaner build process.
+```bash
+git clone <repository-url>
+cd <repository-name>
+```
+
+### 2. Install LaTeX dependencies
+
+Make sure you have a working LaTeX distribution installed, such as:
+
+- TeX Live
+- MacTeX
+- MiKTeX
+
+The build system also requires `latexmk` for the optimized compilation workflow provided by the Makefile.
+
+Depending on your LaTeX distribution, you may also need to install additional packages.
+
+### 3. Create a Python virtual environment (optional but recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+### 4. Install the Python package and dependencies
+
+```bash
+pip install .
+```
+
+### 5. Build the PDF document
+
+Run:
+
+```bash
+make
+```
+
+This command automatically:
+
+- executes the required Python scripts
+- generates figures and tables
+- compiles the LaTeX sources
+- and produces the final PDF document
+
+To speed up the build process using multiple CPU cores, you can run:
+
+```bash
+make -j
+```
+
+For additional targets and advanced usage, refer to the comments inside the `Makefile`.
+
+---
+
+## Manual (Brute-Force) Compilation
+
+If you prefer not to use the Makefile, follow the previous instructions up to step 4, then proceed manually.
+
+### 1. Run the required Python scripts
+
+The scripts used to generate figures, tables, and auxiliary data are located in the `scripts/` directory.
+
+For example:
+
+```bash
+python scripts/*.py
+```
+
+Make sure to execute all scripts required by the document.
+
+### 2. Compile the LaTeX document manually
+
+Compile the main document file (you can also do this from an IDE like TeXstudio or Overleaf):
+
+```bash
+pdflatex analisi_statistica_dei_dati.tex
+```
+
+You may need to run the command multiple times to correctly resolve references, citations, and indexes.
+
+---
+
+## Warning
+
+Manual compilation is significantly less efficient than using the provided Makefile.
+
+In particular:
+
+- compilation may take longer
+- auxiliary files may clutter the project directory
+- and multiple compilation passes may be required
+
+For these reasons, using the Makefile-based workflow is strongly recommended.
 
 # Preface:
 
