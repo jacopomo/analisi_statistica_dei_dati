@@ -1,62 +1,120 @@
 '''
-Script that generates the tables for a chi squared integral
+Script that generates two LaTeX tables of chi-squared values for various degrees of freedom and p-values.
+The first table (chi2_table_high.tex) contains chi-squared values for upper-tail probabilities above 0.5
+The second table (chi2_table_low.tex) contains chi-squared values for upper-tail probabilities below 0.5
+Then, it generates two visualizations of the chi-squared distribution with shaded areas corresponding to specific upper-tail probabilities (0.75 and 0.25).
 '''
 from scipy.stats import chi2
+import numpy as np
 from asd import utils
-
+import matplotlib.pyplot as plt
 
 def format(value):
     """Format a number with 3 significant figures.
     
-    For values < 0.1, use scientific notation.
-    For values >= 0.1, use fixed decimal notation.
+    For values < 0.01, use scientific notation.
+    For values >= 0.01, use fixed decimal notation.
     """
     if value == 0:
         return "0"
     
-    if abs(value) < 0.1:
-        # Use scientific notation with 1 sig fig
-        formatted = f"{value:.0e}"
+    if abs(value) < 0.01:
+        # Use scientific notation with 2 sig fig
+        formatted = f"{value:.1e}"
         # Clean up exponent notation: e-0X -> e-X, e+0X -> e+X
         formatted = formatted.replace("e-0", "e-").replace("e+0", "e+")
         return formatted
     else:
-        # Use general format with 3 sig figs
-        return f"{value:.3g}"
-
+        # Use general format with 3 below the decimal
+        return f"{value:.3f}"
 
 # Degrees of freedom
-dof_values = list(range(1, 31))
+dof_values = list(range(1, 26))
 
-# P-values for column headers
-p_values = [0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99]
+# Chi2-values for column headers
+chi2_values_high = [0.999, 0.995, 0.99, 0.95, 0.90, 0.75, 0.50]
+chi2_values_low = [0.50, 0.25, 0.10, 0.05, 0.01, 0.005, 0.001]
 
 # Generate table columns
 # First column: degrees of freedom
 dof_col = [f"${nu}$" for nu in dof_values]
 
 # Other columns: chi-squared quantiles for each p-value
-chi2_columns = []
-for p in p_values:
-    col_data = []
+chi2_columns_h, chi2_columns_l = [], []
+for h,l in zip(chi2_values_high, chi2_values_low):
+    col_data_h, col_data_l = [], [] 
     for nu in dof_values:
         # chi2.ppf is the quantile function (inverse CDF)
-        value = chi2.ppf(p, nu)
+        # We want the value such that P(X > value) = v, which is equivalent to 1 - P(X <= value)
+        high, low = chi2.ppf(1-h, nu), chi2.ppf(1-l, nu)
         # Format
-        formatted = format(value)
-        col_data.append(formatted)
-    chi2_columns.append(col_data)
+        high, low = format(high), format(low)
+        col_data_h.append(high), col_data_l.append(low)
+    chi2_columns_h.append(col_data_h), chi2_columns_l.append(col_data_l)
 
 # Prepare table labels
-labels = ("$\\nu/p$",) + tuple(f"${p}$" for p in p_values)
+labels_h = ("$\\nu/\\chi^2$",) + tuple(f"${v}$" for v in chi2_values_high)
+labels_l = ("$\\nu/\\chi^2$",) + tuple(f"${v}$" for v in chi2_values_low)
 
 # Prepare content: tuple of all columns (dof first, then chi2 values for each p-value)
-content = tuple([dof_col] + chi2_columns)
+content_h = tuple([dof_col] + chi2_columns_h)
+content_l = tuple([dof_col] + chi2_columns_l)
 
-# Generate the table
+# Generate the tables
 utils.table_generator(
-    n_columns=len(labels), 
-    labels=labels, 
-    content=content, 
-    output_file_name="chi2_table.tex"
+    n_columns=len(labels_h), 
+    labels=labels_h, 
+    content=content_h, 
+    output_file_name="chi2_table_high.tex"
 )
+
+utils.table_generator(
+    n_columns=len(labels_l), 
+    labels=labels_l, 
+    content=content_l, 
+    output_file_name="chi2_table_low.tex"
+)
+
+
+# VISUALIZATION: Chi2 distribution, low and high
+# Example: upper tail integral = 0.75 and 0.25 find the corresponding chi2 value and shade the area under the curve
+integral_example = [0.75, 0.25]
+for i in integral_example:
+    chi2_example = chi2.ppf(1 - i, 3)  # Example with 3 degrees of freedom
+    print(f"Chi2 value for upper tail integral {i} with 3 dof: {chi2_example:.3f}")
+    fig, ax = utils.pgf_generator(figsize=(3.4, 2.2))
+
+    # Create x values
+    x = np.linspace(0, 5, 1000)
+    nu=3  # Example degrees of freedom
+    y = chi2.pdf(x,nu)
+
+    # Plot the curve
+    ax.plot(x, y, 'k-', linewidth=2, label=r'$\chi^2$ distribution', color="black")
+
+    chi2_example = chi2.ppf(1 - i, nu)
+
+    # Fill the upper tail
+    chi_tail = x[x >= chi2_example]
+    y_tail = chi2.pdf(chi_tail,nu)
+    ax.fill_between(chi_tail, 0, y_tail, alpha=0.3, color='C0', label=f'$Area = {i}$')
+
+    # Draw vertical line at chi2
+    ax.axvline(chi2_example, color='black', linestyle='--', linewidth=2)
+
+    # Labels and formatting
+    ax.legend(loc='upper right')
+    ax.set_xlim(0, 5)
+    ax.set_ylim(0, 0.3)
+
+    # Remove ticks and labels
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+    # Save
+    if i > 0.5:
+        plt.savefig('images/chi2_table_visualization_high.pgf', format='pgf')
+    else:
+        plt.savefig('images/chi2_table_visualization_low.pgf', format='pgf')
+    plt.close()
+    

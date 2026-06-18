@@ -225,3 +225,4 @@ utils.code_snippet_generator(
     output_file_name="central_code.tex",
     file=__file__
 )
+

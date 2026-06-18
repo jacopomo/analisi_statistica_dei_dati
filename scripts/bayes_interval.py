@@ -105,3 +105,4 @@ ax[0].set_ylabel("Posterior density")
 
 plt.savefig("images/bayes_interval.pgf", bbox_inches='tight')
 plt.close()
+

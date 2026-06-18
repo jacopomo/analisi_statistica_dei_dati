@@ -34,8 +34,8 @@ starts, ends = asdinterval.find_intervals_indices(mask)
 # Generate plot
 fig, ax1 = utils.pgf_generator(figsize=(5.5,3.5))
 
-ax1.plot(x, pdf, lw=2, label=r"$\mathcal{N}(x;\mu)$")
-ax1.fill_between(x, 0, pdf, where=mask, alpha=0.35)
+ax1.plot(x, pdf, lw=2, label=r"$\mathcal{N}(x;\mu)$", color="black")
+ax1.fill_between(x, 0, pdf, where=mask, alpha=0.35, color="C0")
 
 ax1.set_xlabel("x")
 ax1.set_xlim(x[0], x[-1])
@@ -43,7 +43,7 @@ ax1.set_ylabel(r"$p(x; \mu)$")
 ax1.set_ylim(0, max(pdf)*1.2)
 
 ax2 = ax1.twinx()
-ax2.plot(x, r, lw=2, ls="--", label=r"$LR_{\mu}(x)$")
+ax2.plot(x, r, lw=2, ls="--", label=r"$LR_{\mu}(x)$", color="C0")
 ax2.axhline(threshold, ls=":", color="black", lw=1.0, label="Threshold")
 
 for idx in starts + ends:

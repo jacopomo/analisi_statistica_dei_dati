@@ -111,3 +111,4 @@ axes[0].set_ylabel(r"$x$")
 plt.tight_layout()
 plt.savefig("images/uniform_belts.pgf", bbox_inches="tight")
 plt.close()
+

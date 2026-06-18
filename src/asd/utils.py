@@ -42,6 +42,7 @@ def table_generator(n_columns: int, labels: tuple, content: tuple, output_file_n
 
     table = r"""
     \begin{center}
+    \rowcolors{2}{gray!15}{white}
     \begin{tabular}{|""" + "c|"*n_columns + r"""}
     \hline
     """

@@ -72,7 +72,7 @@ ax.set_ylabel('Cumulative Probability')
 
 ax.grid(alpha=0.3)
 
-
 ax.set_title('Kolmogorov-Smirnov Test Example')
 plt.savefig("images/ks_example.pgf", bbox_inches='tight')
 plt.close()
+

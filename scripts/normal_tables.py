@@ -88,23 +88,22 @@ z_example = norm.ppf(1 - alpha_example)
 # Fill the right tail (alpha region)
 x_tail = x[x >= z_example]
 y_tail = norm.pdf(x_tail)
-ax.fill_between(x_tail, 0, y_tail, alpha=0.3, color='red', label=f'$\\alpha = {alpha_example}$', hatch='XXX')
+ax.fill_between(x_tail, 0, y_tail, alpha=0.3, color='C0', label=f'$\\alpha = {alpha_example}$')
 
 # Draw vertical line at z
 ax.axvline(z_example, color='black', linestyle='--', linewidth=2, label=f'$z = {z_example:.3f}$')
 
 # Add annotations
-ax.annotate('$\\alpha$', xy=(z_example + 0.5, 0.05), color='red', weight='bold')
+ax.annotate('$\\alpha$', xy=(z_example + 0.5, 0.05), color='black', weight='bold')
 
 # Labels and formatting
 ax.set_xlabel('$z$')
-ax.set_ylabel('Probability Density')
-ax.set_title('Standard Normal Distribution: Alpha and z')
+ax.set_ylabel('Probability density')
+ax.set_title('Standard normal distribution: $\\alpha$ and z')
 ax.grid(True, alpha=0.3)
 ax.legend(loc='upper left')
 ax.set_xlim(-4, 4)
-ax.set_ylim(-0.03, 0.45)
+ax.set_ylim(0, 0.45)
 
 plt.savefig('images/normal_table_visualization.pgf', format='pgf')
 plt.close()
-

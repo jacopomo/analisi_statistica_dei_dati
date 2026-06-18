@@ -146,7 +146,7 @@ Following the formalism developed in \ref{subsec:LR_test}, we once again use the
 
 Which, as we have done before, can be re-written by replacing the sup's with \emph{MLE}\sidenote{We have gotten used to this switch from sup to \emph{MLE}, but we still explicit the original supremum for edge cases where the \emph{MLE} does not exist (we can consider it to be an asymptotic \emph{MLE})}.
 
-Once again, we know through Wilks' theorem that under $H_0$, $\lambda(x)$ will asymptotically follow a central $\chi^2_d$ distribution, where the number of degrees of freedom $d$ is equal to the number of parameters fixed by the null hypothesis (the dimension of $\theta$). For all cases where $\theta \neq \theta_0$, the distribution shifts towards higher values\todo{Why???} (following a non-central $\chi^2$), ensuring the test is unbiased.
+Once again, we know through Wilks' theorem that under $H_0$, $\lambda(x)$ will asymptotically follow a central $\chi^2_d$ distribution, where the number of degrees of freedom $d$ is equal to the number of parameters fixed by the null hypothesis (the dimension of $\theta$). For all cases where $\theta \neq \theta_0$, the distribution shifts towards higher values (following a non-central $\chi^2$), ensuring the test is unbiased.
 
 Therefore, the Test with critical region $\lambda(x)>q_\alpha$ will be unbiased and right-tailed, so a good $p$-value is $p=1-F_{\chi^2_d}(\lambda)$. 
 
@@ -175,23 +175,21 @@ To evaluate this, let's look at the numerator. The term $\sup_{\theta,\nu,\xi}\m
 
 In this saturated case, the Likelihood is maximized when each bin's expected value is exactly equal to its observed count, $\hat{\mu}_{i} = k_i$. Essentially, we are allowing each of the $n$ bins to behave as an independent free parameter. Conversely, the denominator represents our specific physical model, which constrains those $n$ bins through fixing $\theta_0$ and using only a small set of free parameters $\nu$.
 
-Following Wilks' theorem, the degrees of freedom for our test statistic will be the difference in the number of free parameters between these two models. Say the Saturated Model uses $m$ parameters\sidenotemark\sidenotetext{Consider the case of $N$ observations distributed among $n$ bins, with $N$ fixed. The saturated model treats the expected count in each bin as an independent parameter, except for one parameter that is constrained by the normalization condition
-	\[
-	\sum_i k_i = N 
-	\]
+Following Wilks' theorem, the degrees of freedom for our test statistic will be the difference in the number of free parameters between these two models. Say the Saturated Model uses $m$ parameters\sidenotemark\sidenotetext{Consider the case of $N$ observations distributed among $n$ bins, with $N$ fixed. The saturated model treats the expected count in each bin as an independent parameter, except for one parameter that is constrained by the normalization condition $\sum_i k_i = N$.
+	
 As a consequence, there are not $n$ independent parameters, but rather $m=n-1$. You have probably encountered this result at least once in your life when fitting histograms}.
 
 We know that our model uses $\dim(\nu)$ free parameters, thus:
 	\[
 	DOF = m - \dim(\nu)
 	\]
-By evaluating the Poisson product at these respective maxima, which are $\hat{\mu}_{i} = k_i$ for the numerator and $\mu_i(\theta_0, \hat\nu)$ for the denominator, our expression becomes:\sidenote{Consider the "hats" to be the \emph{MLE}'s, not explicitly stated for the sake of clarity}
+By evaluating the Poisson product at these respective maxima, which are $\hat{\mu}_{i} = k_i$ for the numerator and $\mu_i(\theta_0, \hat\nu)$ for the denominator (consider the "hats" to be the \emph{MLE}'s, not explicitly stated for the sake of clarity), our expression becomes:
 
 	\[
 	\lambda(x) = 2\ln\frac{\prod_i^n \mathcal{P}\left(k_i;k_i\right)}{\prod_i^n \mathcal{P}\left(k_i;\mu_i(\theta_0,\hat{\nu})\right)}
 	\]
-	
-We expand using the definition of a Poisson statistic (we use $\hat{\mu_i}\equiv\mu_i(\theta_0,\hat{\nu})$ to simplify the notation\sidenote{We will use the compressed notation during calculations and the extended one in the results.}):
+
+We expand using the definition of a Poisson statistic (we use $\hat{\mu_i}\equiv\mu_i(\theta_0,\hat{\nu})$ to simplify the notation during the calculation, returning to the full expression in the results):
 
 \begin{align*}
 	\lambda(x) &= 2\ln\frac{\prod_i e^{-k_i} k_i^{k_i} \cdot k_i!}{\prod_ik_i! \cdot e^{-\hat{\mu_i}} \hat{\mu_i}^{k_i}} \\
