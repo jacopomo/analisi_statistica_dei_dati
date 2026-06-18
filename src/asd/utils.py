@@ -112,3 +112,22 @@ def code_snippet_generator(start_tag, end_tag, output_file_name, file=__file__):
 
     with open(f"code/{output_file_name}", "w", encoding="utf-8") as f:
         f.write(latex_code)
+
+def number_formatter(value, n_sig_fig=3):
+    """Format a number with n significant figures.
+    
+    For values < 0.01, use scientific notation.
+    For values >= 0.01, use fixed decimal notation.
+    """
+    if value == 0:
+        return "0"
+    
+    if abs(value) < 0.01:
+        # Use scientific notation with n sig fig
+        formatted = f"{value:.{n_sig_fig-1}e}"
+        # Clean up exponent notation: e-0X -> e-X, e+0X -> e+X
+        formatted = formatted.replace("e-0", "e-").replace("e+0", "e+")
+        return formatted
+    else:
+        # Use general format with n sig fig
+        return f"{value:.{n_sig_fig}f}"

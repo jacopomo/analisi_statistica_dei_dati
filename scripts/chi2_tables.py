@@ -9,29 +9,10 @@ import numpy as np
 from asd import utils
 import matplotlib.pyplot as plt
 
-def format(value):
-    """Format a number with 3 significant figures.
-    
-    For values < 0.01, use scientific notation.
-    For values >= 0.01, use fixed decimal notation.
-    """
-    if value == 0:
-        return "0"
-    
-    if abs(value) < 0.01:
-        # Use scientific notation with 2 sig fig
-        formatted = f"{value:.1e}"
-        # Clean up exponent notation: e-0X -> e-X, e+0X -> e+X
-        formatted = formatted.replace("e-0", "e-").replace("e+0", "e+")
-        return formatted
-    else:
-        # Use general format with 3 below the decimal
-        return f"{value:.3f}"
-
-# Degrees of freedom
+# Degrees of freedom (table columns)
 dof_values = list(range(1, 26))
 
-# Chi2-values for column headers
+# Chi2-values for upper-tail probabilities (table rows)
 chi2_values_high = [0.999, 0.995, 0.99, 0.95, 0.90, 0.75, 0.50]
 chi2_values_low = [0.50, 0.25, 0.10, 0.05, 0.01, 0.005, 0.001]
 
@@ -48,13 +29,13 @@ for h,l in zip(chi2_values_high, chi2_values_low):
         # We want the value such that P(X > value) = v, which is equivalent to 1 - P(X <= value)
         high, low = chi2.ppf(1-h, nu), chi2.ppf(1-l, nu)
         # Format
-        high, low = format(high), format(low)
+        high, low = utils.number_formatter(high, 3), utils.number_formatter(low, 3)
         col_data_h.append(high), col_data_l.append(low)
     chi2_columns_h.append(col_data_h), chi2_columns_l.append(col_data_l)
 
 # Prepare table labels
-labels_h = ("$\\nu/\\chi^2$",) + tuple(f"${v}$" for v in chi2_values_high)
-labels_l = ("$\\nu/\\chi^2$",) + tuple(f"${v}$" for v in chi2_values_low)
+labels_h = (r"\diagbox{$\nu$}{$p$}",) + tuple(f"${v}$" for v in chi2_values_high)
+labels_l = (r"\diagbox{$\nu$}{$p$}",) + tuple(f"${v}$" for v in chi2_values_low)
 
 # Prepare content: tuple of all columns (dof first, then chi2 values for each p-value)
 content_h = tuple([dof_col] + chi2_columns_h)
@@ -81,7 +62,6 @@ utils.table_generator(
 integral_example = [0.75, 0.25]
 for i in integral_example:
     chi2_example = chi2.ppf(1 - i, 3)  # Example with 3 degrees of freedom
-    print(f"Chi2 value for upper tail integral {i} with 3 dof: {chi2_example:.3f}")
     fig, ax = utils.pgf_generator(figsize=(3.4, 2.2))
 
     # Create x values

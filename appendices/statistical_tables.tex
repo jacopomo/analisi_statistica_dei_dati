@@ -1,5 +1,11 @@
 \chapter{Statistical Tables}
-Here we will have tables
+This appendix compiles the essential statistical tables required for the hypothesis testing, interval estimation, and distribution analysis discussed throughout these notes. 
+While modern statistical software has largely automated these calculations, these tables remain fundamental for understanding critical thresholds, verifying software outputs, and conducting quick hand calculations. Get accustomed to using them!
+
+When using these tables, pay careful attention to the specific definitions of the tail areas, degrees of freedom, and significance levels, visual aids have been added where possible to try to reduce ambiguity.
+
+Note on interpolation: For degrees of freedom or sample sizes not explicitly listed in these tables, use the closest smaller value for a conservative estimate, or employ linear interpolation for higher precision. Naturally, think of all you have learned in these notes about asymptotic distributions, maybe you can come up with a pretty good estimate for certain values not listed explicitly in the tables!
+
 \clearpage
 
 \section{\texorpdfstring{Upper-tail $\chi^2_\nu$ integral for $p$-values}{Upper-tail Chi-Squared integral for p-values}}
@@ -44,12 +50,22 @@ Here we will have tables
 		\centering
 		\input{tables/normal_table_z.tex}
 	\end{minipage}
-	\caption{One-tailed integral of Normal distribution at different $\alpha$ and $\sigma$}
+	\caption{One-tailed integral of standard Normal distribution at different $\alpha$ and $\sigma$}
+	\label{tab:normal_tables}
 \end{table}
 
 \begin{figure}[H]
 	\centering
 	\input{images/normal_table_visualization.pgf}
-	\caption{Proof of concept... not done yet by any stretch of the imagination.}
+	\caption{Visualization of table \ref{tab:normal_tables}, representing the one-sided tail area under a standard Normal curve.}
 	\label{fig:normal_table_visualization}
 \end{figure}
+
+\clearpage
+\section{Critical values for the Kolmogorov-Smirnov test}
+
+\begin{table}[H]
+	\input{tables/ks_table.tex}
+	\caption{Critical values for the Kolmogorov-Smirnov test at different sample sizes and significance levels. The last row shows the critical value that must be scaled with the square root of the sample size for large $n$.}
+	\label{tab:ks_table_values}
+\end{table}
