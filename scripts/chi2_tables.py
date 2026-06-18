@@ -90,7 +90,7 @@ for i in integral_example:
     y = chi2.pdf(x,nu)
 
     # Plot the curve
-    ax.plot(x, y, 'k-', linewidth=2, label=r'$\chi^2$ distribution', color="black")
+    ax.plot(x, y, '-', linewidth=2, label=r'$\chi^2$ distribution', color="black")
 
     chi2_example = chi2.ppf(1 - i, nu)
 
@@ -117,4 +117,3 @@ for i in integral_example:
     else:
         plt.savefig('images/chi2_table_visualization_low.pgf', format='pgf')
     plt.close()
-    
