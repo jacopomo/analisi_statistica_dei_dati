@@ -80,7 +80,7 @@ where we explicitly write that $\hat{\theta}$ depends on the observations $x_0$ 
 	\begin{figure}[H]
 		\centering
 		\input{images/consistency_counterexample.pgf}
-		\caption{Should we add a caption and a label to this image??}
+		\caption{Visualization of the pmf constructed as a counterexample to the statement that a consistent estimator must have asymptotically null variance. The mass function is defined in a way such that as $N$ increases the central peak approaches unity, while the two-point tails diminish asymptotically to $0$ but get further away.}
 	\end{figure}
 	
 	An estimator is consistent if it converges in probability to the true parameter: 
@@ -625,13 +625,13 @@ We have seen thus far the basic principles of classic point estimators, where in
 In a sense, a robust statistic is more trustworthy, as it is less volatile to outliers, model inconsistencies, or noise. The last thing we want as experimental scientists is to use methods that break down for tiny variations of the initial hypotheses, and for this reason robustness is a sought out property.
 
 \begin{example}
-	A good estimator for the variance of a Gaussian distributed random variable is the \emph{root-mean-square} (RMS), which, being the MLE, is asymptotically efficient:
+	A good estimator for the standard deviation of a Gaussian distributed random variable is the \emph{root-mean-square} (RMS), which, being the MLE, is asymptotically efficient:
 	\[
 	\hat\sigma \equiv s_N = \sqrt{\frac{1}{N}\sum_i (x_i - \bar{x})^2}
 	\]
 	where $\bar{x}$ is the sample mean.
 	
-	This is not the only possible estimator for the variance. We could use, for example, the \emph{mean-absolute-deviation} (MAD):
+	This is not the only possible estimator for the standard deviation. We could use, for example, the \emph{mean-absolute-deviation} (MAD):
 	\[
 	d_N = \frac{1}{N}\sum_i |x_i - \bar{x}| \quad \rightarrow \quad \hat\sigma' \equiv \sqrt{\frac{\pi}{2}}\, d_N
 	\]
@@ -643,17 +643,17 @@ In a sense, a robust statistic is more trustworthy, as it is less volatile to ou
 	\]
 	This means that the efficiency of $d_N$ is significantly worse than that of $s_N$. One might conclude that this settles the question. However, the story does not end here.
 	
-	Consider the case where we are not completely certain about the underlying pdf. For example, suppose the data are contaminated by a small fraction $f$ of observations with a larger variance $\sigma_2$.
-	We model the total pdf as a mixture of two Gaussians with the same mean $\mu$ but different variances (take $\sigma_2 = 3\sigma_1$):
+	Consider the case where we are not completely certain about the underlying pdf. For example, suppose the data is contaminated by a small fraction $f$ of observations with a larger standard deviation $\sigma_2$.
+	We model the total pdf as a mixture of two Gaussians with the same mean $\mu$ but different standard deviations (take $\sigma_2 = 3\sigma_1$):
 	\[
 	p(x; \mu, \sigma_1, f) = (1-f)\mathcal{N}(x;\mu,\sigma_1) + f\mathcal{N}(x;\mu, 3\sigma_1)
 	\]
 	\begin{figure}[H]
 		\centering
 		\input{images/historical_example.pgf}
-		\caption{Should we add a caption and a label to this image??}
+		\caption{Visualization of the three Normal curves, one with standard deviation $\sigma_1$, one with $3\sigma_1$, and the contaminated sum pdf.}
 	\end{figure}
-	We consider small values of $f$ (e.g.\ $f=0.05$), so most of the data follow the distribution with variance $\sigma_1$. This does not seem like an extreme situation, only a mild contamination. Let us now look at the efficiency ratio $r$ for different values of $f$:
+	We consider small values of $f$ (e.g.\ $f=0.05$), so most of the data follow the distribution with standard deviation $\sigma_1$. This does not seem like an extreme situation, only a mild contamination. Let us now look at the efficiency ratio $r$ for different values of $f$:
 	\begin{center}
 	\begin{tabular}{||c|c||}
 		\hline

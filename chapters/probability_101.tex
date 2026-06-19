@@ -408,6 +408,44 @@ The law of large numbers (LLN) is one of the most fundamental and well-known the
 \label{def:mean}
 \end{definition}
 
+Before diving deeply into the Law of Large Numbers, it's customary to see a certain theorem that will be useful in its proof.
+
+\begin{lemma}[Čebyšëv's theorem]
+	Let $X$ be a real-valued observable for which mean and variance $\mu$ and $\sigma^2$ exist and are well defined. In this case, the following inequality:
+	\begin{equation}
+		P\left( \left| x-\mu \right|>k\sigma \right)\leq \frac{1}{k^2}
+		\label{eq:chebyshev}
+	\end{equation}
+	exists for each $k\in\R^+$. This provides a conservative and easy to calculate upper bound for the probability of finding a point a certain amount of standard deviations from the mean. 
+\end{lemma}
+
+\begin{example}[Proof of Čebyšëv's theorem]
+	\begin{align*}
+		P\left( \left| x-\mu \right|>k\sigma \right) &= \int_{\left| x-\mu \right|>k\sigma} p_X(x)\dd x \\
+		&= \int_{O_X} \mathscr{F}\left( \left| x-\mu \right|>k\sigma \right)p_X(x)\dd x
+	\end{align*}
+	We have introduced $\mathscr{F}$ as the indicator function of the set $X$:
+	\[
+	\mathscr{F}\left( \left| x-\mu \right|>k\sigma \right) = \begin{cases} 1 & \text{if } \left| x-\mu \right|>k\sigma  \\ 0 &  \text{otherwise} \end{cases}
+	\]
+	\begin{figure}[H]
+		\centering
+		\input{images/chebyshev_theorem.pgf}
+		\caption{Visualization of the indicator function that defines Čebyšëv's inequality. Its construction is such that its value is null for all $x$ that are less than one $\sigma$ from the mean $\mu$, and unitary everywhere else.}
+	\end{figure}
+	So substituting into the integrand this property:
+	\[
+	\mathscr{F}\left[ \frac{\left| x-\mu \right|}{k\sigma} > 1 \right] \leq \frac{\left| x-\mu \right|^2}{k^2\sigma^2} 
+	\]
+	we obtain 
+	\[
+	P\left( \left| x-\mu \right|>k\sigma \right) \leq \int \frac{1}{k^2\sigma^2}\cdot \underbrace{\left| x-\mu \right|^2 p_X(x)\dd x}_{\text{Variance}} = \frac{\Var[x]}{k^2\sigma^2} = \frac{1}{k^2}
+	\]
+	\qed
+\end{example}
+
+Now we can get to stating and proving the LLN, armed with the Čebyšëv inequality. 
+
 \begin{theorem}[Law of large numbers (LLN)]
 	Let $X$ be a real-valued observable, and $p(x)$ its pdf. Let's suppose that the mean of $X$ exists and is finite:
 	\begin{equation}
@@ -424,50 +462,16 @@ The law of large numbers (LLN) is one of the most fundamental and well-known the
 
 Within this theorem we have defined an interesting property "under the rug", which is convergence in probability, which is nothing more than the limit in (\ref{eq:LLN})
 
-If we had to write the law of large numbers in words, it would read: "the sample mean of an observable converges in probability to its expected value whenever the latter exists and is finite".\sidenote{For those of you who are not on their first read of these notes, or have some prior knowledge on point estimators, we can say that "the arithmetic mean is a consistent estimator of the mean $\E[x]$ of the distribution."}
+If we had to write the law of large numbers in words, it would read: "the sample mean of an observable converges in probability to its expected value whenever the latter exists and is finite". For those of you who are not on their first read of these notes, or have some prior knowledge on point estimators, we can say that "the arithmetic mean is a consistent (point) estimator for the mean $\E[x]$ of the distribution." Don't worry if you don't know what that means right now, we'll talk about point estimators extensively in the future.
 
 \begin{example}[Proof of the LLN]
-	The most general proof of the LLN is beyond the scope of this course and therefore this write-up, however we will look at a more limiting but still instructive example. Let's suppose that also the following integral exists (\emph{variance of} $X$):
+The most general proof of the LLN is beyond the scope of this course and therefore this write-up, however we will look at a more limiting but still instructive example. Let's suppose that also the following integral exists (\emph{variance of} $X$):
 	\[
 	\sigma^2 \equiv \Var[X] \equiv \int_{O_X}\left( x-\E[x]\right)^2p_X(x)\dd x
 	\] 
-\begin{lemma}[Čebyšëv's theorem]
-	Let $X$ be a real-valued observable for which mean and variance $\mu$ and $\sigma^2$ exist and are well defined. In this case, the following inequality:
-	\begin{equation}
-	P\left( \left| x-\mu \right|>k\sigma \right)\leq \frac{1}{k^2}
-	\label{eq:chebyshev}
-	\end{equation}
-	exists for each $k\in\R^+$. While it's not the most useful upper bound it's useful in the proof of the LLN. 
-\end{lemma}
 
-\begin{example}[Proof of Čebyšëv's theorem]
-		\begin{align*}
-			P\left( \left| x-\mu \right|>k\sigma \right) &= \int_{\left| x-\mu \right|>k\sigma} p_X(x)\dd x \\
-		&= \int_{O_X} \mathscr{F}\left( \left| x-\mu \right|>k\sigma \right)p_X(x)\dd x
-	\end{align*}
-	We have introduced $\mathscr{F}$ as the indicator function of the set $X$:
-	\[
-	\mathscr{F}\left( \left| x-\mu \right|>k\sigma \right) = \begin{cases} 1 & \text{if } \left| x-\mu \right|>k\sigma  \\ 0 &  \text{otherwise} \end{cases}
-	\]
-	\begin{figure}[H]
-		\centering
-		\input{images/chebyshev_theorem.pgf}
-		\caption{Should we add a caption and a label to this image?}
-	\end{figure}
-	So substituting into the integrand this property:
-	\[
-	\mathscr{F}\left[ \frac{\left| x-\mu \right|}{k\sigma} > 1 \right] \leq \frac{\left| x-\mu \right|^2}{k^2\sigma^2} 
-	\]
-	we obtain 
-	\[
-	P\left( \left| x-\mu \right|>k\sigma \right) \leq \int \frac{1}{k^2\sigma^2}\cdot \underbrace{\left| x-\mu \right|^2 p_X(x)\dd x}_{\text{Variance}} = \frac{\Var[x]}{k^2\sigma^2} = \frac{1}{k^2}
-	\]
-	\qed
-\end{example}
+	We notice that the pdf of the vectorial observable $\{x_i\}_N$ can be written as the product of the \emph{pdf's} of the single observables, assuming that the observations are all independent: $p(x_N)=\prod_i^N p_X(x_i)$. Therefore, we have that
 
-Now we can get to proving the LLN, armed with the Čebyšëv inequality. We notice that the pdf of the vectorial observable $\{x_i\}_N$ can be written as the product of the \emph{pdf's} of the single observables, assuming that the observations are all independent: $p(x_N)=\prod_i^N p_X(x_i)$. 
-
-Therefore, we have that
 \begin{align*}
 	\Var{\bar{x}_N} &= \Var\left[ \frac{\sum_i x_i}{N} \right] = \frac{\Var\left[ \sum_i x_i \right]}{N^2} \\
 	&= \frac{1}{N^2}\int\left[ \sum_i x_i - \E\left[ \sum_i x_i \right] \right]^2\prod_i p_X(x_i)\dd x^N \\ 
@@ -924,7 +928,7 @@ Now seems like a great time to introduce what is probably the most important the
 	\end{align*}\qed
 
 \end{example}
-\sidenotetext{If complex analysis isn't your strong suit, don't worry, you can kind of just follow along}
+\sidenotetext{Whatever that means}
 
 This is the Gaussian (or normal) pdf, and the way we derived it highlights its fundamental importance in statistics. It is important to emphasize that the shape of this limit distribution does not depend on the original distribution of $x$.
 One can easily verify that the expected value and variance of the Gaussian coincide with those computed for $y_N$ at the beginning of the demonstration.

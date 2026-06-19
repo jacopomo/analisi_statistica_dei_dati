@@ -86,7 +86,7 @@ for i, o in enumerate(ordering):
     elif o == "Upper bound":
         lo, hi = lo_high, hi_high
 
-    ax[i].plot(m, posterior, lw=2)
+    ax[i].plot(m, posterior, lw=2, color="black")
 
     mask = (m >= lo) & (m <= hi)
     ax[i].fill_between(m[mask], posterior[mask], alpha=0.25)
@@ -105,4 +105,3 @@ ax[0].set_ylabel("Posterior density")
 
 plt.savefig("images/bayes_interval.pgf", bbox_inches='tight')
 plt.close()
-
