@@ -102,10 +102,10 @@ To try and clear any possible confusion, the following image depicts a right-tai
 
 
 \begin{figure}[H]
-\centering
-\input{images/hypothesis_testing_errors.pgf}
-\caption{Probability of the Test statistic considering null and alternative hypotheses. The critical region is separated from the acceptance region by a vertical line, and $\alpha, \beta$ are shown shaded. This Test corresponds to a right-tailed test statistic. The two curves represent the \emph{distribution} of the test statistic $T(x)$ under the different hypotheses.}
-\label{fig:hypothesis_testing_errors}
+	\centering
+	\input{images/hypothesis_testing_errors.pgf}
+	\caption{Probability of the Test statistic considering null and alternative hypotheses. The critical region is separated from the acceptance region by a vertical line, and $\alpha, \beta$ are shown shaded. This Test corresponds to a right-tailed test statistic. The two curves represent the \emph{distribution} of the test statistic $T(x)$ under the different hypotheses.}
+	\label{fig:hypothesis_testing_errors}
 \end{figure}
 
 We also calculate the second type of error:
@@ -121,7 +121,14 @@ This is calculated after $\alpha$, and naturally depends on it, as well as being
 	\tag{Power of a Test}
 	\]
 
-\todo{INSERT power of a Test graph}
+\begin{figure}[H]
+	\centering
+	\input{images/hypothesis_testing_power.pgf}
+	\caption{Power of a test as the alternative hypothesis $i$ changes. The same values as in image \ref{fig:hypothesis_testing_errors} have been used, and so $i=0$ corresponds to the hypothesis $H_0$, and $i=1$ corresponds to $H_1$ seen in the previous figure. As the alternative hypothesis changes (gets "further"), the power increases asymptotically towards $1$. This figure shows that the test portrayed is both unbiased and consistent.}
+	\label{fig:hypothesis_testing_power}
+\end{figure}
+
+
 We can see how the power reduces to $\alpha$ for $i=0$. This metric will be the one that we will use to build our statistical Tests, and we want it to be as close to $1$ as possible, which happens for $H_0$ "far away" from the alternative hypotheses. Also, we can request certain favorable conditions from these Tests:
 
 
@@ -352,14 +359,7 @@ We can't prove general properties on the power of this statistic, we can appreci
 Once again, we have an asymptotically pivotal quantity, and we can find the critical region for the test using the usual $\chi^2$ tables. We also enjoy the property that this Test is asymptotically unbiased.
 
 \section{Where hypothesis tests fail}
-Example of the two peaks where we need to actually do a GOF not hypothesis test:
-I leave this to M.L (if he wants) as it was an instructive example when I first worked it out (and because I want to go on to new things at this moment!)
-
-
-In general, I am not so sure about the sectioning in this chapter, though I think when we start adding graphs and examples the subsections will be long enough for them to warrant being subsections and not anything smaller. 
-
-That being said, I believe that each subsection requires $\geq1$ example, to be filled in as they come to mind, possibly coming from exams that we try.
-
+\todo{Example of the two peaks where we need to actually do a GOF not hypothesis test: I leave this to M.L (if he wants) as it was an instructive example when I first worked it out (and because I want to go on to new things at this moment!)}
 
 \vspace*{1cm}
 \hrule

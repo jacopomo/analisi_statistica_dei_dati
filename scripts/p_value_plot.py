@@ -15,7 +15,7 @@ H_1 = 1.6 * (0.12*np.sin(np.cos(2 * np.pi * x_grid)) ** 2 + 1 - x_grid)  # Under
 fig, ax = utils.pgf_generator(figsize=(5.5, 3.5))
 
 ax.plot(x_grid, H_0, linewidth=1, ls="--", label=r"$H_0$: Uniform distribution", color='black')
-ax.plot(x_grid, H_1, linewidth=1, label=r"$H_1$: Non-uniform distribution")
+ax.plot(x_grid, H_1, linewidth=1, label=r"$H_1$: Non-uniform distribution", color="C0")
 ax.axvline(0.05, color="red", ls=":", lw=1.0, label=r"Significance level $\alpha = 0.05$")
 ax.legend(loc="upper right")
 
